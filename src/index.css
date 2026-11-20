@@ -507,3 +507,6 @@ html.lenis body {
 #nl-badge-frame:hover {
   opacity: 0.9 !important;
 }
+
+/* nunca desbordar a lo ancho en celular */
+html, body { overflow-x: clip; }

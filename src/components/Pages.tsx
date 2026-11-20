@@ -84,7 +84,7 @@ function Treatments() {
   const group = treatments.find((t) => t.id === tab)!;
   return (
     <>
-      <div className="grid items-center gap-4 md:grid-cols-[1fr_auto] md:gap-[4vw]">
+      <div className="grid items-center gap-4 md:grid-cols-[1fr_auto] md:gap-[4vw] [&>*]:min-w-0">
         <div>
           <Eyebrow>Tratamientos</Eyebrow>
           <h1 className="mt-2 font-display text-[2rem] leading-none font-medium tracking-[-0.035em] md:text-title">
