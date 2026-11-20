@@ -21,7 +21,6 @@ const COMBOS = [
     promise: 'Para cuando te ves cansada aunque hayas dormido.',
     items: ['Bótox', 'Skinbooster'],
     save: 10,
-    img: 'proc-botox-celulas.webp',
     plus: ['Expresión suave, sin congelar', 'Hidratación profunda', 'Control a los 15 días'],
   },
   {
@@ -30,7 +29,6 @@ const COMBOS = [
     promise: 'Textura, poros y marcas: tu piel, renovada desde adentro.',
     items: ['Dermapen', 'Exosomas', 'Peeling'],
     save: 15,
-    img: 'exora-exosomas.webp',
     plus: ['Renovación en 3 frentes', 'Luminosidad visible', 'Plan de sesiones a tu medida'],
     star: true,
   },
@@ -40,7 +38,6 @@ const COMBOS = [
     promise: 'Firmeza que se construye con tu propio colágeno.',
     items: ['Bioestimuladores de colágeno', 'Skinbooster', 'Exosomas'],
     save: 20,
-    img: 'exora-regenerativa.webp',
     plus: ['Resultado progresivo y natural', 'Efecto de larga duración', 'Seguimiento médico completo'],
   },
 ];
@@ -64,21 +61,30 @@ export function Combos() {
             style={{'--d': `${150 + i * 120}ms`} as CSSProperties}
             className={`relative flex flex-col overflow-hidden rounded-[1.8rem] ${c.star ? 'bg-coral text-paper shadow-[0_30px_70px_-30px_rgb(59_56_35/0.7)] md:-translate-y-3 md:scale-[1.03]' : 'glass'}`}
           >
-            {c.star && <span className="absolute top-3 right-3 z-10 rounded-full bg-paper px-3 py-1 text-[0.7rem] font-semibold tracking-wide text-coral uppercase">★ La más elegida</span>}
-            <img src={media(c.img)} alt="" loading="lazy" className="aspect-[16/10] w-full object-cover" />
-            <div className="flex flex-1 flex-col p-5">
-              <span className={`self-start rounded-full px-3 py-1 text-[0.75rem] font-semibold ${c.star ? 'bg-paper/20' : 'bg-coral/12 text-coral'}`}>Ahorras {c.save}%</span>
-              <b className="mt-3 font-display text-[1.7rem] leading-tight font-medium">{c.name}</b>
-              <p className={`mt-1 text-small ${c.star ? 'text-paper/85' : 'text-mute'}`}>{c.promise}</p>
-              <p className="mt-4 text-[0.8rem] font-semibold tracking-wide uppercase opacity-70">Incluye</p>
-              <ul className="mt-1 grid gap-1 text-[0.95rem]">
+                        <div className={`relative overflow-hidden px-5 pt-6 pb-5 ${c.star ? 'bg-[#6f6a45]' : 'bg-[#ebe6d6]'}`}>
+              <img src={media(c.star ? 'iso-white.png' : 'iso-olive.png')} alt="" aria-hidden className="pointer-events-none absolute -right-6 -bottom-8 h-36 w-auto opacity-15" />
+              {c.star && <span className="mb-2 inline-block rounded-full bg-paper px-3 py-1 text-[0.7rem] font-semibold tracking-wide text-coral uppercase">★ La más elegida</span>}
+              <span className={`block text-[0.72rem] font-semibold tracking-[0.16em] uppercase ${c.star ? 'text-paper/70' : 'text-coral'}`}>
+                Combo {i + 1} · {c.items.length} tratamientos
+              </span>
+              <b className="mt-2 block font-display text-[2.1rem] leading-[1.02] font-medium">{c.name}</b>
+              <div className="mt-3 flex flex-wrap gap-1.5">
                 {c.items.map((it) => (
-                  <li key={it}>✓ {it}</li>
+                  <span key={it} className={`rounded-full px-2.5 py-1 text-[0.75rem] ${c.star ? 'bg-paper/15' : 'bg-paper'}`}>
+                    {it}
+                  </span>
                 ))}
-              </ul>
-              <ul className={`mt-3 grid gap-1 text-small ${c.star ? 'text-paper/80' : 'text-mute'}`}>
+              </div>
+              <span className={`mt-4 flex items-baseline gap-1.5 ${c.star ? 'text-paper' : 'text-coral'}`}>
+                <b className="font-display text-[2.6rem] leading-none font-medium">−{c.save}%</b>
+                <span className="text-small">de ahorro</span>
+              </span>
+            </div>
+            <div className="flex flex-1 flex-col p-5">
+              <p className={`text-[1rem] ${c.star ? 'text-paper/90' : 'text-ink/80'}`}>{c.promise}</p>
+              <ul className={`mt-3 grid gap-1.5 text-small ${c.star ? 'text-paper/85' : 'text-ink/75'}`}>
                 {c.plus.map((p) => (
-                  <li key={p}>· {p}</li>
+                  <li key={p}>✓ {p}</li>
                 ))}
               </ul>
               <span className="flex-1" />

@@ -152,18 +152,52 @@ function Quick({who, onDone}: {who: string; onDone: (q: Quote) => void}) {
         onClick={() => {
           const all = loadQuotes();
           const q: Quote = {id: `EX-${1001 + all.length}`, paciente: name.trim(), celular: cel.trim(), items, cuotas, desc, nota: '', creada: new Date().toISOString(), vence: new Date(Date.now() + 15 * 86400000).toISOString(), estado: 'enviada', por: who};
-          waTo(q.celular, `Hola ${first(q.paciente)} 😊 Te comparto tu cotización de EXORA (${q.id}) por ${cop(total(q))}${q.cuotas > 1 ? `, que puedes pagar hasta en ${q.cuotas} cuotas` : ''}. Aquí la ves y la pagas de forma segura: ${quoteUrl(q)}\n${who}`);
           onDone(q);
         }}
         className="min-h-14 cursor-pointer rounded-full bg-[#25d366] text-[1rem] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
       >
-        Enviar por WhatsApp
+        Crear cotización
+      </button>
+    </div>
+  );
+}
+
+const quoteMsg = (q: Quote, who: string) =>
+  `Hola ${first(q.paciente)} 😊 Te comparto tu cotización de EXORA (${q.id}) por ${cop(total(q))}${q.cuotas > 1 ? `, que puedes pagar hasta en ${q.cuotas} cuotas` : ''}. Aquí la ves y la pagas de forma segura: ${quoteUrl(q)}\n${q.por ?? who}`;
+
+/** Tras crear la cotización: enviar el enlace por WhatsApp o compartir el PDF. */
+function Sent({q, who, onClose}: {q: Quote; who: string; onClose: () => void}) {
+  const [msg, setMsg] = useState('');
+  return (
+    <div className="mt-4 grid gap-3 rounded-3xl bg-coral p-5 text-paper">
+      <b className="font-display text-[1.5rem]">Cotización {q.id} lista ✓</b>
+      <span className="text-small text-paper/85">
+        {q.paciente} · {cop(total(q))}
+      </span>
+      <button type="button" onClick={() => waTo(q.celular, quoteMsg(q, who))} className="min-h-13 cursor-pointer rounded-full bg-[#25d366] py-3 text-[1rem] font-semibold text-white">
+        Enviar enlace por WhatsApp
+      </button>
+      <button
+        type="button"
+        onClick={async () => {
+          const {sharePdf} = await import('../lib/quotePdf');
+          const r = await sharePdf(q, quoteMsg(q, who));
+          setMsg(r === 'downloaded' ? 'PDF descargado: adjúntalo en el chat de WhatsApp.' : r === 'shared' ? 'PDF compartido.' : '');
+        }}
+        className="min-h-12 cursor-pointer rounded-full bg-paper py-3 text-small font-semibold text-coral"
+      >
+        Compartir PDF de la cotización
+      </button>
+      {msg && <span className="text-[0.8rem]">{msg}</span>}
+      <button type="button" onClick={onClose} className="cursor-pointer text-small text-paper/80 underline">
+        Listo
       </button>
     </div>
   );
 }
 
 function PanelBody({who, onOut}: {who: string; onOut: () => void}) {
+  const [sent, setSent] = useState<Quote | null>(null);
   const [qs, setQs] = useState<Quote[]>(() => loadQuotes().map((q) => (vencida(q) ? {...q, estado: 'vencida' as const} : q)));
   const [show, setShow] = useState(false);
   const [filter, setFilter] = useState<'todas' | Quote['estado']>('todas');
@@ -175,7 +209,8 @@ function PanelBody({who, onOut}: {who: string; onOut: () => void}) {
   const stats = useMemo(() => {
     const pag = qs.filter((q) => q.estado === 'pagada');
     const pend = qs.filter((q) => q.estado !== 'pagada');
-    return {cobrado: pag.reduce((a, q) => a + (q.pago?.valor ?? 0), 0), pendiente: pend.reduce((a, q) => a + total(q), 0), nPend: pend.length, nPag: pag.length};
+    const ver = qs.filter((q) => q.estado === 'verificar').length;
+    return {cobrado: pag.reduce((a, q) => a + (q.pago?.valor ?? 0), 0), pendiente: pend.reduce((a, q) => a + total(q), 0), nPend: pend.length, nPag: pag.length, ver};
   }, [qs]);
   const recordar = (q: Quote) => {
     const msg =
@@ -218,9 +253,11 @@ function PanelBody({who, onOut}: {who: string; onOut: () => void}) {
           onDone={(q) => {
             update([q, ...qs]);
             setShow(false);
+            setSent(q);
           }}
         />
       )}
+      {sent && <Sent q={sent} who={who} onClose={() => setSent(null)} />}
 
       <div className="mt-5 grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3">
         {[
@@ -236,8 +273,13 @@ function PanelBody({who, onOut}: {who: string; onOut: () => void}) {
         ))}
       </div>
 
+      {stats.ver > 0 && (
+        <button type="button" onClick={() => setFilter('verificar')} className="mt-3 w-full cursor-pointer rounded-2xl bg-[#a87350] px-4 py-3 text-left text-small text-paper">
+          ⚠ Tienes {stats.ver} pago{stats.ver > 1 ? 's' : ''} por verificar en tu cuenta →
+        </button>
+      )}
       <div className="mt-5 flex flex-wrap items-center gap-2">
-        {(['todas', 'enviada', 'vista', 'pagada', 'vencida'] as const).map((e) => (
+        {(['todas', 'enviada', 'vista', 'verificar', 'pagada', 'vencida'] as const).map((e) => (
           <button key={e} type="button" onClick={() => setFilter(e)} className={`min-h-9 cursor-pointer rounded-full px-3.5 text-small ${filter === e ? 'bg-ink text-paper' : 'glass text-ink/70'}`}>
             {e === 'todas' ? 'Todas' : ESTADOS[e][0]}
           </button>
@@ -272,12 +314,27 @@ function PanelBody({who, onOut}: {who: string; onOut: () => void}) {
                 <span className={`mt-1 inline-block rounded-full px-2.5 py-0.5 text-[0.7rem] ${ESTADOS[q.estado][1]}`}>{ESTADOS[q.estado][0]}</span>
               </span>
             </div>
-            {q.pago && (
+            {q.pago && q.estado === 'pagada' && (
               <span className="text-[0.75rem] text-coral">
-                Pagó {fecha(q.pago.fecha)} · {q.pago.medio} · ref. {q.pago.ref}
+                {q.pago.fuente === 'mercadopago' ? '✓ Confirmado por Mercado Pago' : `✓ Verificado en la cuenta por ${q.pago.verificadoPor ?? 'la doctora'}`} · {fecha(q.pago.fecha)} · {q.pago.medio} · ref. {q.pago.ref}
               </span>
             )}
-            {q.estado !== 'pagada' && (
+            {q.estado === 'verificar' && q.pago && (
+              <div className="grid gap-2 rounded-xl bg-[#a87350]/12 p-3 text-small">
+                <span>
+                  ⚠ La paciente dice que pagó <b>{cop(q.pago.valor)}</b> por <b>{q.pago.medio}</b> y envió un comprobante. <b>No confíes en la foto:</b> abre la app de tu banco y confirma que la plata llegó.
+                </span>
+                <span className="flex flex-wrap gap-2">
+                  <button type="button" onClick={() => update(qs.map((x) => (x.id === q.id && x.pago ? {...x, estado: 'pagada', pago: {...x.pago, verificadoPor: who}} : x)))} className="min-h-10 cursor-pointer rounded-full bg-ink px-4 text-small font-medium text-paper">
+                    ✓ Ya vi la plata en mi cuenta
+                  </button>
+                  <button type="button" onClick={() => update(qs.map((x) => (x.id === q.id ? {...x, estado: 'vista', pago: undefined} : x)))} className="min-h-10 cursor-pointer rounded-full border border-line px-4 text-small">
+                    No llegó
+                  </button>
+                </span>
+              </div>
+            )}
+            {q.estado !== 'pagada' && q.estado !== 'verificar' && (
               <div className="flex flex-wrap items-center gap-2">
                 <button type="button" onClick={() => recordar(q)} className="flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full bg-[#25d366] px-4 text-small font-medium text-white">
                   🔔 Recordar por WhatsApp

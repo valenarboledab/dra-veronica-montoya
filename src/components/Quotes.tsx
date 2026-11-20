@@ -8,6 +8,7 @@ export const fecha = (s: string) => new Date(s).toLocaleDateString('es-CO', {day
 export const ESTADOS: Record<Quote['estado'], [string, string]> = {
   enviada: ['Enviada', 'bg-[#e6e1cf] text-ink'],
   vista: ['Vista', 'bg-[#dfd1a7] text-ink'],
+  verificar: ['Por verificar', 'bg-[#a87350] text-paper'],
   pagada: ['Pagada', 'bg-[#7f7a52] text-paper'],
   vencida: ['Vencida', 'bg-ink/10 text-mute'],
 };
@@ -51,7 +52,8 @@ export function QuoteView() {
       const qs = loadQuotes();
       const i = qs.findIndex((x) => x.id === q.id);
       if (i >= 0) {
-        qs[i] = {...qs[i], estado: 'pagada', pago: {fecha: new Date().toISOString(), medio: m === 'Tarjeta de crédito' && q.cuotas > 1 ? `Tarjeta de crédito · ${q.cuotas} cuotas` : m, ref: 'MP-SIM-' + Math.floor(10000 + Math.random() * 89999), valor: t}};
+        const transfer = m === 'Llave Bre-B';
+        qs[i] = {...qs[i], estado: transfer ? 'verificar' : 'pagada', pago: {fecha: new Date().toISOString(), medio: m === 'Tarjeta de crédito' && q.cuotas > 1 ? `Tarjeta de crédito · ${q.cuotas} cuotas` : m, ref: transfer ? 'Comprobante enviado por WhatsApp' : 'MP-SIM-' + Math.floor(10000 + Math.random() * 89999), valor: t, fuente: transfer ? 'transferencia' : 'mercadopago'}};
         saveQuotes(qs);
       }
       setPaid(true);
@@ -90,12 +92,30 @@ export function QuoteView() {
           </div>
           {q.cuotas > 1 && <p className="mt-1 text-right text-small text-coral">Hasta {q.cuotas} cuotas de {cop(t / q.cuotas)} con tarjeta de crédito</p>}
           {q.nota && <p className="mt-4 rounded-xl bg-[#ebe6d6] px-4 py-3 text-small">{q.nota}</p>}
+          <button
+            type="button"
+            onClick={async () => {
+              const {quotePdf} = await import('../lib/quotePdf');
+              const blob = await quotePdf({...q, celular: '', creada: new Date().toISOString(), estado: 'vista'}, {demo: true});
+              const a = document.createElement('a');
+              a.href = URL.createObjectURL(blob);
+              a.download = `Cotizacion-EXORA-${q.id}.pdf`;
+              a.click();
+            }}
+            className="mt-3 cursor-pointer text-small text-coral underline-offset-2 hover:underline"
+          >
+            Descargar cotización en PDF
+          </button>
           <p className="mt-3 text-[0.72rem] text-mute">Válida hasta el {new Date(q.vence).toLocaleDateString('es-CO', {day: 'numeric', month: 'long', year: 'numeric'})}.</p>
 
           {paid ? (
             <div className="mt-6 rounded-2xl bg-[#7f7a52] p-5 text-center text-paper">
-              <b className="block font-display text-[1.6rem]">¡Pago aprobado!</b>
-              <span className="text-small">{method} · te escribimos por WhatsApp para confirmar tu cita.</span>
+              <b className="block font-display text-[1.6rem]">{method === 'Llave Bre-B' ? '¡Gracias! Recibimos tu aviso' : '¡Pago aprobado!'}</b>
+              <span className="text-small">
+                {method === 'Llave Bre-B'
+                  ? 'Apenas la doctora confirme la transferencia en su cuenta, te escribimos para agendar.'
+                  : `${method} · Mercado Pago nos confirma tu pago automáticamente. Te escribimos por WhatsApp para confirmar tu cita.`}
+              </span>
             </div>
           ) : step === 'redirect' ? (
             <div className="mt-6 rounded-2xl border border-line p-5 text-center">
