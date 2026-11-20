@@ -5,9 +5,9 @@ import {clamp, pinProgress, range, smoothstep} from '../lib/math';
 import {onFrame} from '../lib/scroll';
 import {ChipIcon} from './icons';
 
-const FAINT = [205, 201, 178];
-const CORAL = [127, 122, 82];
-const INK = [59, 56, 35];
+const FAINT = [156, 151, 112];
+const CORAL = [223, 209, 167];
+const INK = [245, 242, 234];
 const blend = (a: number[], b: number[], t: number) => `rgb(${a.map((c, i) => Math.round(c + (b[i] - c) * t)).join(',')})`;
 // faint → coral at the front of the light → settles to ink
 const tone = (t: number) => (t < 0.5 ? blend(FAINT, CORAL, t * 2) : blend(CORAL, INK, (t - 0.5) * 2));
@@ -69,11 +69,11 @@ export function Statement({reduced}: {reduced: boolean}) {
   }, [reduced, root]);
 
   return (
-    <section ref={root} className="relative h-[190vh] bg-paper md:h-[260vh]">
+    <section ref={root} className="relative h-[190vh] bg-coral md:h-[260vh]">
       <div className="sticky top-0 flex h-svh items-center overflow-hidden px-5 md:px-[7vw]">
         <div className="relative z-10 max-w-[64rem]">
-          <p className="mb-6 flex items-center gap-2 text-micro font-medium text-mute uppercase md:mb-8" data-reveal>
-            <span className="size-1.5 rounded-full bg-coral" />
+          <p className="mb-6 flex items-center gap-2 text-micro font-medium text-peach uppercase md:mb-8" data-reveal>
+            <span className="size-1.5 rounded-full bg-peach" />
             {statement.eyebrow}
           </p>
           <p ref={para} className="font-display text-statement font-medium" style={{color: tone(0)}}>
