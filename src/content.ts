@@ -136,9 +136,9 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     id: 'eco',
     label: 'Ecografías',
     short: 'Ecografías',
-    intro: 'Ecografías y ultrasonidos realizados por la Dra. Susana en el consultorio, con cita previa. Escríbenos por WhatsApp para saber qué estudio necesitas.',
+    intro: 'Ecografías y ultrasonidos realizados por la Dra. Susana Zárate en el consultorio, con cita previa. Escríbenos por WhatsApp para saber qué estudio necesitas.',
     items: [
-      {n: 'Ecografías y ultrasonidos', d: 'Estudios por ultrasonido realizados por la Dra. Susana, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa'},
+      {n: 'Ecografías y ultrasonidos', d: 'Estudios por ultrasonido realizados por la Dra. Susana Zárate, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa'},
     ],
   },
 ];
