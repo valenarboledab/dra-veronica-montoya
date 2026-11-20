@@ -54,6 +54,18 @@ export function Pay() {
           );
         })}
       </div>
+      {PAY.transferencia.llave && (
+        <div className="glass mt-3 rounded-3xl p-5" data-reveal>
+          <span className="self-start rounded-full bg-ink/6 px-2.5 py-1 text-[0.68rem] text-mute">{PAY.transferencia.banco}</span>
+          <b className="mt-3 block font-display text-[1.45rem] leading-tight font-medium">Transferencia o Nequi</b>
+          <span className="mt-1 block text-small text-mute">
+            A nombre de {PAY.transferencia.titular}. Llave / número: <b className="text-ink select-all">{PAY.transferencia.llave}</b>
+          </span>
+          <WaLink text="Hola EXORA, ya hice la transferencia de mi tratamiento. Te envío el comprobante." className="mt-4 flex min-h-12 items-center justify-center rounded-full border border-ink/20 text-small font-medium">
+            Enviar comprobante por WhatsApp
+          </WaLink>
+        </div>
+      )}
       <p className="mt-5 text-[0.72rem] text-mute">Si necesitas factura o tienes dudas con tu pago, escríbenos por WhatsApp.</p>
     </div>
   );

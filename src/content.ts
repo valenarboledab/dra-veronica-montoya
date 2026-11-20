@@ -223,5 +223,7 @@ export const POLICY_VERSION = '19-11-2026';
 export const PAY = {
   tarjeta: '', // p. ej. enlace abierto de Bold o "Tu link" de Mercado Pago (el cliente escribe el valor)
   cuotas: '', // p. ej. enlace de pago de Addi
-  cuotasProveedor: 'Addi · Sistecrédito',
+  cuotasProveedor: 'Addi',
+  // Mientras tanto: cuenta personal de la Dra. Verónica (transferencia, Nequi o llave Bre-B). Vacío = no se muestra.
+  transferencia: {titular: '', banco: '', llave: ''},
 };
