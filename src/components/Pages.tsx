@@ -49,7 +49,7 @@ function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number
       </div>
       <div className="flex items-center justify-between gap-3 md:mt-auto md:pt-2">
         <a
-          href={wa(`Hola Dra. Verónica, quiero información sobre ${it.n.toLowerCase()}.`)}
+          href={wa(`Hola EXORA, quiero información sobre ${it.n.toLowerCase()}.`)}
           className="text-small font-semibold text-coral hover:underline"
         >
           Preguntar →

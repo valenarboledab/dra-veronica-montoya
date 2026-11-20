@@ -13,7 +13,7 @@ const sections: [string, string[]][] = [
   [
     '1. Responsables del tratamiento',
     [
-      'EXORA es la marca bajo la cual atienden la Dra. Verónica Montoya (médica general con enfoque en medicina estética y regenerativa) y la Dra. Susana Zárate (ecografías), quienes actúan como responsables del tratamiento de los datos personales que se recogen en este sitio, por WhatsApp y en el consultorio (en adelante, "EXORA" o "las Responsables").',
+      'EXORA es la marca bajo la cual atienden la Dra. Verónica Montoya (médica general con enfoque en medicina regenerativa) y la Dra. Susana Zárate (ecografías), quienes actúan como responsables del tratamiento de los datos personales que se recogen en este sitio, por WhatsApp y en el consultorio (en adelante, "EXORA" o "las Responsables").',
       'Domicilio: ' + ADDR + '. Canal de atención de datos: WhatsApp ' + WA_SHOW + ' · Instagram @exora.regeneracion.',
     ],
   ],

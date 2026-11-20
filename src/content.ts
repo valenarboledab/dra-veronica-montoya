@@ -21,17 +21,17 @@ export const brand = {
   by: 'Dra. Verónica Montoya · Dra. Susana Zárate',
   doctors: ['Dra. Verónica Montoya', 'Dra. Susana Zárate'],
   short: 'Verónica Montoya',
-  tag: 'Medicina estética, regenerativa y ecografías',
+  tag: 'Medicina regenerativa y ecografías',
   contact: 'WhatsApp',
   app: 'Agendar',
 };
 
 export const hero = {
-  eyebrow: 'Estética · Regenerativa · Ecografías · Armenia',
+  eyebrow: 'Medicina regenerativa · Ecografías · Armenia',
   lead: 'Tu piel,',
   accent: 'por fin',
   tail: 'entendida.',
-  sub: 'EXORA reúne a la Dra. Verónica Montoya, en medicina estética y regenerativa, y a la Dra. Susana Zárate, en ecografías. Te valoramos con calma para que te veas descansada, nunca transformada.',
+  sub: 'EXORA reúne a la Dra. Verónica Montoya, en medicina regenerativa, y a la Dra. Susana Zárate, en ecografías. Te valoramos con calma para que te veas descansada, nunca transformada.',
   cta: 'Agenda tu valoración',
   card: {
     title: 'Valoración facial',
@@ -76,7 +76,7 @@ export const statement = {
   eyebrow: 'Nuestra promesa',
   tokens: [
     'En', 'EXORA', 'te', 'ayudamos', 'a', {img: 'eyes'}, 'entender', 'y', 'cuidar', 'tu', 'piel', 'como', 'nunca', 'antes.',
-    'Medicina', 'estética', 'con', 'criterio', 'médico', {img: 'gel'}, 'y', 'ciencia', 'amable,', 'para', 'tu', 'piel', 'más',
+    'Medicina', 'regenerativa', 'con', 'criterio', 'médico', {img: 'gel'}, 'y', 'ciencia', 'amable,', 'para', 'tu', 'piel', 'más',
     '*tranquila,*', 'más', '*luminosa*', {img: 'freckles'}, 'y', 'más', 'tuya.',
   ] as (string | {img: string})[],
   chips: [
@@ -161,11 +161,11 @@ export const susana = {
 
 export const doctor = {
   title: ['Conoce a la', '*Dra.* *Verónica*'],
-  body: 'Médica general con enfoque en medicina estética, en Armenia. Su consulta se basa en una idea sencilla: que te veas descansada y luminosa, nunca transformada. Escucha primero, explica cada opción con claridad y diseña un plan a tu medida.',
+  body: 'Médica general con enfoque en medicina regenerativa, en Armenia. Su consulta se basa en una idea sencilla: que te veas descansada y luminosa, nunca transformada. Escucha primero, explica cada opción con claridad y diseña un plan a tu medida.',
   facts: [
-    ['Formación', 'Médica general, Universidad de Manizales · Medicina estética, Fundación Universitaria de Ciencias de la Salud (FUCS)'],
-    ['Experiencia', 'Más de 6 años en medicina estética y procedimientos no invasivos · Investigadora en medicina regenerativa y terapias biológicas'],
-    ['Enfoque', 'Estética facial e íntima, medicina regenerativa y ecografías'],
+    ['Formación', 'Médica general, Universidad de Manizales · Formación de posgrado en la Fundación Universitaria de Ciencias de la Salud (FUCS)'],
+    ['Experiencia', 'Más de 6 años en procedimientos no invasivos · Investigadora en medicina regenerativa y terapias biológicas'],
+    ['Enfoque', 'Medicina regenerativa facial, íntima y corporal, y ecografías'],
     ['Consultorio', ADDRESS],
     ['Horario', '8:00 a. m. – 4:00 p. m. · solo con cita previa'],
   ],
