@@ -318,9 +318,18 @@ html.lenis body {
   opacity: 1;
 }
 @media (max-width: 1023px) {
-  .ring-label,
   .leader {
     display: none;
+  }
+  /* en celular la etiqueta va debajo del anillo, centrada */
+  .ring-label[data-side='right'],
+  .ring-label[data-side='left'] {
+    left: 50%;
+    right: auto;
+    top: 118%;
+    translate: -50% 0;
+    font-size: 0.62rem;
+    padding: 2px 8px;
   }
 }
 @keyframes spin {

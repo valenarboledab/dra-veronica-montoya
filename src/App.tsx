@@ -21,6 +21,19 @@ export default function App() {
   const reduced = useReducedMotion();
   const navRoot = useReveals<HTMLDivElement>();
   const [view, setView] = useState<View>(fromHash);
+  // en celular el botón de WhatsApp aparece al pasar la portada, para no tapar el título
+  const [pastHero, setPastHero] = useState(false);
+  useEffect(() => {
+    const check = () => setPastHero(window.innerWidth >= 1024 || window.scrollY > window.innerHeight * 0.6);
+    check();
+    window.addEventListener('scroll', check, {passive: true});
+    window.addEventListener('resize', check);
+    return () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+  }, []);
+  const bubble = view !== 'inicio' || pastHero;
 
   useEffect(() => startScroll(reduced), [reduced]);
 
@@ -54,7 +67,7 @@ export default function App() {
       <WaLink
         text="Hola EXORA, quiero agendar una valoración."
         label="Escribir por WhatsApp"
-        className="fixed bottom-4 left-4 z-50 grid size-12 md:size-14 place-items-center rounded-full bg-[#25d366] text-white shadow-[0_12px_30px_-8px_rgb(0_0_0/0.35)] transition-transform hover:scale-105 md:bottom-7 md:left-7"
+        className={`fixed bottom-4 left-4 z-50 grid size-12 place-items-center transition-[opacity,transform] duration-500 md:size-14 ${bubble ? "" : "pointer-events-none translate-y-4 opacity-0"} rounded-full bg-[#25d366] text-white shadow-[0_12px_30px_-8px_rgb(0_0_0/0.35)] transition-transform hover:scale-105 md:bottom-7 md:left-7`}
       >
         <span className="absolute inset-0 animate-ping rounded-full bg-[#25d366]/40 motion-reduce:hidden" />
         <svg viewBox="0 0 24 24" className="relative size-6 md:size-7" fill="currentColor" aria-hidden>

@@ -31,7 +31,8 @@ export function Statement({reduced}: {reduced: boolean}) {
     const el = root.current;
     if (!el) return;
     const chipAt = statement.chips.map((c) => tokens.indexOf(c.at));
-    if (reduced) {
+    // en celular y tablet la frase se muestra completa, sin anclar el scroll (evita espacios vacíos y tirones)
+    if (reduced || window.matchMedia('(max-width: 1023px)').matches) {
       items.current.forEach((w) => {
         if (!w) return;
         w.style.color = tone(1);
@@ -69,8 +70,8 @@ export function Statement({reduced}: {reduced: boolean}) {
   }, [reduced, root]);
 
   return (
-    <section ref={root} className="relative h-[145vh] bg-coral md:h-[180vh]">
-      <div className="sticky top-0 flex h-svh items-center overflow-hidden px-5 md:px-[7vw]">
+    <section ref={root} className="relative bg-coral lg:h-[180vh]">
+      <div className="flex items-center overflow-hidden px-5 py-20 md:px-[7vw] lg:sticky lg:top-0 lg:h-svh lg:py-0">
         <div className="relative z-10 max-w-[56rem]">
           <p className="mb-6 flex items-center gap-2 text-micro font-medium text-peach uppercase md:mb-8" data-reveal>
             <span className="size-1.5 rounded-full bg-peach" />

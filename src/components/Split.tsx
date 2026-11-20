@@ -56,10 +56,10 @@ export function Split({reduced}: {reduced: boolean}) {
 
   return (
     <section ref={root} id="ritual" className="relative">
-      <div className="flex flex-col gap-8 overflow-hidden bg-linear-to-br from-blush via-[#f5f2ea] to-paper px-5 py-14 md:flex-row md:items-center md:gap-[5vw] md:px-[6vw] md:py-20">
+      <div className="flex flex-col gap-8 overflow-hidden bg-linear-to-br from-blush via-[#f5f2ea] to-paper px-5 py-10 md:flex-row md:items-center md:gap-[5vw] md:px-[6vw] md:py-20">
         {/* arch photo — right on desktop, top on phones */}
         <div className="flex justify-center md:order-2 md:flex-1">
-          <div ref={archWrap} className="relative aspect-square w-[72vw] max-w-[22rem] md:w-[min(34rem,40vw)] md:max-w-none">
+          <div ref={archWrap} className="relative aspect-square w-[56vw] max-w-[15rem] md:w-[min(30rem,36vw)] md:max-w-none">
             {/* offset outline echo */}
             <div className="blob blob-echo absolute inset-0 translate-x-3 -translate-y-3 border border-coral/35 md:translate-x-5 md:-translate-y-5" />
             <div className="blob relative size-full bg-coral">
