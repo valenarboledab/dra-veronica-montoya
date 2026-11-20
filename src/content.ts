@@ -86,10 +86,11 @@ export const statement = {
 
 type Item = {n: string; d: string; p: string; s: string; e: string};
 
-export const treatments: {id: string; label: string; intro: string; items: Item[]}[] = [
+export const treatments: {id: string; label: string; short: string; intro: string; items: Item[]}[] = [
   {
     id: 'facial',
     label: 'Facial',
+    short: 'Facial',
     intro: 'Rejuvenecimiento y calidad de piel con resultados naturales: que te veas descansada, no diferente.',
     items: [
       {n: 'Bótox', d: 'Suaviza las arrugas de frente, entrecejo y patas de gallo sin congelar tu expresión. También se usa para el bruxismo y la sudoración excesiva (hiperhidrosis).', p: 'Arrugas, bruxismo e hiperhidrosis', s: '20–30 min', e: 'Visible en 3 a 7 días'},
@@ -104,6 +105,7 @@ export const treatments: {id: string; label: string; intro: string; items: Item[
   {
     id: 'intimo',
     label: 'Íntimo',
+    short: 'Íntimo',
     intro: 'Un espacio privado y respetuoso para hablar de comodidad y confianza íntima. La consulta es confidencial.',
     items: [
       {n: 'Bioestimuladores íntimos', d: 'Estimulan colágeno en la zona genital para mejorar la firmeza y la calidad del tejido.', p: 'Flacidez y cambios por edad o partos', s: '30–40 min', e: 'Progresivo en semanas'},
@@ -116,6 +118,7 @@ export const treatments: {id: string; label: string; intro: string; items: Item[
   {
     id: 'regen',
     label: 'Medicina regenerativa',
+    short: 'Regenerativa',
     intro: 'Tratamientos para el dolor, la recuperación y el bienestar de tu cuerpo, siempre con valoración médica previa.',
     items: [
       {n: 'Biopuntura', d: 'Aplicación de medicamentos biológicos en puntos específicos para apoyar el manejo del dolor y la inflamación.', p: 'Dolor muscular y articular', s: '30 min', e: 'Plan por sesiones'},

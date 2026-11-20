@@ -16,70 +16,99 @@ const Eyebrow = ({children}: {children: string}) => (
 
 const dropWord: Record<string, string> = {facial: 'Facial', intimo: 'Íntimo', regen: 'Regenerativa'};
 
+function Facts({it}: {it: (typeof treatments)[number]['items'][number]}) {
+  return (
+    <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-small">
+      <div className="col-span-2">
+        <dt className="text-micro text-mute uppercase">Ideal para</dt>
+        <dd>{it.p}</dd>
+      </div>
+      <div>
+        <dt className="text-micro text-mute uppercase">Sesión</dt>
+        <dd className="whitespace-nowrap">{it.s}</dd>
+      </div>
+      <div>
+        <dt className="text-micro text-mute uppercase">Resultado</dt>
+        <dd>{it.e}</dd>
+      </div>
+    </dl>
+  );
+}
+
+function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number]; i: number}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <article
+      className="card-in glass flex flex-col gap-2 rounded-2xl p-4 md:gap-3 md:rounded-3xl md:p-6"
+      style={{'--d': `${i * 50}ms`} as CSSProperties}
+    >
+      <h3 className="font-display text-[1.15rem] font-medium tracking-[-0.03em] md:text-[1.35rem]">{it.n}</h3>
+      <p className={`text-small text-mute md:line-clamp-none ${open ? '' : 'line-clamp-2'}`}>{it.d}</p>
+      <div className={`mt-1 border-t border-line pt-3 md:block md:pt-4 ${open ? 'block' : 'hidden'}`}>
+        <Facts it={it} />
+      </div>
+      <div className="flex items-center justify-between gap-3 md:mt-auto md:pt-2">
+        <a
+          href={wa(`Hola Dra. Verónica, quiero información sobre ${it.n.toLowerCase()}.`)}
+          className="text-small font-semibold text-coral hover:underline"
+        >
+          Preguntar →
+        </a>
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          className="min-h-9 cursor-pointer text-small text-mute md:hidden"
+        >
+          {open ? 'Ocultar' : 'Ver detalles'}
+        </button>
+      </div>
+    </article>
+  );
+}
+
 function Treatments() {
   const [tab, setTab] = useState(treatments[0].id);
   const reduced = useReducedMotion();
   const group = treatments.find((t) => t.id === tab)!;
   return (
     <>
-      <div className="grid items-center gap-5 md:grid-cols-[1fr_auto] md:gap-[4vw]">
+      <div className="grid items-center gap-4 md:grid-cols-[1fr_auto] md:gap-[4vw]">
         <div>
           <Eyebrow>Tratamientos</Eyebrow>
-          <BlurText lines={['Pensados', 'para *ti*']} className="mt-3 font-display text-title font-medium" delay={100} />
-          <p className="mt-3 max-w-[34rem] text-copy text-ink/70">{group.intro}</p>
-          <div role="tablist" className="glass tabs-scroll mt-5 inline-flex max-w-full gap-1 overflow-x-auto rounded-full p-1">
+          <h1 className="mt-2 font-display text-[2rem] leading-none font-medium tracking-[-0.035em] md:text-title">
+            Pensados para <span className="accent">ti</span>
+          </h1>
+          <p className="mt-3 hidden max-w-[34rem] text-copy text-ink/70 md:block">{group.intro}</p>
+          {/* pestañas con cuántos tratamientos hay en cada una */}
+          <div role="tablist" className="glass tabs-scroll mt-4 flex max-w-full gap-1 overflow-x-auto rounded-full p-1 md:mt-5 md:inline-flex">
             {treatments.map((t) => (
               <button
                 key={t.id}
                 role="tab"
                 aria-selected={tab === t.id}
                 onClick={() => setTab(t.id)}
-                className={`min-h-11 shrink-0 cursor-pointer rounded-full px-5 text-small font-medium transition-colors ${tab === t.id ? 'bg-ink text-paper' : 'text-ink/70 hover:text-ink'}`}
+                className={`flex min-h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full px-4 text-small font-medium transition-colors md:px-5 ${tab === t.id ? 'bg-ink text-paper' : 'text-ink/70 hover:text-ink'}`}
               >
-                {t.label}
+                {t.short}
+                <span className={`grid size-5 place-items-center rounded-full text-[0.68rem] ${tab === t.id ? 'bg-paper/20' : 'bg-ink/8'}`}>{t.items.length}</span>
               </button>
             ))}
           </div>
+          <p className="mt-3 text-small text-ink/65 md:hidden">{group.intro}</p>
         </div>
-        {/* la gota: la palabra detrás cambia con la pestaña */}
-        <div className="h-40 w-full md:h-56 md:w-[22rem] lg:w-[26rem]" aria-hidden>
+        {/* la gota: solo en pantallas grandes; la palabra cambia con la pestaña */}
+        <div className="hidden md:block md:h-56 md:w-[22rem] lg:w-[26rem]" aria-hidden>
           <DropScene word={dropWord[tab]} reduced={reduced} />
         </div>
       </div>
 
-      <div key={tab} className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div key={tab} className="mt-5 grid gap-3 sm:grid-cols-2 md:mt-6 md:gap-4 lg:grid-cols-3">
         {group.items.map((it, i) => (
-          <article
-            key={it.n}
-            className="card-in glass flex flex-col gap-3 rounded-3xl p-6"
-            style={{'--d': `${i * 60}ms`} as CSSProperties}
-          >
-            <h3 className="font-display text-[1.35rem] font-medium tracking-[-0.03em]">{it.n}</h3>
-            <p className="text-small text-mute">{it.d}</p>
-            <dl className="mt-1 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-line pt-4 text-small">
-              <div className="col-span-2">
-                <dt className="text-micro text-mute uppercase">Ideal para</dt>
-                <dd>{it.p}</dd>
-              </div>
-              <div>
-                <dt className="text-micro text-mute uppercase">Sesión</dt>
-                <dd className="whitespace-nowrap">{it.s}</dd>
-              </div>
-              <div>
-                <dt className="text-micro text-mute uppercase">Resultado</dt>
-                <dd>{it.e}</dd>
-              </div>
-            </dl>
-            <a
-              href={wa(`Hola Dra. Verónica, quiero información sobre ${it.n.toLowerCase()}.`)}
-              className="mt-auto pt-2 text-small font-semibold text-coral hover:underline"
-            >
-              Preguntar por este tratamiento →
-            </a>
-          </article>
+          <TreatmentCard key={it.n} it={it} i={i} />
         ))}
       </div>
-      <p className="mt-8 text-[0.75rem] text-mute">
+      <p className="mt-6 text-[0.75rem] text-mute">
         Los tiempos son aproximados y varían en cada paciente. Los resultados no se pueden garantizar: tu plan se define en consulta.
       </p>
     </>
