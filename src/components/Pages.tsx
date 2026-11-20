@@ -275,6 +275,7 @@ function Agenda() {
             ['Consultorio', ADDRESS],
             ['Horario', '8:00 a. m. – 4:00 p. m. · solo con cita previa'],
             ['WhatsApp', WA_SHOW],
+            ['Instagram', '@exora.regeneracion'],
           ].map(([k, v]) => (
             <li key={k} className="flex gap-3">
               <span className="mt-2 size-1.5 shrink-0 rounded-full bg-sage" />

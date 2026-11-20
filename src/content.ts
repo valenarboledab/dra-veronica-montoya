@@ -176,7 +176,7 @@ export const footer = {
   note: 'La información de este sitio es educativa y no reemplaza una consulta médica. Todo procedimiento requiere valoración previa y consentimiento informado; los resultados varían en cada paciente.',
   links: [
     {label: 'Tratamiento de datos', href: '#privacidad'},
-    {label: 'Instagram', href: 'https://www.instagram.com/exora.regeneracion/'},
+    {label: 'Instagram @exora.regeneracion', href: 'https://www.instagram.com/exora.regeneracion/'},
   ],
 };
 
