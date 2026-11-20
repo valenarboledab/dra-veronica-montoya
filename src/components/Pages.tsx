@@ -13,7 +13,7 @@ import {ConsentText, consentLine, WaLink} from './Consent';
 import {newConsentId, saveConsent} from '../lib/consents';
 import {AnatomyDialog} from './Anatomy';
 import {REELS, Viewer, type Reel} from './Reels';
-import {BotoxDemo} from './BotoxDemo';
+import {BotoxDialog} from './BotoxDemo';
 import {Eco} from './Eco';
 import {useReducedMotion} from '../hooks/useReducedMotion';
 
@@ -52,6 +52,7 @@ function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number
   const [open, setOpen] = useState(false);
   const [fig, setFig] = useState(false);
   const [vid, setVid] = useState<Reel | null>(null);
+  const [ba, setBa] = useState(false);
   return (
     <article
       className="card-in glass flex flex-col gap-2 rounded-2xl p-4 md:gap-3 md:rounded-3xl md:p-6"
@@ -59,6 +60,17 @@ function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number
     >
       <h3 className="font-display text-[1.15rem] font-medium tracking-[-0.03em] md:text-[1.35rem]">{it.n}</h3>
       <p className={`text-small text-mute md:line-clamp-none ${open ? '' : 'line-clamp-2'}`}>{it.d}</p>
+      {it.f === 'facial-botox' && (
+        <button type="button" onClick={() => setBa(true)} className="group relative mt-1 cursor-pointer overflow-hidden rounded-xl text-left">
+          <span className="grid grid-cols-2 gap-px">
+            <img src={media('ba-antes.webp')} alt="" className="aspect-[4/3] w-full object-cover object-[50%_35%]" loading="lazy" />
+            <img src={media('ba-despues.webp')} alt="" className="aspect-[4/3] w-full object-cover object-[50%_35%]" loading="lazy" />
+          </span>
+          <span className="absolute inset-x-2 bottom-2 flex items-center justify-between rounded-full bg-paper/90 px-3 py-1.5 text-[0.8rem] font-semibold backdrop-blur-sm">
+            Ver antes y después <span aria-hidden>→</span>
+          </span>
+        </button>
+      )}
       <div className={`mt-1 border-t border-line pt-3 md:block md:pt-4 ${open ? 'block' : 'hidden'}`}>
         <Facts it={it} />
       </div>
@@ -88,6 +100,7 @@ function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number
         </button>
       </div>
       {vid && <Viewer r={vid} onClose={() => setVid(null)} />}
+      {ba && <BotoxDialog onClose={() => setBa(false)} />}
       {fig && it.f && <AnatomyDialog id={it.f} n={i + 1} onClose={() => setFig(false)} />}
     </article>
   );
@@ -138,7 +151,6 @@ function Treatments() {
           <b className="font-semibold text-ink">Productos con registro sanitario INVIMA.</b> Todos los productos y medicamentos que aplicamos tienen registro INVIMA vigente; pídenos el número de registro de tu tratamiento.
         </span>
       </div>
-      {tab === 'facial' && <BotoxDemo />}
       <div key={tab} className="mt-5 grid gap-3 sm:grid-cols-2 md:mt-6 md:gap-4 lg:grid-cols-3">
         {group.items.map((it, i) => (
           <TreatmentCard key={it.n} it={it} i={i} />

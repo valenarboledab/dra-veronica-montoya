@@ -1,3 +1,4 @@
+import {useEffect, useRef} from 'react';
 import {media} from '../content';
 
 /**
@@ -77,5 +78,37 @@ export function BotoxDemo() {
         Los resultados varían en cada persona y se definen en la valoración.
       </p>
     </section>
+  );
+}
+
+/** El antes y después del bótox en una ventana, abierta desde la tarjeta del Bótox. */
+export function BotoxDialog({onClose}: {onClose: () => void}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  const close = useRef(onClose);
+  close.current = onClose;
+  useEffect(() => {
+    const d = ref.current;
+    if (d && !d.open) d.showModal();
+    const h = () => close.current();
+    d?.addEventListener('close', h);
+    return () => d?.removeEventListener('close', h);
+  }, []);
+  return (
+    <dialog
+      ref={ref}
+      aria-label="Antes y después del bótox"
+      className="m-auto max-h-[94svh] w-[min(64rem,96vw)] overflow-y-auto overscroll-contain rounded-[1.8rem] border-0 bg-paper p-0 text-ink shadow-2xl backdrop:bg-[#3b3823]/60 backdrop:backdrop-blur-sm"
+      onClick={(e) => e.target === ref.current && ref.current?.close()}
+    >
+      <div className="sticky top-0 z-20 flex items-center justify-between bg-paper/90 px-5 py-3 backdrop-blur-sm">
+        <b className="font-display text-[1.3rem] font-medium">Bótox · antes y después</b>
+        <button type="button" onClick={() => ref.current?.close()} className="grid size-9 cursor-pointer place-items-center rounded-full bg-ink/8" aria-label="Cerrar">
+          ✕
+        </button>
+      </div>
+      <div className="px-3 pb-3 md:px-5 md:pb-5 [&>section]:mt-0">
+        <BotoxDemo />
+      </div>
+    </dialog>
   );
 }
