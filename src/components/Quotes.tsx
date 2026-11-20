@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {media} from '../content';
 import {cop, decodeQuote, loadQuotes, saveQuotes, subtotal, total, type Quote} from '../lib/quotes';
 import {ConsentText} from './Consent';
+import {newConsentId, saveConsent} from '../lib/consents';
 import {PayBadges} from './Trust';
 
 export const fecha = (s: string) => new Date(s).toLocaleDateString('es-CO', {day: 'numeric', month: 'short'});
@@ -154,7 +155,11 @@ export function QuoteView() {
                   <ConsentText />
                 </span>
               </label>
-              <button type="button" onClick={() => ok && setStep('methods')} aria-disabled={!ok} className={`mt-4 flex min-h-12 w-full items-center justify-center rounded-full text-small font-medium ${ok ? 'cursor-pointer bg-ink text-paper hover:bg-coral' : 'cursor-not-allowed bg-ink/20 text-paper'}`}>
+              <button type="button" onClick={() => {
+                  if (!ok) return;
+                  saveConsent({id: newConsentId(), nombre: q.paciente, celular: '', origen: 'Cotización', promo: false, detalle: q.id});
+                  setStep('methods');
+                }} aria-disabled={!ok} className={`mt-4 flex min-h-12 w-full items-center justify-center rounded-full text-small font-medium ${ok ? 'cursor-pointer bg-ink text-paper hover:bg-coral' : 'cursor-not-allowed bg-ink/20 text-paper'}`}>
                 Pagar {cop(t)}
               </button>
               <PayBadges className="mt-3 justify-center" />

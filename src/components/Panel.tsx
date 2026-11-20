@@ -1,4 +1,6 @@
 import {useMemo, useState, useEffect, useRef} from 'react';
+import {consentCsv, loadConsents, type Consent} from '../lib/consents';
+import {CONSENT_SHEET_VIEW} from '../content';
 import {media, treatments} from '../content';
 import {comboDesc, cop, loadQuotes, quoteUrl, resetQuotes, saveQuotes, subtotal, total, type Quote} from '../lib/quotes';
 import {Banner, ESTADOS, fecha} from './Quotes';
@@ -60,15 +62,28 @@ function Login({onIn}: {onIn: (name: string) => void}) {
 
 export function Panel() {
   const [who, setWho] = useState(() => sessionStorage.getItem(SKEY) ?? '');
+  const [sec, setSec] = useState<'cot' | 'datos'>('cot');
   if (!who) return <Login onIn={setWho} />;
+  const out = () => {
+    sessionStorage.removeItem(SKEY);
+    setWho('');
+  };
   return (
-    <PanelBody
-      who={who}
-      onOut={() => {
-        sessionStorage.removeItem(SKEY);
-        setWho('');
-      }}
-    />
+    <>
+      <div role="tablist" className="mx-auto mb-4 flex max-w-[60rem] gap-1 rounded-full bg-ink/6 p-1">
+        {(
+          [
+            ['cot', 'Cotizaciones y pagos'],
+            ['datos', 'Autorizaciones de datos'],
+          ] as const
+        ).map(([id, label]) => (
+          <button key={id} role="tab" aria-selected={sec === id} type="button" onClick={() => setSec(id)} className={`min-h-11 flex-1 cursor-pointer rounded-full px-3 text-[0.85rem] font-medium ${sec === id ? 'bg-ink text-paper' : 'text-ink/70'}`}>
+            {label}
+          </button>
+        ))}
+      </div>
+      {sec === 'cot' ? <PanelBody who={who} onOut={out} /> : <Consents onOut={out} />}
+    </>
   );
 }
 
@@ -394,6 +409,103 @@ function PanelBody({who, onOut}: {who: string; onOut: () => void}) {
       <button type="button" onClick={() => setQs(resetQuotes())} className="mt-6 cursor-pointer text-[0.72rem] text-mute underline">
         Reiniciar la simulación
       </button>
+    </div>
+  );
+}
+
+/** Registro de autorizaciones de datos (Ley 1581): quién, cuándo, desde dónde y con qué versión de la política. */
+function Consents({onOut}: {onOut: () => void}) {
+  const [rows] = useState(loadConsents);
+  const [qText, setQText] = useState('');
+  const [org, setOrg] = useState<'todas' | Consent['origen']>('todas');
+  const quotes = useMemo(() => loadQuotes(), []);
+  const cel = (c: Consent) => c.celular || quotes.find((q) => q.id === c.detalle)?.celular || '—';
+  const list = rows.filter((c) => (org === 'todas' || c.origen === org) && `${c.nombre} ${cel(c)} ${c.id}`.toLowerCase().includes(qText.toLowerCase()));
+  const exportar = () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['\ufeff' + consentCsv(rows.map((c) => ({...c, celular: cel(c)})))], {type: 'text/csv;charset=utf-8'}));
+    a.download = 'EXORA-autorizaciones-datos.csv';
+    a.click();
+  };
+  return (
+    <div className="mx-auto max-w-[60rem]">
+      <Banner />
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-micro font-medium tracking-[0.14em] text-coral uppercase">Ley 1581 de 2012</p>
+          <h1 className="mt-1 font-display text-[2rem] leading-none md:text-[2.4rem]">Autorizaciones de datos</h1>
+        </div>
+        <button type="button" onClick={onOut} className="min-h-10 cursor-pointer rounded-full px-3 text-small text-mute hover:text-ink">
+          Salir
+        </button>
+      </div>
+
+      <details className="glass mt-4 rounded-2xl p-4 text-small text-ink/80">
+        <summary className="cursor-pointer font-medium text-ink">¿Cómo sabemos quién la llenó?</summary>
+        <ul className="mt-2 grid list-disc gap-1.5 pl-5">
+          <li>Antes de escribir, la persona pone su nombre y su celular, y marca la autorización. Sin eso no puede continuar.</li>
+          <li>Cada autorización recibe un <b>código único</b> (por ejemplo A-7KQ2M) que va dentro del mensaje de WhatsApp.</li>
+          <li>Cuando el mensaje llega, compara: si el número que escribe es el mismo celular y trae el mismo código, es ella.</li>
+          <li>En las cotizaciones, la autorización queda ligada al número de cotización, que solo le llega a la paciente por WhatsApp.</li>
+        </ul>
+      </details>
+
+      <div className="mt-4 grid grid-cols-3 gap-2 md:gap-3">
+        {[
+          ['Total', rows.length],
+          ['Aceptan promociones', rows.filter((c) => c.promo).length],
+          ['Este mes', rows.filter((c) => c.fecha.slice(0, 7) === new Date().toISOString().slice(0, 7)).length],
+        ].map(([k, v]) => (
+          <div key={k} className="glass rounded-2xl p-3 md:p-4">
+            <span className="text-micro text-mute uppercase">{k}</span>
+            <b className="mt-1 block font-display text-[1.5rem] font-medium">{v}</b>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <input className="min-h-10 min-w-0 flex-1 rounded-full border border-line bg-paper px-4 text-small focus:border-coral focus:outline-none" placeholder="Buscar nombre, celular o código" value={qText} onChange={(e) => setQText(e.target.value)} />
+        <select value={org} onChange={(e) => setOrg(e.target.value as typeof org)} className="min-h-10 rounded-full border border-line bg-paper px-3 text-small">
+          <option value="todas">Todos los orígenes</option>
+          <option>Agenda</option>
+          <option>WhatsApp</option>
+          <option>Cotización</option>
+        </select>
+      </div>
+      <div className="mt-2 flex flex-wrap gap-4 text-small">
+        <button type="button" onClick={exportar} className="cursor-pointer text-coral underline-offset-2 hover:underline">
+          Descargar Excel
+        </button>
+        {CONSENT_SHEET_VIEW && (
+          <a href={CONSENT_SHEET_VIEW} target="_blank" rel="noopener" className="text-coral underline-offset-2 hover:underline">
+            Abrir registro en Google Sheets
+          </a>
+        )}
+      </div>
+
+      <ul className="mt-4 grid gap-2.5">
+        {list.map((c) => (
+          <li key={c.id} className="glass rounded-2xl p-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <b className="font-display text-[1.25rem] font-medium">{c.nombre}</b>
+              <span className="rounded-full bg-ink/8 px-2.5 py-0.5 font-mono text-[0.75rem]">{c.id}</span>
+            </div>
+            <p className="mt-1 text-small text-ink/75">
+              {cel(c)} · {new Date(c.fecha).toLocaleString('es-CO', {dateStyle: 'medium', timeStyle: 'short'})}
+            </p>
+            <p className="mt-1.5 flex flex-wrap gap-1.5 text-[0.75rem]">
+              <span className="rounded-full bg-[#ebe6d6] px-2 py-0.5">Desde {c.origen}</span>
+              {c.detalle && <span className="rounded-full bg-[#ebe6d6] px-2 py-0.5">{c.detalle}</span>}
+              <span className="rounded-full bg-[#ebe6d6] px-2 py-0.5">Política v. {c.version}</span>
+              <span className={`rounded-full px-2 py-0.5 ${c.promo ? 'bg-coral text-paper' : 'bg-ink/8'}`}>{c.promo ? 'Acepta promociones' : 'Sin promociones'}</span>
+            </p>
+          </li>
+        ))}
+        {!list.length && <li className="text-small text-mute">No hay autorizaciones con ese filtro.</li>}
+      </ul>
+      <p className="mt-4 text-[0.72rem] text-mute">
+        Simulación: aquí ves las autorizaciones de ejemplo y las que se den desde este mismo navegador. El registro de todas las pacientes, desde cualquier celular, queda en Google Sheets; en la versión real quedará también aquí.
+      </p>
     </div>
   );
 }

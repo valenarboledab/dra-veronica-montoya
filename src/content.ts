@@ -219,6 +219,10 @@ export const botox = {
 export const beforeAfter: {title: string; before: string; after: string; note: string}[] = [];
 
 export const POLICY_VERSION = '19-11-2026';
+/** Google Sheets del registro de autorizaciones: URL de la app web de Apps Script (ver tools/google-sheets/README.md). Vacío = solo simulación. */
+export const CONSENT_SHEET_URL = '';
+/** Enlace a la hoja para abrirla desde el panel (solo la ven las cuentas con permiso). */
+export const CONSENT_SHEET_VIEW = '';
 
 /** Enlaces de pago. Pegar aquí el enlace de cada plataforma cuando la cuenta esté activa; mientras estén vacíos, el botón pide el enlace por WhatsApp. */
 export const PAY = {

@@ -10,6 +10,7 @@ import {Combos} from './Combos';
 import {QuoteView} from './Quotes';
 import {Panel} from './Panel';
 import {ConsentText, consentLine, WaLink} from './Consent';
+import {newConsentId, saveConsent} from '../lib/consents';
 import {AnatomyDialog} from './Anatomy';
 import {REELS, Viewer, type Reel} from './Reels';
 import {BotoxDemo} from './BotoxDemo';
@@ -313,13 +314,14 @@ function Agenda() {
   const [consent, setConsent] = useState(false);
   const [promo, setPromo] = useState(false);
   const [tried, setTried] = useState(false);
+  const [code] = useState(newConsentId);
   const digits = phone.replace(/\D/g, '');
   const phoneOk = digits.length >= 10 && digits.length <= 12;
   const nameOk = name.trim().length >= 3;
   const ready = nameOk && phoneOk && consent;
   const msg =
     `Hola EXORA, soy ${name.trim()} (cel. ${phone.trim()}). Me interesa: ${what}. Para: ${when.toLowerCase()}, hacia las ${part}.\n\n` +
-    consentLine(promo);
+    consentLine(promo, code);
   const link = wa(msg);
   const problems = [!nameOk && 'escribe tu nombre completo', !phoneOk && 'escribe un celular válido', !consent && 'acepta la política de tratamiento de datos'].filter(Boolean) as string[];
   const field = 'min-h-12 w-full min-w-0 rounded-xl border border-line bg-paper px-3.5 text-[1rem] text-ink focus:border-coral focus:outline-none';
@@ -416,7 +418,9 @@ function Agenda() {
             if (!ready) {
               e.preventDefault();
               setTried(true);
+              return;
             }
+            saveConsent({id: code, nombre: name.trim(), celular: phone.trim(), origen: 'Agenda', promo, detalle: what});
           }}
           className={`mt-1 flex min-h-12 items-center justify-center rounded-full text-small font-medium transition-colors ${ready ? 'cursor-pointer bg-ink text-paper hover:bg-coral' : 'cursor-not-allowed bg-ink/25 text-paper'}`}
         >
