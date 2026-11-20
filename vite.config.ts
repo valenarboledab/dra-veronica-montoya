@@ -8,5 +8,6 @@ export default defineConfig({
   build: {
     // The hero films and stills live in public/media and are served as-is.
     target: 'es2020',
+    rollupOptions: {input: {main: 'index.html', botox: 'demo/botox.html'}},
   },
 });
