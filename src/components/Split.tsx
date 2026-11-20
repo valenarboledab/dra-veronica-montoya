@@ -52,7 +52,7 @@ export function Split({reduced}: {reduced: boolean}) {
   }, [reduced, root]);
 
   return (
-    <section ref={root} id="ritual" className="relative h-[200vh] md:h-[300vh]">
+    <section ref={root} id="ritual" className="relative h-[150vh] md:h-[200vh]">
       <div className="sticky top-0 flex h-svh flex-col gap-5 overflow-hidden bg-linear-to-br from-blush via-[#f5f2ea] to-paper px-5 py-6 md:flex-row md:items-center md:gap-[5vw] md:px-[6vw] md:py-0">
         {/* arch photo — right on desktop, top on phones */}
         <div className="flex justify-center md:order-2 md:flex-1">
