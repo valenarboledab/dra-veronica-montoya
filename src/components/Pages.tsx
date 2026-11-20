@@ -116,6 +116,15 @@ function Treatments() {
         </div>
       </div>
 
+      <div className="mt-4 flex items-start gap-2.5 rounded-2xl bg-coral/10 px-4 py-3 text-small text-ink/80">
+        <svg viewBox="0 0 24 24" className="mt-0.5 size-5 shrink-0 text-coral" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+          <path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.2 7.5 9.5 4.3-1.3 7.5-4.9 7.5-9.5V6L12 3Z" />
+          <path d="m8.8 12.2 2.2 2.2 4.4-4.6" />
+        </svg>
+        <span>
+          <b className="font-semibold text-ink">Productos con registro sanitario INVIMA.</b> Todos los productos y medicamentos que aplicamos tienen registro INVIMA vigente; pídenos el número de registro de tu tratamiento.
+        </span>
+      </div>
       <div key={tab} className="mt-5 grid gap-3 sm:grid-cols-2 md:mt-6 md:gap-4 lg:grid-cols-3">
         {group.items.map((it, i) => (
           <TreatmentCard key={it.n} it={it} i={i} />
