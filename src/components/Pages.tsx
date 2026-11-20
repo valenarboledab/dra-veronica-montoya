@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState, type CSSProperties} from 'react';
-import {doctor, faq, media, treatments, visit, wa, WA_SHOW, type View, ADDRESS} from '../content';
+import {doctor, susana, faq, media, treatments, visit, wa, WA_SHOW, type View, ADDRESS} from '../content';
 import {useReveals} from '../hooks/useReveals';
 import {BlurText} from './BlurText';
 import {DropScene} from './DropScene';
@@ -172,7 +172,7 @@ function Doctor() {
         </div>
       </div>
       <div>
-        <Eyebrow>La doctora</Eyebrow>
+        <Eyebrow>Las doctoras de EXORA</Eyebrow>
         <BlurText lines={doctor.title} className="mt-3 font-display text-title font-medium" delay={100} />
         <p className="mt-5 max-w-[34rem] text-copy text-ink/75" data-reveal style={{'--d': '400ms'} as CSSProperties}>
           {doctor.body}
@@ -185,6 +185,14 @@ function Doctor() {
             </li>
           ))}
         </ul>
+        <div className="glass mt-6 flex items-center gap-4 rounded-3xl p-5" data-reveal style={{'--d': '700ms'} as CSSProperties}>
+          <span className="grid size-12 shrink-0 place-items-center rounded-full bg-coral font-display text-lg text-paper">SZ</span>
+          <span>
+            <b className="block font-display text-[1.2rem] font-medium">{susana.name}</b>
+            <span className="block text-micro font-medium text-coral uppercase">{susana.role}</span>
+            <span className="mt-1 block text-small text-mute">{susana.body}</span>
+          </span>
+        </div>
       </div>
     </div>
   );

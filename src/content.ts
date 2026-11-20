@@ -1,4 +1,4 @@
-// Todo el texto de la página de la Dra. Verónica Montoya.
+// Todo el texto de la página de EXORA (Dra. Verónica Montoya y Dra. Susana Zárate).
 
 export const WA = '573104130083';
 export const WA_SHOW = '310 413 0083';
@@ -8,7 +8,7 @@ export const media = (file: string) => `${import.meta.env.BASE_URL}media/${file}
 export const views = [
   {id: 'inicio', label: 'Inicio'},
   {id: 'tratamientos', label: 'Tratamientos'},
-  {id: 'doctora', label: 'La doctora'},
+  {id: 'doctora', label: 'Las doctoras'},
   {id: 'cita', label: 'Tu primera cita'},
   {id: 'preguntas', label: 'Preguntas'},
 ] as const;
@@ -18,7 +18,8 @@ export const ADDRESS = 'Calle 25N #13-41, Consultorio 9, Mall Privilegio, Armeni
 
 export const brand = {
   name: 'EXORA',
-  by: 'Dra. Verónica Montoya',
+  by: 'Dra. Verónica Montoya · Dra. Susana Zárate',
+  doctors: ['Dra. Verónica Montoya', 'Dra. Susana Zárate'],
   short: 'Verónica Montoya',
   tag: 'Medicina estética, regenerativa y ecografías',
   contact: 'WhatsApp',
@@ -30,7 +31,7 @@ export const hero = {
   lead: 'Tu piel,',
   accent: 'por fin',
   tail: 'entendida.',
-  sub: 'La Dra. Verónica Montoya valora tu piel con calma y diseña un plan médico para que te veas descansada, nunca transformada.',
+  sub: 'EXORA reúne a la Dra. Verónica Montoya, en medicina estética y regenerativa, y a la Dra. Susana Zárate, en ecografías. Te valoramos con calma para que te veas descansada, nunca transformada.',
   cta: 'Agenda tu valoración',
   card: {
     title: 'Valoración facial',
@@ -142,6 +143,12 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     ],
   },
 ];
+
+export const susana = {
+  name: 'Dra. Susana Zárate',
+  role: 'Ecografías y ultrasonidos',
+  body: 'Socia de EXORA. Realiza las ecografías y los ultrasonidos del consultorio, con cita previa.',
+};
 
 export const doctor = {
   title: ['Conoce a la', '*Dra.* *Verónica*'],

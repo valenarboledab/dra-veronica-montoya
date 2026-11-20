@@ -10,7 +10,7 @@ export function Nav({view}: {view: View}) {
       <div className="grid grid-cols-[1fr_auto] items-center gap-4 xl:grid-cols-[1fr_auto_1fr]">
         <a href="#inicio" className="glass flex items-center gap-2 justify-self-start rounded-full py-2.5 pr-4 pl-4 xl:col-start-2 xl:row-start-1 xl:justify-self-center">
           <img src={media('wordmark-olive.webp')} alt={brand.name} className="h-5 w-auto sm:h-6 md:h-7" />
-          <span className="hidden border-l border-ink/15 pl-2 text-[0.72rem] leading-tight text-ink/60 sm:block">{brand.by}</span>
+          <span className="hidden border-l border-ink/15 pl-2 text-[0.68rem] leading-[1.25] text-ink/60 sm:block">{brand.doctors.map((d) => <span key={d} className="block whitespace-nowrap">{d}</span>)}</span>
         </a>
 
         <div className="col-start-2 flex items-center gap-5 justify-self-end xl:col-start-3">

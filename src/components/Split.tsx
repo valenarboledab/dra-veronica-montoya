@@ -10,6 +10,9 @@ import {BlurText} from './BlurText';
  * thread draws down the ritual timeline, lighting each step as it passes and
  * arriving at "Gentle Rituals".
  */
+/** Sección fija (sin scroll anclado): todo visible de una vez. */
+const STATIC = true;
+
 export function Split({reduced}: {reduced: boolean}) {
   const root = useReveals<HTMLElement>();
   const archWrap = useRef<HTMLDivElement>(null);
@@ -24,7 +27,7 @@ export function Split({reduced}: {reduced: boolean}) {
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    if (reduced) {
+    if (reduced || STATIC) {
       steps.current.forEach((s) => s?.classList.add('is-lit'));
       pills.current.forEach((p) => p?.classList.add('is-in'));
       title2.current?.classList.add('is-in');
@@ -52,14 +55,14 @@ export function Split({reduced}: {reduced: boolean}) {
   }, [reduced, root]);
 
   return (
-    <section ref={root} id="ritual" className="relative h-[150vh] md:h-[200vh]">
-      <div className="sticky top-0 flex h-svh flex-col gap-5 overflow-hidden bg-linear-to-br from-blush via-[#f5f2ea] to-paper px-5 py-6 md:flex-row md:items-center md:gap-[5vw] md:px-[6vw] md:py-0">
+    <section ref={root} id="ritual" className="relative">
+      <div className="flex flex-col gap-8 overflow-hidden bg-linear-to-br from-blush via-[#f5f2ea] to-paper px-5 py-14 md:flex-row md:items-center md:gap-[5vw] md:px-[6vw] md:py-20">
         {/* arch photo — right on desktop, top on phones */}
         <div className="flex justify-center md:order-2 md:flex-1">
-          <div ref={archWrap} className="relative aspect-[2/3] h-[30svh] md:h-[78vh]">
+          <div ref={archWrap} className="relative aspect-square w-[72vw] max-w-[22rem] md:w-[min(34rem,40vw)] md:max-w-none">
             {/* offset outline echo */}
-            <div className="arch absolute inset-0 translate-x-3 -translate-y-3 border border-coral/35 md:translate-x-5 md:-translate-y-5" />
-            <div className="arch relative size-full bg-peach">
+            <div className="blob blob-echo absolute inset-0 translate-x-3 -translate-y-3 border border-coral/35 md:translate-x-5 md:-translate-y-5" />
+            <div className="blob relative size-full bg-coral">
               <img
                 ref={img}
                 src={media('exora-escultura.webp')}
@@ -112,7 +115,7 @@ export function Split({reduced}: {reduced: boolean}) {
                   <span className="text-micro text-mute tabular-nums">{s.n}</span>
                   <span className="font-display text-[1.15rem] font-medium tracking-[-0.02em] md:text-[1.3rem]">{s.title}</span>
                 </div>
-                <p className="mt-1 hidden max-w-[22rem] text-small text-mute md:block">{s.text}</p>
+                <p className="mt-1 max-w-[22rem] text-small text-mute">{s.text}</p>
               </div>
             ))}
             <div
@@ -123,7 +126,7 @@ export function Split({reduced}: {reduced: boolean}) {
             >
               <span className="node absolute top-[0.9rem] -left-8 size-[11px] rounded-full border border-ink/20 bg-paper md:top-[1.2rem]" />
               <BlurText ref={title2} reveal={false} lines={split.title2} className="font-display text-title font-medium" />
-              <p ref={end} className="gate mt-2 hidden max-w-[24rem] text-copy text-ink/70 md:block" style={{'--d': '450ms'} as CSSProperties}>
+              <p ref={end} className="gate mt-2 max-w-[24rem] text-copy text-ink/70" style={{'--d': '450ms'} as CSSProperties}>
                 {split.body2}
               </p>
             </div>
