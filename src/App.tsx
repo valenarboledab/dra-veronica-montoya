@@ -7,6 +7,7 @@ import {Nav} from './components/Nav';
 import {Page} from './components/Pages';
 import {Split} from './components/Split';
 import {Statement} from './components/Statement';
+import {Reels} from './components/Reels';
 import {useReducedMotion} from './hooks/useReducedMotion';
 import {useReveals} from './hooks/useReveals';
 import {scrollToY, startScroll} from './lib/scroll';
@@ -57,6 +58,7 @@ export default function App() {
           <Hero reduced={reduced} />
           <Split reduced={reduced} />
           <Statement reduced={reduced} />
+          <Reels />
         </>
       ) : (
         <Page key={view} view={view} />
