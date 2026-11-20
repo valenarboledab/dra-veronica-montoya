@@ -12,7 +12,7 @@ export const views = [
   {id: 'cita', label: 'Tu primera cita'},
   {id: 'preguntas', label: 'Preguntas'},
 ] as const;
-export type View = (typeof views)[number]['id'] | 'agenda' | 'resultados' | 'privacidad' | 'pagar';
+export type View = (typeof views)[number]['id'] | 'agenda' | 'resultados' | 'privacidad' | 'pagar' | 'panel' | 'cotizacion';
 
 export const ADDRESS = 'Calle 25N #13-41, Consultorio 9, Mall Privilegio, Armenia';
 
