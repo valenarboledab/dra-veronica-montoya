@@ -2,7 +2,7 @@ import {brand, footer, media} from '../content';
 
 export function Footer() {
   return (
-    <footer className="bg-coral px-5 pt-8 pb-24 md:px-7 md:pb-8">
+    <footer className="bg-coral px-5 pt-8 pb-24 md:pr-7 md:pb-8 md:pl-24">
       <div className="flex flex-col gap-4 text-[0.72rem] text-paper/70 md:flex-row md:items-center md:justify-between">
         <span className="flex items-center gap-2 text-paper">
           <img src={media('wordmark-white.webp')} alt={brand.name} className="h-4 w-auto" />

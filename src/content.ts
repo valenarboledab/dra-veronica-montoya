@@ -75,16 +75,16 @@ export const split = {
 export const statement = {
   eyebrow: 'Nuestra promesa',
   tokens: [
-    'La', 'Dra.', 'Verónica', 'te', 'ayuda', 'a', {img: 'eyes'}, 'entender', 'y', 'cuidar', 'tu', 'piel', 'como', 'nunca', 'antes.',
+    'En', 'EXORA', 'te', 'ayudamos', 'a', {img: 'eyes'}, 'entender', 'y', 'cuidar', 'tu', 'piel', 'como', 'nunca', 'antes.',
     'Medicina', 'estética', 'con', 'criterio', 'médico', {img: 'gel'}, 'y', 'ciencia', 'amable,', 'para', 'tu', 'piel', 'más',
     '*tranquila,*', 'más', '*luminosa*', {img: 'freckles'}, 'y', 'más', 'tuya.',
   ] as (string | {img: string})[],
   chips: [
-    {label: 'Natural', icon: 'heart', at: 'cuidar', x: 74, y: 13, r: 6},
-    {label: 'Segura', icon: 'star', at: 'nunca', x: 84, y: 34, r: -5},
-    {label: 'Hidratada', icon: 'dew', at: 'amable,', x: 6, y: 80, r: 4},
-    {label: 'Tranquila', icon: 'leaf', at: '*tranquila,*', x: 58, y: 84, r: -3},
-    {label: 'Radiante', icon: 'sun', at: '*luminosa*', x: 80, y: 74, r: 5},
+    {label: 'Natural', icon: 'heart', at: 'cuidar', x: 70, y: 9, r: 6},
+    {label: 'Segura', icon: 'star', at: 'nunca', x: 86, y: 16, r: -5},
+    {label: 'Hidratada', icon: 'dew', at: 'amable,', x: 12, y: 88, r: 4},
+    {label: 'Tranquila', icon: 'leaf', at: '*tranquila,*', x: 48, y: 90, r: -3},
+    {label: 'Radiante', icon: 'sun', at: '*luminosa*', x: 82, y: 86, r: 5},
   ] as const,
 };
 
@@ -131,6 +131,15 @@ export const treatments: {id: string; label: string; short: string; intro: strin
       {n: 'Células madre', d: 'Terapia regenerativa avanzada, indicada solo después de una valoración médica completa.', p: 'Casos seleccionados', s: 'Según protocolo', e: 'Según valoración'},
       {n: 'Aplicaciones intraarticulares', d: 'Aplicación de medicamentos dentro de la articulación para aliviar el dolor y mejorar la movilidad.', p: 'Dolor articular', s: '30 min', e: 'Según valoración'},
       {n: 'Ácido hialurónico en rodillas', d: 'Lubrica la articulación de la rodilla para disminuir el dolor y mejorar el movimiento.', p: 'Desgaste de rodilla (artrosis)', s: '30 min', e: 'Según valoración'},
+    ],
+  },
+  {
+    id: 'capilar',
+    label: 'Tricología (capilar)',
+    short: 'Capilar',
+    intro: 'Cuidado médico del cabello y el cuero cabelludo. Empezamos con una valoración tricológica para entender la causa antes de tratar.',
+    items: [
+      {n: 'Tricología', d: 'Valoración y tratamiento médico del cabello y el cuero cabelludo: caída, debilitamiento y falta de densidad.', p: 'Caída y cabello débil', s: 'Según valoración', e: 'Plan por sesiones'},
     ],
   },
   {

@@ -34,7 +34,7 @@
   --text-title--line-height: 1;
   --text-title--letter-spacing: -0.005em;
 
-  --text-statement: clamp(1.85rem, 3.9vw, 4.2rem);
+  --text-statement: clamp(1.55rem, 3vw, 3.3rem);
   --text-statement--line-height: 1.12;
   --text-statement--letter-spacing: -0.005em;
 
