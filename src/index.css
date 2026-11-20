@@ -1,0 +1,417 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Satoshi', 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+
+  /* Sampled from the renders: studio white, warm ink, blush skin, gel highlights */
+  --color-paper: #fefefe;
+  --color-ink: #1e1816;
+  --color-mute: #85776f;
+  --color-faint: #cbc3bf;
+  --color-line: #eee4df;
+  --color-blush: #fbe5da;
+  --color-peach: #f6cdb9;
+  --color-coral: #e7866c;
+  --color-rose: #e59aa1;
+  --color-sage: #9fbf98;
+  --color-dew: #8fc3dc;
+  --color-butter: #f2cf6b;
+
+  --text-hero: clamp(2.9rem, 5.7vw, 6.4rem);
+  --text-hero--line-height: 0.94;
+  --text-hero--letter-spacing: -0.045em;
+
+  --text-title: clamp(2.1rem, 3.4vw, 3.7rem);
+  --text-title--line-height: 1;
+  --text-title--letter-spacing: -0.038em;
+
+  --text-statement: clamp(1.85rem, 3.9vw, 4.2rem);
+  --text-statement--line-height: 1.12;
+  --text-statement--letter-spacing: -0.036em;
+
+  --text-figure: clamp(1.25rem, 1.55vw, 1.7rem);
+  --text-figure--line-height: 1;
+  --text-figure--letter-spacing: -0.035em;
+
+  --text-copy: 0.95rem;
+  --text-copy--line-height: 1.55;
+  --text-copy--letter-spacing: -0.005em;
+
+  --text-small: 0.8rem;
+  --text-small--line-height: 1.35;
+  --text-small--letter-spacing: 0;
+
+  --text-micro: 0.64rem;
+  --text-micro--line-height: 1.2;
+  --text-micro--letter-spacing: 0.12em;
+
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-pop: cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-peach);
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Italic serif accent words, optically matched to the grotesk */
+.accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Letter-by-letter blur-in ---------- */
+.blur-text .ch {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(14px);
+  transform: translate3d(0.18em, 0, 0);
+  will-change: opacity, filter, transform;
+}
+.blur-text.is-in .ch {
+  animation: blur-in 1.05s var(--ease-soft) forwards;
+  animation-delay: calc(var(--d, 0ms) + var(--i) * 34ms);
+}
+@keyframes blur-in {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* One-shot entrances (observer) and scroll-gated ones (JS toggles .is-in) */
+[data-reveal],
+.gate {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 1s var(--ease-soft),
+    filter 1s var(--ease-soft),
+    transform 1s var(--ease-soft);
+  transition-delay: var(--d, 0ms);
+}
+[data-reveal].is-in,
+.gate.is-in {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+.blur-text[data-reveal] {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+/* Frosted glass used by the scan card, ring labels and photo pills */
+@utility glass {
+  background: rgb(255 255 255 / 0.74);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.9),
+    0 0 0 1px rgb(236 222 215 / 0.9),
+    0 22px 50px -30px rgb(140 90 70 / 0.5);
+}
+
+/* ---------- Hero film stage ---------- */
+.hero-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  /* blush aura in the empty corners; the film multiplies onto it */
+  background:
+    radial-gradient(48% 60% at 0% 18%, #fce5da 0%, rgb(252 229 218 / 0) 70%),
+    radial-gradient(36% 50% at 100% 62%, #fdeae1 0%, rgb(253 234 225 / 0) 70%),
+    var(--color-paper);
+}
+.hero-frame video {
+  mix-blend-mode: multiply;
+}
+.hero-stage {
+  --sw: max(100vw, 177.78vh);
+  position: absolute;
+  top: 0;
+  width: var(--sw);
+  aspect-ratio: 16 / 9;
+  left: calc((100vw - var(--sw)) / 2);
+}
+@media (max-width: 767px) {
+  .hero-frame {
+    position: relative;
+    height: 62svh;
+  }
+  .hero-stage {
+    --sw: max(100vw, 110.2svh);
+    /* keep her face centred on narrow screens */
+    left: clamp(calc(100vw - var(--sw)), calc(50vw - 0.56 * var(--sw)), 0px);
+  }
+}
+
+/* Scan sweep: a soft band of light reading down her face */
+.sweep {
+  position: absolute;
+  left: 39%;
+  width: 34%;
+  height: 1.5px;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.95) 30%, rgb(255 255 255 / 0.95) 70%, transparent);
+  box-shadow: 0 0 22px 5px rgb(246 205 185 / 0.55);
+}
+.sweep::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 9vh;
+  background: linear-gradient(180deg, transparent, rgb(255 238 230 / 0.28));
+  mask: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+}
+
+/* Focus rings with leader-line labels ("ring" is a Tailwind utility, hence "focus") */
+.focus {
+  position: absolute;
+  width: 4.4%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  opacity: 0;
+  scale: 0.7;
+  transition:
+    opacity 0.9s var(--ease-soft),
+    scale 0.9s var(--ease-soft);
+  transition-delay: var(--d, 0ms);
+}
+.focus.is-on {
+  opacity: 1;
+  scale: 1;
+}
+/* soft tracking brackets locked to the ring */
+.focus-frame {
+  position: absolute;
+  inset: -18%;
+  --c: rgb(255 255 255 / 0.92);
+  --l: 24%;
+  background:
+    linear-gradient(var(--c), var(--c)) left top / var(--l) 1px,
+    linear-gradient(var(--c), var(--c)) left top / 1px var(--l),
+    linear-gradient(var(--c), var(--c)) right top / var(--l) 1px,
+    linear-gradient(var(--c), var(--c)) right top / 1px var(--l),
+    linear-gradient(var(--c), var(--c)) left bottom / var(--l) 1px,
+    linear-gradient(var(--c), var(--c)) left bottom / 1px var(--l),
+    linear-gradient(var(--c), var(--c)) right bottom / var(--l) 1px,
+    linear-gradient(var(--c), var(--c)) right bottom / 1px var(--l);
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 3px rgb(120 60 40 / 0.25));
+  scale: 1.25;
+  opacity: 0;
+  transition:
+    scale 0.9s var(--ease-soft) 0.15s,
+    opacity 0.9s var(--ease-soft) 0.15s;
+}
+.focus.is-on .focus-frame {
+  scale: 1;
+  opacity: 1;
+}
+.ring-orbit {
+  position: absolute;
+  inset: 0;
+  animation: spin 16s linear infinite;
+}
+.ring-core {
+  position: absolute;
+  inset: 20%;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.9);
+  background: radial-gradient(circle, rgb(255 255 255 / 0.14), transparent 70%);
+}
+.leader {
+  position: absolute;
+  top: 50%;
+  width: 85%;
+  height: 1px;
+  background: rgb(255 255 255 / 0.85);
+  scale: 0 1;
+  transition: scale 0.8s var(--ease-soft) 0.35s;
+}
+.leader[data-side='right'] {
+  left: 100%;
+  transform-origin: left;
+}
+.leader[data-side='left'] {
+  right: 100%;
+  transform-origin: right;
+}
+.focus.is-on .leader {
+  scale: 1 1;
+}
+.ring-label {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-soft) 0.8s;
+}
+.ring-label[data-side='right'] {
+  left: 185%;
+}
+.ring-label[data-side='left'] {
+  right: 185%;
+}
+.focus.is-on .ring-label {
+  opacity: 1;
+}
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* Arch photo card */
+.arch {
+  aspect-ratio: 2 / 3;
+  border-radius: 50% 50% 1.5rem 1.5rem / 33.4% 33.4% 1.5rem 1.5rem;
+  overflow: hidden;
+}
+
+/* Ritual timeline steps light as the thread reaches them */
+.step {
+  opacity: 0.38;
+  transition: opacity 0.6s var(--ease-soft);
+}
+.step.is-lit {
+  opacity: 1;
+}
+.step .node {
+  transition:
+    background-color 0.5s var(--ease-soft),
+    border-color 0.5s var(--ease-soft),
+    box-shadow 0.5s var(--ease-soft);
+}
+.step.is-lit .node {
+  background-color: var(--color-coral);
+  border-color: var(--color-coral);
+  box-shadow: 0 0 0 5px rgb(231 134 108 / 0.16);
+}
+
+/* Inline photo pills in the statement */
+.inline-pill {
+  display: inline-block;
+  height: 0.8em;
+  width: 1.8em;
+  margin: 0 0.06em;
+  vertical-align: -0.04em;
+  border-radius: 999px;
+  overflow: hidden;
+  opacity: 0.25;
+  scale: 0.55;
+  transition:
+    opacity 0.6s var(--ease-soft),
+    scale 0.8s var(--ease-pop);
+}
+.inline-pill.is-in {
+  opacity: 1;
+  scale: 1;
+}
+
+/* Feeling chips pop in when their word lights */
+.chip {
+  opacity: 0;
+  scale: 0.55;
+  rotate: calc(var(--r) - 14deg);
+  transition:
+    opacity 0.45s var(--ease-soft),
+    scale 0.75s var(--ease-pop),
+    rotate 0.75s var(--ease-pop);
+}
+.chip.is-in {
+  opacity: 1;
+  scale: 1;
+  rotate: var(--r);
+}
+.chip-float {
+  animation: chip-bob 6s ease-in-out infinite;
+  animation-delay: var(--bd, 0s);
+}
+@keyframes chip-bob {
+  50% {
+    transform: translate3d(0, -9px, 0);
+  }
+}
+
+/* Pestañas y tarjetas de tratamientos */
+.tabs-scroll {
+  scrollbar-width: none;
+}
+.tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+.card-in {
+  animation: card-in 0.8s var(--ease-soft) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes card-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translate3d(0, 12px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-in {
+    animation: none;
+  }
+  .blur-text .ch,
+  [data-reveal],
+  .gate,
+  .chip,
+  .focus,
+  .focus-frame,
+  .step,
+  .inline-pill {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    scale: 1;
+    animation: none;
+    transition: none;
+  }
+  .ring-label {
+    opacity: 1;
+  }
+  .leader {
+    scale: 1 1;
+  }
+  .chip-float,
+  .ring-orbit {
+    animation: none;
+  }
+}
