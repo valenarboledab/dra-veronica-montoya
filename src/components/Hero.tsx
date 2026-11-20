@@ -152,7 +152,7 @@ export function Hero({reduced}: {reduced: boolean}) {
   }, [reduced, root]);
 
   return (
-    <section ref={root} id="top" className="relative bg-paper md:h-svh md:min-h-[640px]">
+    <section ref={root} id="top" className="relative bg-paper lg:h-svh lg:min-h-[640px]">
       <h1 className="sr-only">
         {hero.lead} {hero.accent} {hero.tail}
       </h1>
@@ -214,7 +214,7 @@ export function Hero({reduced}: {reduced: boolean}) {
       </div>
 
       {/* "Your skin, finally" — top left */}
-      <div aria-hidden className="relative z-10 px-5 pt-3 md:absolute md:top-[20%] md:left-7 md:p-0">
+      <div aria-hidden className="relative z-10 px-5 pt-3 lg:absolute lg:top-[20%] lg:left-7 lg:p-0">
         <p
           className="glass mb-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-micro font-medium text-ink/80 uppercase"
           data-reveal
@@ -231,12 +231,12 @@ export function Hero({reduced}: {reduced: boolean}) {
       </div>
 
       {/* "understood." — bottom right, over her shoulder */}
-      <div aria-hidden className="relative z-10 px-5 md:absolute md:right-7 md:bottom-[10%] md:p-0 md:text-right">
+      <div aria-hidden className="relative z-10 px-5 lg:absolute lg:right-7 lg:bottom-[10%] lg:p-0 lg:text-right">
         <BlurText as="p" lines={[hero.tail]} delay={1050} className="font-display text-hero font-medium" />
       </div>
 
       {/* sub, CTA, trusted — bottom left */}
-      <div className="relative z-10 px-5 pt-6 pb-8 md:absolute md:bottom-[9%] md:left-7 md:p-0">
+      <div className="relative z-10 px-5 pt-6 pb-8 lg:absolute lg:bottom-[9%] lg:left-7 lg:p-0">
         <p className="max-w-[18rem] text-copy text-ink/75" data-reveal style={{'--d': '1300ms'} as CSSProperties}>
           {hero.sub}
         </p>
@@ -267,7 +267,7 @@ export function Hero({reduced}: {reduced: boolean}) {
       </div>
 
       {/* live reading card — top right */}
-      <div className="relative z-10 px-5 pb-14 md:absolute md:top-[19%] md:right-7 md:w-[15.5rem] md:p-0">
+      <div className="relative z-10 px-5 pb-14 lg:absolute lg:top-[19%] lg:right-7 lg:w-[15.5rem] lg:p-0">
         <div className="glass rounded-2xl p-4" data-reveal style={{'--d': '700ms'} as CSSProperties}>
           <div className="flex items-center justify-between text-micro font-medium uppercase">
             <span className="flex items-center gap-2">
