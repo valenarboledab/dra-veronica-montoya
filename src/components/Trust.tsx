@@ -1,3 +1,4 @@
+import {media} from '../content';
 /** Sellos de confianza: productos con registro INVIMA y pagos seguros. Sin logos de terceros (solo texto). */
 const Shield = () => (
   <svg viewBox="0 0 24 24" className="size-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
@@ -12,7 +13,32 @@ const Lock = () => (
   </svg>
 );
 
-export const PAY_BRANDS = ['Mercado Pago', 'Visa', 'Mastercard', 'PSE'];
+/** Logos oficiales de medios de pago: poner los archivos que entregue cada marca en public/media/logos/ (mercadopago.svg, visa.svg, mastercard.svg, pse.svg).
+ *  Mientras la cuenta no esté activa se muestran con marca de agua DEMO. */
+export const PAY_BRANDS: [string, string][] = [
+  ['Mercado Pago', 'mercadopago.svg'],
+  ['Visa', 'visa.svg'],
+  ['Mastercard', 'mastercard.svg'],
+  ['PSE', 'pse.svg'],
+];
+const DEMO = true;
+
+function Logo({name, file}: {name: string; file: string}) {
+  return (
+    <span className="relative inline-flex h-8 min-w-[3.6rem] items-center justify-center overflow-hidden rounded-md border border-line bg-white px-2">
+      <img
+        src={media('logos/' + file)}
+        alt={name}
+        className="h-5 w-auto"
+        onError={(e) => {
+          const el = e.currentTarget;
+          el.replaceWith(Object.assign(document.createElement('span'), {textContent: name, className: 'text-[0.72rem] font-semibold tracking-wide text-ink/75'}));
+        }}
+      />
+      {DEMO && <span className="pointer-events-none absolute inset-0 grid place-items-center text-[0.55rem] font-bold tracking-[0.2em] text-[#a87350]/70 [transform:rotate(-14deg)]">DEMO</span>}
+    </span>
+  );
+}
 
 export function PayBadges({className = ''}: {className?: string}) {
   return (
@@ -20,10 +46,8 @@ export function PayBadges({className = ''}: {className?: string}) {
       <span className="flex items-center gap-1.5 text-[0.72rem] text-mute">
         <Lock /> Pago seguro con
       </span>
-      {PAY_BRANDS.map((b) => (
-        <span key={b} className="rounded-md border border-line bg-paper px-2 py-0.5 text-[0.72rem] font-semibold tracking-wide text-ink/75">
-          {b}
-        </span>
+      {PAY_BRANDS.map(([n, f]) => (
+        <Logo key={n} name={n} file={f} />
       ))}
     </div>
   );

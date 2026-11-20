@@ -8,6 +8,7 @@ export const media = (file: string) => `${import.meta.env.BASE_URL}media/${file}
 export const views = [
   {id: 'inicio', label: 'Inicio'},
   {id: 'tratamientos', label: 'Tratamientos'},
+  {id: 'combos', label: 'Combos y pagos'},
   {id: 'doctora', label: 'Las doctoras'},
   {id: 'cita', label: 'Tu primera cita'},
   {id: 'preguntas', label: 'Preguntas'},
