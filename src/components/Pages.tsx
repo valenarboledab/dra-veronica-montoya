@@ -12,6 +12,7 @@ import {Panel} from './Panel';
 import {ConsentText, consentLine, WaLink} from './Consent';
 import {AnatomyDialog} from './Anatomy';
 import {REELS, Viewer, type Reel} from './Reels';
+import {BotoxDemo} from './BotoxDemo';
 import {useReducedMotion} from '../hooks/useReducedMotion';
 
 const Eyebrow = ({children}: {children: string}) => (
@@ -140,6 +141,7 @@ function Treatments() {
           <TreatmentCard key={it.n} it={it} i={i} />
         ))}
       </div>
+      {tab === 'facial' && <BotoxDemo />}
       <p className="mt-6 text-[0.75rem] text-mute">
         Los tiempos son aproximados y varían en cada paciente. Los resultados no se pueden garantizar: tu plan se define en consulta.
       </p>
