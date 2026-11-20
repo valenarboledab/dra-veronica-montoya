@@ -53,7 +53,7 @@ export function Split({reduced}: {reduced: boolean}) {
 
   return (
     <section ref={root} id="ritual" className="relative h-[200vh] md:h-[300vh]">
-      <div className="sticky top-0 flex h-svh flex-col gap-5 overflow-hidden bg-linear-to-br from-blush via-[#fdf1eb] to-paper px-5 py-6 md:flex-row md:items-center md:gap-[5vw] md:px-[6vw] md:py-0">
+      <div className="sticky top-0 flex h-svh flex-col gap-5 overflow-hidden bg-linear-to-br from-blush via-[#f5f2ea] to-paper px-5 py-6 md:flex-row md:items-center md:gap-[5vw] md:px-[6vw] md:py-0">
         {/* arch photo — right on desktop, top on phones */}
         <div className="flex justify-center md:order-2 md:flex-1">
           <div ref={archWrap} className="relative aspect-[2/3] h-[30svh] md:h-[78vh]">
@@ -62,9 +62,9 @@ export function Split({reduced}: {reduced: boolean}) {
             <div className="arch relative size-full bg-peach">
               <img
                 ref={img}
-                src={media('split.webp')}
-                alt="Primer plano de una mujer aplicando un gel hidratante en su mejilla"
-                className="size-full object-cover object-[50%_40%] [transform:scale(1.16)]"
+                src={media('exora-escultura.webp')}
+                alt="Escultura orgánica en tonos oliva con una gota de cristal, imagen de la marca EXORA"
+                className="size-full object-cover object-[50%_50%] [transform:scale(1.16)]"
                 loading="lazy"
               />
             </div>

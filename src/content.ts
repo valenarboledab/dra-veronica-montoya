@@ -147,7 +147,8 @@ export const doctor = {
   title: ['Conoce a la', '*Dra.* *Verónica*'],
   body: 'Médica general con enfoque en medicina estética, en Armenia. Su consulta se basa en una idea sencilla: que te veas descansada y luminosa, nunca transformada. Escucha primero, explica cada opción con claridad y diseña un plan a tu medida.',
   facts: [
-    ['Formación', 'Médica general con enfoque en medicina estética'],
+    ['Formación', 'Médica general, Universidad de Manizales · Medicina estética, Fundación Universitaria de Ciencias de la Salud (FUCS)'],
+    ['Experiencia', 'Más de 6 años en medicina estética y procedimientos no invasivos · Investigadora en medicina regenerativa y terapias biológicas'],
     ['Enfoque', 'Estética facial e íntima, medicina regenerativa y ecografías'],
     ['Consultorio', ADDRESS],
     ['Horario', '8:00 a. m. – 4:00 p. m. · solo con cita previa'],

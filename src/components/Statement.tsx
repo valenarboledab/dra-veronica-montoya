@@ -5,9 +5,9 @@ import {clamp, pinProgress, range, smoothstep} from '../lib/math';
 import {onFrame} from '../lib/scroll';
 import {ChipIcon} from './icons';
 
-const FAINT = [216, 210, 207];
-const CORAL = [231, 134, 108];
-const INK = [30, 24, 22];
+const FAINT = [205, 201, 178];
+const CORAL = [127, 122, 82];
+const INK = [59, 56, 35];
 const blend = (a: number[], b: number[], t: number) => `rgb(${a.map((c, i) => Math.round(c + (b[i] - c) * t)).join(',')})`;
 // faint → coral at the front of the light → settles to ink
 const tone = (t: number) => (t < 0.5 ? blend(FAINT, CORAL, t * 2) : blend(CORAL, INK, (t - 0.5) * 2));

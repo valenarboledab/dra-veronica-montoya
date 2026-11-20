@@ -1,39 +1,46 @@
 @import 'tailwindcss';
 
-@theme {
-  --font-display: 'Satoshi', 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+@font-face { font-family: 'GrandSlang'; src: url('/fonts/GrandSlang-Roman.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Bitter'; src: url('/fonts/Bitter-Light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Bitter'; src: url('/fonts/Bitter-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Bitter'; src: url('/fonts/Bitter-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Bitter'; src: url('/fonts/Bitter-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Bitter'; src: url('/fonts/Bitter-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
 
-  /* Sampled from the renders: studio white, warm ink, blush skin, gel highlights */
-  --color-paper: #fefefe;
-  --color-ink: #1e1816;
-  --color-mute: #85776f;
-  --color-faint: #cbc3bf;
-  --color-line: #eee4df;
-  --color-blush: #fbe5da;
-  --color-peach: #f6cdb9;
-  --color-coral: #e7866c;
-  --color-rose: #e59aa1;
-  --color-sage: #9fbf98;
-  --color-dew: #8fc3dc;
-  --color-butter: #f2cf6b;
+@theme {
+  --font-display: 'GrandSlang', 'Bitter', Georgia, serif;
+  --font-sans: 'Bitter', Georgia, serif;
+  --font-serif: 'Bitter', Georgia, serif;
+
+  /* Paleta EXORA (brandboard): oliva #7F7A52, crema #F0EEE9, arena #DFD1A7, caramelo #A87350, salvia #BBB89B */
+  --color-paper: #f0eee9;
+  --color-ink: #3b3823;
+  --color-mute: #7a7558;
+  --color-faint: #bbb89b;
+  --color-line: #dcd6c4;
+  --color-blush: #e6dfcb;
+  --color-peach: #dfd1a7;
+  --color-coral: #7f7a52;
+  --color-rose: #a87350;
+  --color-sage: #a9a57f;
+  --color-dew: #bbb89b;
+  --color-butter: #dfd1a7;
 
   --text-hero: clamp(2.9rem, 5.7vw, 6.4rem);
   --text-hero--line-height: 0.94;
-  --text-hero--letter-spacing: -0.045em;
+  --text-hero--letter-spacing: -0.01em;
 
   --text-title: clamp(2.1rem, 3.4vw, 3.7rem);
   --text-title--line-height: 1;
-  --text-title--letter-spacing: -0.038em;
+  --text-title--letter-spacing: -0.005em;
 
   --text-statement: clamp(1.85rem, 3.9vw, 4.2rem);
   --text-statement--line-height: 1.12;
-  --text-statement--letter-spacing: -0.036em;
+  --text-statement--letter-spacing: -0.005em;
 
   --text-figure: clamp(1.25rem, 1.55vw, 1.7rem);
   --text-figure--line-height: 1;
-  --text-figure--letter-spacing: -0.035em;
+  --text-figure--letter-spacing: 0;
 
   --text-copy: 0.95rem;
   --text-copy--line-height: 1.55;
@@ -99,8 +106,8 @@ html.lenis body {
 .accent {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-weight: 300;
+  letter-spacing: -0.02em;
 }
 
 /* ---------- Letter-by-letter blur-in ---------- */
@@ -154,8 +161,8 @@ html.lenis body {
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   box-shadow:
     inset 0 0 0 1px rgb(255 255 255 / 0.9),
-    0 0 0 1px rgb(236 222 215 / 0.9),
-    0 22px 50px -30px rgb(140 90 70 / 0.5);
+    0 0 0 1px rgb(220 214 196 / 0.9),
+    0 22px 50px -30px rgb(90 86 55 / 0.5);
 }
 
 /* ---------- Hero film stage ---------- */
@@ -165,8 +172,8 @@ html.lenis body {
   overflow: hidden;
   /* blush aura in the empty corners; the film multiplies onto it */
   background:
-    radial-gradient(48% 60% at 0% 18%, #fce5da 0%, rgb(252 229 218 / 0) 70%),
-    radial-gradient(36% 50% at 100% 62%, #fdeae1 0%, rgb(253 234 225 / 0) 70%),
+    radial-gradient(48% 60% at 0% 18%, #e6dfcb 0%, rgb(230 223 203 / 0) 70%),
+    radial-gradient(36% 50% at 100% 62%, #ebe6d6 0%, rgb(235 230 214 / 0) 70%),
     var(--color-paper);
 }
 .hero-frame video {
@@ -206,14 +213,14 @@ html.lenis body {
   height: 1.5px;
   opacity: 0;
   background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.95) 30%, rgb(255 255 255 / 0.95) 70%, transparent);
-  box-shadow: 0 0 22px 5px rgb(246 205 185 / 0.55);
+  box-shadow: 0 0 22px 5px rgb(223 209 167 / 0.55);
 }
 .sweep::before {
   content: '';
   position: absolute;
   inset: auto 0 0;
   height: 9vh;
-  background: linear-gradient(180deg, transparent, rgb(255 238 230 / 0.28));
+  background: linear-gradient(180deg, transparent, rgb(240 238 233 / 0.28));
   mask: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
 }
 
@@ -250,7 +257,7 @@ html.lenis body {
     linear-gradient(var(--c), var(--c)) right bottom / var(--l) 1px,
     linear-gradient(var(--c), var(--c)) right bottom / 1px var(--l);
   background-repeat: no-repeat;
-  filter: drop-shadow(0 0 3px rgb(120 60 40 / 0.25));
+  filter: drop-shadow(0 0 3px rgb(60 58 35 / 0.25));
   scale: 1.25;
   opacity: 0;
   transition:
@@ -346,7 +353,7 @@ html.lenis body {
 .step.is-lit .node {
   background-color: var(--color-coral);
   border-color: var(--color-coral);
-  box-shadow: 0 0 0 5px rgb(231 134 108 / 0.16);
+  box-shadow: 0 0 0 5px rgb(127 122 82 / 0.16);
 }
 
 /* Inline photo pills in the statement */

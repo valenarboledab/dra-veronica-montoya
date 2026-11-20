@@ -13,7 +13,7 @@ function Compare({item}: {item?: Case}) {
     if (r) setX(Math.min(100, Math.max(0, ((clientX - r.left) / r.width) * 100)));
   };
   const placeholder = (label: string) => (
-    <div className="absolute inset-0 grid place-items-center pb-32 bg-linear-to-br from-blush to-[#fdf1eb]">
+    <div className="absolute inset-0 grid place-items-center pb-32 bg-linear-to-br from-blush to-[#f5f2ea]">
       <div className="flex flex-col items-center gap-2 text-center text-small text-mute">
         <Mark className="size-9 opacity-70" />
         {label}
@@ -48,7 +48,7 @@ function Compare({item}: {item?: Case}) {
           {item ? (
             <img src={media(item.before)} alt={`Antes: ${item.title}`} className="absolute inset-0 size-full object-cover" draggable={false} />
           ) : (
-            <div className="absolute inset-0 grid place-items-center pb-32 bg-linear-to-br from-[#f3e6df] to-[#e9dcd5]">
+            <div className="absolute inset-0 grid place-items-center pb-32 bg-linear-to-br from-[#ece7d9] to-[#ded8c6]">
               <div className="flex flex-col items-center gap-2 text-center text-small text-mute">
                 <Mark className="size-9 opacity-70" />
                 Foto real del antes

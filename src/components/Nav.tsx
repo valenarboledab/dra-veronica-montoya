@@ -1,5 +1,4 @@
-import {brand, views, type View} from '../content';
-import {Mark} from './icons';
+import {brand, media, views, type View} from '../content';
 
 /** Pestañas: cada una abre su propia vista (#inicio, #tratamientos…), no un scroll infinito. */
 export function Nav({view}: {view: View}) {
@@ -9,9 +8,8 @@ export function Nav({view}: {view: View}) {
       className={`inset-x-0 top-0 z-30 px-5 pt-5 md:px-7 ${home ? 'relative bg-paper pb-3 lg:absolute lg:bg-transparent lg:pb-0' : 'border-b border-line bg-paper/85 pb-4 backdrop-blur-md'}`}
     >
       <div className="grid grid-cols-[1fr_auto] items-center gap-4 xl:grid-cols-[1fr_auto_1fr]">
-        <a href="#inicio" className="glass flex items-center gap-2 justify-self-start rounded-full py-1.5 pr-4 pl-1.5 xl:col-start-2 xl:row-start-1 xl:justify-self-center">
-          <Mark className="size-8" />
-          <span className="font-display text-[1.05rem] font-semibold tracking-[-0.035em] whitespace-nowrap sm:text-[1.2rem] md:text-[1.35rem]">{brand.name}</span>
+        <a href="#inicio" className="glass flex items-center gap-2 justify-self-start rounded-full py-2.5 pr-4 pl-4 xl:col-start-2 xl:row-start-1 xl:justify-self-center">
+          <img src={media('wordmark-olive.webp')} alt={brand.name} className="h-5 w-auto sm:h-6 md:h-7" />
           <span className="hidden border-l border-ink/15 pl-2 text-[0.72rem] leading-tight text-ink/60 sm:block">{brand.by}</span>
         </a>
 

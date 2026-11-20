@@ -71,21 +71,7 @@ export function ChipIcon({name}: {name: 'sun' | 'heart' | 'leaf' | 'dew' | 'star
   }
 }
 
-/** Monograma VM: iniciales en serif itálica dentro de un círculo, con una hoja de café. */
-export function Mark({className = ''}: {className?: string}) {
-  return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden>
-      <defs>
-        <linearGradient id="vm-g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f8c6b2" />
-          <stop offset="1" stopColor="#e7866c" />
-        </linearGradient>
-      </defs>
-      <circle cx="24" cy="24" r="22.5" fill="none" stroke="url(#vm-g)" strokeWidth="1.3" />
-      <text x="24" y="31" textAnchor="middle" fontFamily="'Instrument Serif', Georgia, serif" fontStyle="italic" fontSize="21" fill="currentColor">
-        VM
-      </text>
-      <path d="M24 3.6c3.2 3 3.8 5.6 0 8.4-3.8-2.8-3.2-5.4 0-8.4Z" fill="#9fbf98" />
-    </svg>
-  );
+/** Isotipo EXORA (la "O" con el punto), tomado del logo oficial. */
+export function Mark({className = '', light = false}: {className?: string; light?: boolean}) {
+  return <img src={`${import.meta.env.BASE_URL}media/${light ? 'iso-white' : 'iso-olive'}.png`} alt="" aria-hidden className={`object-contain ${className}`} />;
 }

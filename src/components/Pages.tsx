@@ -198,7 +198,7 @@ function Visit() {
       <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {visit.map(([t, d], i) => (
           <li key={t} className="glass relative rounded-3xl p-6" data-reveal style={{'--d': `${300 + i * 120}ms`} as CSSProperties}>
-            <span className="node mb-5 block size-[11px] rounded-full bg-coral shadow-[0_0_0_5px_rgb(231_134_108/0.16)]" />
+            <span className="node mb-5 block size-[11px] rounded-full bg-coral shadow-[0_0_0_5px_rgb(127_122_82/0.16)]" />
             <h3 className="font-display text-[1.3rem] font-medium tracking-[-0.03em]">{t}</h3>
             <p className="mt-2 text-small text-mute">{d}</p>
           </li>
@@ -358,7 +358,7 @@ export function Page({view}: {view: Exclude<View, 'inicio'>}) {
   return (
     <section
       ref={root}
-      className="min-h-[calc(100svh-8rem)] bg-linear-to-br from-blush via-[#fdf1eb] to-paper px-5 py-8 md:px-[6vw] md:py-12"
+      className="min-h-[calc(100svh-8rem)] bg-linear-to-br from-blush via-[#f5f2ea] to-paper px-5 py-8 md:px-[6vw] md:py-12"
     >
       <div className="mx-auto max-w-[78rem]">
         <Body />

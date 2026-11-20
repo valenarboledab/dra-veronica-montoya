@@ -18,19 +18,19 @@ function bokehTexture() {
   c.height = 1000;
   const g = c.getContext('2d')!;
   const bg = g.createLinearGradient(0, 0, c.width, c.height);
-  bg.addColorStop(0, '#fbe5da');
-  bg.addColorStop(0.55, '#fdf1eb');
-  bg.addColorStop(1, '#eef3ea');
+  bg.addColorStop(0, '#e6dfcb');
+  bg.addColorStop(0.55, '#f5f2ea');
+  bg.addColorStop(1, '#e8e6d8');
   g.fillStyle = bg;
   g.fillRect(0, 0, c.width, c.height);
   // degradados radiales en vez de ctx.filter: Safari (iPhone) ignora el blur del canvas
   const blobs: [number, number, number, string][] = [
-    [0.12, 0.22, 230, 'rgba(159,191,152,0.55)'],
-    [0.86, 0.18, 190, 'rgba(246,205,185,0.9)'],
-    [0.78, 0.8, 260, 'rgba(159,191,152,0.45)'],
-    [0.2, 0.84, 210, 'rgba(246,205,185,0.85)'],
+    [0.12, 0.22, 230, 'rgba(169,165,127,0.55)'],
+    [0.86, 0.18, 190, 'rgba(223,209,167,0.9)'],
+    [0.78, 0.8, 260, 'rgba(169,165,127,0.45)'],
+    [0.2, 0.84, 210, 'rgba(223,209,167,0.85)'],
     [0.5, 0.5, 300, 'rgba(255,255,255,0.7)'],
-    [0.64, 0.36, 90, 'rgba(231,134,108,0.28)'],
+    [0.64, 0.36, 90, 'rgba(127,122,82,0.28)'],
     [0.34, 0.3, 70, 'rgba(255,255,255,0.9)'],
   ];
   for (const [x, y, r, col] of blobs) {
@@ -50,7 +50,7 @@ function wordTexture(word: string) {
   c.width = 2400;
   c.height = 640;
   const g = c.getContext('2d')!;
-  g.fillStyle = '#1e1816';
+  g.fillStyle = '#3b3823';
   g.font = FONT;
   // encoge la letra si la palabra es larga, para que quepa siempre
   const fit = Math.min(1, 2200 / g.measureText(word).width);
@@ -71,12 +71,12 @@ function labelTexture() {
   c.width = 1024;
   c.height = 256;
   const g = c.getContext('2d')!;
-  g.fillStyle = '#fbf7f4';
+  g.fillStyle = '#f5f2ea';
   g.fillRect(0, 0, c.width, c.height);
-  g.fillStyle = '#e7866c';
+  g.fillStyle = '#7f7a52';
   g.fillRect(0, 40, c.width, 6);
   g.fillRect(0, c.height - 46, c.width, 6);
-  g.fillStyle = '#cbc3bf';
+  g.fillStyle = '#bbb89b';
   for (let i = 0; i < 4; i++) g.fillRect(380, 96 + i * 18, 260 - i * 50, 4);
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
@@ -101,7 +101,7 @@ function buildVial() {
         ior: 1.5,
         clearcoat: 1,
         clearcoatRoughness: 0.05,
-        attenuationColor: new THREE.Color('#f3efe9'),
+        attenuationColor: new THREE.Color('#efece2'),
         attenuationDistance: 8,
       }),
     ),
@@ -116,7 +116,7 @@ function buildVial() {
   label.rotation.y = Math.PI;
   const crimp = new THREE.Mesh(new THREE.CylinderGeometry(0.385, 0.385, 0.3, 64), new THREE.MeshStandardMaterial({color: 0xd8d4d0, metalness: 1, roughness: 0.28}));
   crimp.position.y = 1.88;
-  const flip = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.37, 0.1, 64), new THREE.MeshPhysicalMaterial({color: 0xe7866c, roughness: 0.35, clearcoat: 0.6}));
+  const flip = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.37, 0.1, 64), new THREE.MeshPhysicalMaterial({color: 0x7f7a52, roughness: 0.35, clearcoat: 0.6}));
   flip.position.y = 2.08;
   vial.add(cake, label, crimp, flip);
   vial.position.y = -1.08;
@@ -144,8 +144,8 @@ function buildMotes() {
   const g = dot.getContext('2d')!;
   const rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
   rg.addColorStop(0, 'rgba(255,255,255,1)');
-  rg.addColorStop(0.4, 'rgba(255,236,226,0.6)');
-  rg.addColorStop(1, 'rgba(255,236,226,0)');
+  rg.addColorStop(0.4, 'rgba(240,238,233,0.6)');
+  rg.addColorStop(1, 'rgba(240,238,233,0)');
   g.fillStyle = rg;
   g.fillRect(0, 0, 64, 64);
   const mat = new THREE.PointsMaterial({
@@ -210,7 +210,7 @@ export function DropScene({word, reduced}: {word: string; reduced: boolean}) {
     const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
     camera.position.set(0, 0.05, 5.6);
 
-    const key = new THREE.DirectionalLight(0xfff4ec, 1.6);
+    const key = new THREE.DirectionalLight(0xf5f2ea, 1.6);
     key.position.set(3, 4, 5);
     scene.add(key, new THREE.AmbientLight(0xffffff, 0.35));
 
