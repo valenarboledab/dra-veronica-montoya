@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tu bótox, en 15 minutos · EXORA</title>
+    <link rel="icon" type="image/png" href="../favicon.png" />
+    <style>
+      @font-face { font-family: GrandSlang; src: url(../fonts/GrandSlang-Roman.woff2) format('woff2'); }
+      @font-face { font-family: Bitter; src: url(../fonts/Bitter-Regular.woff2) format('woff2'); }
+      html, body { margin: 0; background: #f0eee9; color: #3b3823; font-family: Bitter, Georgia, serif; }
+      .wrap { max-width: 760px; margin: 0 auto; padding: 22px 18px 40px; }
+      .kicker { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #7f7a52; }
+      h1 { font-family: GrandSlang, Georgia, serif; font-weight: 400; font-size: clamp(2rem, 6vw, 3rem); line-height: 1; margin: .25em 0 0; }
+      .stage { position: relative; margin-top: 16px; aspect-ratio: 4 / 3; border-radius: 26px; overflow: hidden;
+        background: radial-gradient(120% 90% at 50% 20%, #f7f4ec 0%, #ebe6d6 100%); box-shadow: 0 24px 60px -36px #3b382380; }
+      canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+      .say { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); background: #fbfaf6; border-radius: 999px;
+        padding: 10px 18px; font-size: clamp(1rem, 3.4vw, 1.25rem); white-space: nowrap; box-shadow: 0 10px 24px -14px #3b382366; transition: opacity .4s; }
+      .lead { font-size: 1.2rem; line-height: 1.55; margin: 16px 2px 0; }
+      .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+      .facts div { background: #f5f2ea; border-radius: 18px; padding: 12px; text-align: center; }
+      .facts b { display: block; font-family: GrandSlang, Georgia, serif; font-weight: 400; font-size: 1.6rem; }
+      .facts span { font-size: .9rem; color: #7f7a52; }
+      .note { font-size: .78rem; color: #8e8a6c; margin-top: 18px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="kicker">EXORA · lo que te vamos a hacer</div>
+      <h1>Tu bótox, fácil</h1>
+      <div class="stage">
+        <canvas id="c" aria-label="Animación: una aguja muy finita pone tres gotitas en la piel y la arruga se borra"></canvas>
+        <div class="say" id="say">Tres gotitas en tu piel…</div>
+      </div>
+      <p class="lead">La doctora pone <b>tres gotitas</b> con una aguja muy finita donde está la arruga. El músculo de abajo descansa y <b>la piel queda lisita</b>.</p>
+      <div class="facts">
+        <div><b>15 min</b><span>dura</span></div>
+        <div><b>Pellizquito</b><span>se siente</span></div>
+        <div><b>3–4 meses</b><span>dura el efecto</span></div>
+      </div>
+      <p class="note">Animación educativa y simplificada. La doctora te explica tu caso en la valoración.</p>
+    </div>
+    <script type="module" src="./botox-3d.ts"></script>
+  </body>
+</html>

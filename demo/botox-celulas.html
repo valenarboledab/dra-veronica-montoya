@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bótox · EXORA</title>
+    <link rel="icon" type="image/png" href="../favicon.png" />
+    <style>
+      @font-face { font-family: GrandSlang; src: url(../fonts/GrandSlang-Roman.woff2) format('woff2'); }
+      @font-face { font-family: Bitter; src: url(../fonts/Bitter-Regular.woff2) format('woff2'); }
+      html, body { margin: 0; background: #f0eee9; color: #3b3823; font-family: Bitter, Georgia, serif; }
+      .wrap { max-width: 760px; margin: 0 auto; padding: 22px 18px 40px; }
+      .card { position: relative; border-radius: 28px; overflow: hidden; background: #f5f2ea; box-shadow: 0 30px 70px -40px #3b382399; }
+      .card video, .card img.still { display: block; width: 100%; aspect-ratio: 1104 / 832; object-fit: cover; }
+      .top { position: absolute; inset: 0 0 auto 0; display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; }
+      .logo { background: #f5f2eaee; border-radius: 999px; padding: 9px 16px; display: flex; }
+      .logo img { height: 18px; }
+      .tag { background: #7f7a52; color: #f5f2ea; border-radius: 999px; padding: 7px 14px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+      .title { padding: 20px 22px 6px; }
+      .title h1 { font-family: GrandSlang, Georgia, serif; font-weight: 400; font-size: clamp(2.2rem, 7vw, 3.4rem); line-height: .95; margin: 0; }
+      .title h1 em { font-family: Bitter, Georgia, serif; font-style: italic; color: #7f7a52; }
+      .title p { font-size: 1.15rem; line-height: 1.55; margin: .7em 0 0; color: #5f5b44; }
+      .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 16px 18px 20px; }
+      .facts div { background: #ebe6d6; border-radius: 18px; padding: 12px 8px; text-align: center; }
+      .facts b { display: block; font-family: GrandSlang, Georgia, serif; font-weight: 400; font-size: 1.45rem; }
+      .facts span { font-size: .85rem; color: #7f7a52; }
+      .note { font-size: .78rem; color: #8e8a6c; margin: 16px 4px 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <video src="../media/proc-botox-celulas.mp4" poster="../media/proc-botox-celulas.webp" autoplay muted loop playsinline aria-label="Animación: gotitas doradas bajan hasta el músculo, el músculo se relaja y la arruga se alisa"></video>
+        <div class="top"><span class="logo"><img src="../media/wordmark-olive.webp" alt="EXORA" /></span><span class="tag">Bótox</span></div>
+        <div class="title">
+          <h1>Tu piel, <em>más tranquila</em></h1>
+          <p>Con una aguja muy finita, la doctora pone unas <b>gotitas</b> en el músculo que está debajo de la arruga. El músculo <b>descansa</b>, deja de apretar y la piel queda <b>lisita</b>.</p>
+        </div>
+        <div class="facts">
+          <div><b>15 min</b><span>dura</span></div>
+          <div><b>Pellizquito</b><span>se siente</span></div>
+          <div><b>3–4 meses</b><span>dura el efecto</span></div>
+        </div>
+      </div>
+      <p class="note">Ilustración educativa y simplificada. La doctora te explica tu caso en la valoración.</p>
+    </div>
+  </body>
+</html>
