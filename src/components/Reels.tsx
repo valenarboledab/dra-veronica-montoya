@@ -166,10 +166,10 @@ export function Viewer({r, onClose}: {r: Reel; onClose: () => void}) {
   return (
     <dialog
       ref={ref}
-      className="m-auto max-h-[94svh] w-[min(24rem,94vw)] overflow-hidden rounded-[1.8rem] border-0 bg-[#3b3823] p-0 text-paper shadow-2xl backdrop:bg-[#3b3823]/60 backdrop:backdrop-blur-sm"
+      className="m-auto max-h-[94svh] w-[min(26rem,94vw)] overflow-y-auto overscroll-contain rounded-[1.8rem] border-0 bg-[#3b3823] p-0 text-paper shadow-2xl backdrop:bg-[#3b3823]/60 backdrop:backdrop-blur-sm"
       onClick={(e) => e.target === ref.current && ref.current?.close()}
     >
-      <div className="relative aspect-[9/16] max-h-[70svh] w-full">
+      <div className={`relative w-full ${r.video.startsWith('proc-') ? 'aspect-[4/3]' : 'aspect-[9/16] max-h-[60svh]'}`}>
         <video src={media(r.video)} poster={media(r.poster)} autoPlay muted loop playsInline className="absolute inset-0 size-full object-cover" style={{objectPosition: r.pos}} />
         <button type="button" onClick={() => ref.current?.close()} className="absolute top-3 right-3 grid size-9 cursor-pointer place-items-center rounded-full bg-[#3b3823]/50 text-paper" aria-label="Cerrar">
           ✕
