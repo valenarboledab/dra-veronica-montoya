@@ -137,12 +137,12 @@ function Treatments() {
           <b className="font-semibold text-ink">Productos con registro sanitario INVIMA.</b> Todos los productos y medicamentos que aplicamos tienen registro INVIMA vigente; pídenos el número de registro de tu tratamiento.
         </span>
       </div>
+      {tab === 'facial' && <BotoxDemo />}
       <div key={tab} className="mt-5 grid gap-3 sm:grid-cols-2 md:mt-6 md:gap-4 lg:grid-cols-3">
         {group.items.map((it, i) => (
           <TreatmentCard key={it.n} it={it} i={i} />
         ))}
       </div>
-      {tab === 'facial' && <BotoxDemo />}
       <p className="mt-6 text-[0.75rem] text-mute">
         Los tiempos son aproximados y varían en cada paciente. Los resultados no se pueden garantizar: tu plan se define en consulta.
       </p>
@@ -270,14 +270,26 @@ function Faq() {
         </p>
       </div>
       <div data-reveal style={{'--d': '300ms'} as CSSProperties}>
-        {faq.map(([q, a]) => (
-          <details key={q} className="group border-b border-line">
-            <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-5 text-[1.02rem] font-medium [&::-webkit-details-marker]:hidden">
-              {q}
-              <span className="accent text-[1.6rem] leading-none text-coral transition-transform group-open:rotate-45">+</span>
-            </summary>
-            <p className="max-w-[38rem] pb-5 text-copy text-mute">{a}</p>
-          </details>
+        <nav className="mb-6 flex flex-wrap gap-2" aria-label="Temas">
+          {faq.map((g) => (
+            <a key={g.t} href={`#faq-${g.t}`} onClick={(e) => { e.preventDefault(); document.getElementById(`faq-${g.t}`)?.scrollIntoView({behavior: 'smooth', block: 'start'}); }} className="glass min-h-9 rounded-full px-3.5 py-1.5 text-[0.82rem] text-ink/75 hover:text-ink">
+              {g.t}
+            </a>
+          ))}
+        </nav>
+        {faq.map((g) => (
+          <section key={g.t} id={`faq-${g.t}`} className="mb-8 scroll-mt-40">
+            <h2 className="font-display text-[1.6rem] leading-tight font-medium text-coral md:text-[1.9rem]">{g.t}</h2>
+            {g.qs.map(([q, a]) => (
+              <details key={q} className="group border-b border-line">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-4 text-[1.02rem] font-medium [&::-webkit-details-marker]:hidden">
+                  {q}
+                  <span className="accent text-[1.6rem] leading-none text-coral transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="max-w-[38rem] pb-5 text-copy text-mute">{a}</p>
+              </details>
+            ))}
+          </section>
         ))}
       </div>
     </div>

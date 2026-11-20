@@ -179,14 +179,75 @@ export const visit = [
   ['Tú decides', 'Puedes tratarte ese día o pensarlo con tranquilidad.'],
 ];
 
-export const faq = [
-  ['¿Duele la aplicación de bótox?', 'Se siente como pequeños pinchazos de pocos segundos. Se usan agujas muy finas y, si lo necesitas, anestesia tópica.'],
-  ['¿Se va a notar que me hice algo?', 'La idea es que no. Se trabaja con dosis y técnicas que respetan tu expresión: que te veas descansada, no diferente.'],
-  ['¿Cuándo veo los resultados?', 'Con el bótox empiezas a notar cambios entre el día 3 y el 7, y el resultado completo hacia las dos semanas. Los bioestimuladores son graduales.'],
-  ['¿Puedo volver a mi rutina el mismo día?', 'En la mayoría de los procedimientos faciales sí. Recibirás indicaciones específicas para las primeras horas.'],
-  ['¿Quién no debería hacerse estos tratamientos?', 'Hay casos en que se deben aplazar, por ejemplo durante el embarazo o la lactancia, o con ciertas condiciones médicas. Por eso la valoración siempre va primero.'],
-  ['¿La consulta íntima es confidencial?', 'Sí. Es una consulta privada, con lenguaje respetuoso y sin juicios.'],
-  ['¿Atienden sin cita?', 'No. La atención es solo con cita previa, de 8:00 a. m. a 4:00 p. m. Escríbenos por WhatsApp para agendar.'],
+/** Preguntas frecuentes agrupadas por procedimiento. Textos por aprobar con las doctoras. */
+export const faq: {t: string; qs: [string, string][]}[] = [
+  {
+    t: 'Bótox',
+    qs: [
+      ['¿Duele la aplicación de bótox?', 'Se siente como pequeños pinchazos de pocos segundos. Se usan agujas muy finas y, si lo necesitas, anestesia tópica.'],
+      ['¿Se va a notar que me hice algo?', 'La idea es que no. Se trabaja con dosis y técnicas que respetan tu expresión: que te veas descansada, no diferente.'],
+      ['¿Cuándo veo los resultados?', 'Empiezas a notar cambios entre el día 3 y el 7, y el resultado completo hacia las dos semanas.'],
+      ['¿Cuánto dura el efecto?', 'Por lo general unos meses; depende de cada persona y de la zona tratada. En la valoración te decimos cada cuánto conviene repetirlo.'],
+      ['¿Qué cuidados tengo después?', 'Las primeras horas evita acostarte, hacer ejercicio fuerte y masajear la zona. Te damos las indicaciones por escrito.'],
+    ],
+  },
+  {
+    t: 'Bioestimuladores de colágeno',
+    qs: [
+      ['¿Qué son los bioestimuladores?', 'Son sustancias como la hidroxiapatita de calcio o el ácido poliláctico que le piden a tu piel fabricar su propio colágeno.'],
+      ['¿Cuándo se ven los cambios?', 'Son graduales: la piel va ganando firmeza con las semanas, a medida que tu cuerpo produce colágeno nuevo.'],
+      ['¿Cuántas sesiones necesito?', 'Depende de tu piel y de lo que quieras lograr. Lo definimos juntas en la valoración.'],
+    ],
+  },
+  {
+    t: 'Ácido hialurónico',
+    qs: [
+      ['¿El resultado es inmediato?', 'Sí, el volumen se ve desde el primer momento. Puede haber algo de inflamación los primeros días.'],
+      ['¿Se ve natural?', 'Esa es la meta: devolver volumen respetando tus proporciones, sin exagerar.'],
+      ['¿Cuánto dura?', 'Varía según el producto y la zona. Te lo explicamos en la valoración.'],
+    ],
+  },
+  {
+    t: 'Skinbooster, exosomas, peeling y dermapen',
+    qs: [
+      ['¿Para qué sirve cada uno?', 'El skinbooster hidrata por dentro; los exosomas ayudan a renovar la piel; el peeling trata manchas y textura; el dermapen mejora cicatrices, poros y líneas finas.'],
+      ['¿Necesito varias sesiones?', 'Sí, suelen trabajarse por sesiones. El número depende de tu piel.'],
+      ['¿Me puedo exponer al sol después?', 'Debes usar protector solar y evitar el sol directo los días siguientes, sobre todo con peeling y dermapen.'],
+    ],
+  },
+  {
+    t: 'Regeneración íntima',
+    qs: [
+      ['¿La consulta íntima es confidencial?', 'Sí. Es una consulta privada, con lenguaje respetuoso y sin juicios.'],
+      ['¿Qué tratamientos hay?', 'Bioestimuladores, ácido hialurónico en labios mayores, peeling genital, skinbooster íntimo e hilos. En la valoración vemos cuál es para ti.'],
+    ],
+  },
+  {
+    t: 'Medicina regenerativa',
+    qs: [
+      ['¿Para qué casos sirve?', 'Para apoyar el manejo del dolor muscular y articular, la recuperación de tejidos y el bienestar general, siempre después de una valoración.'],
+      ['¿Las células madre son para todos?', 'No. Es una terapia avanzada que solo se indica después de una valoración médica completa.'],
+    ],
+  },
+  {
+    t: 'Tricología',
+    qs: [['¿Qué hace la consulta de tricología?', 'Revisa tu cuero cabelludo y tu cabello para encontrar la causa de la caída o el debilitamiento y proponer un plan.']],
+  },
+  {
+    t: 'Ecografías',
+    qs: [
+      ['¿Quién hace las ecografías?', 'La Dra. Susana Zárate.'],
+      ['¿Duelen o tienen radiación?', 'No. El ultrasonido no usa radiación y no duele. Algunos estudios piden preparación previa; te la indicamos al agendar.'],
+    ],
+  },
+  {
+    t: 'Generales',
+    qs: [
+      ['¿Puedo volver a mi rutina el mismo día?', 'En la mayoría de los procedimientos faciales sí. Recibirás indicaciones específicas para las primeras horas.'],
+      ['¿Quién no debería hacerse estos tratamientos?', 'Hay casos en que se deben aplazar, por ejemplo durante el embarazo o la lactancia, o con ciertas condiciones médicas. Por eso la valoración siempre va primero.'],
+      ['¿Atienden sin cita?', 'No. La atención es solo con cita previa, de 8:00 a. m. a 4:00 p. m. Escríbenos por WhatsApp para agendar.'],
+    ],
+  },
 ];
 
 export const footer = {
