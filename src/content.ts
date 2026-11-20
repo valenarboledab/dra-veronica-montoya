@@ -136,9 +136,9 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     id: 'eco',
     label: 'Ecografías',
     short: 'Ecografías',
-    intro: 'Estudios por ultrasonido en el consultorio, con cita previa. Escríbenos por WhatsApp para saber qué ecografía necesitas.',
+    intro: 'Ecografías y ultrasonidos realizados por la Dra. Susana en el consultorio, con cita previa. Escríbenos por WhatsApp para saber qué estudio necesitas.',
     items: [
-      {n: 'Ecografías', d: 'Estudio por ultrasonido realizado en el consultorio, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa'},
+      {n: 'Ecografías y ultrasonidos', d: 'Estudios por ultrasonido realizados por la Dra. Susana, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa'},
     ],
   },
 ];
