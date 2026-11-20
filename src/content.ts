@@ -215,3 +215,5 @@ export const botox = {
  * #resultados muestra marcos vacíos y no aparece en el menú.
  */
 export const beforeAfter: {title: string; before: string; after: string; note: string}[] = [];
+
+export const POLICY_VERSION = '19-11-2026';

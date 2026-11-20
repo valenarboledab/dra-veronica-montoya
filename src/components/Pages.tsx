@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState, type CSSProperties} from 'react';
-import {doctor, susana, faq, media, treatments, visit, wa, WA_SHOW, type View, ADDRESS} from '../content';
+import {doctor, susana, faq, media, treatments, visit, wa, WA_SHOW, type View, ADDRESS, POLICY_VERSION} from '../content';
 import {useReveals} from '../hooks/useReveals';
 import {BlurText} from './BlurText';
 import {DropScene} from './DropScene';
@@ -262,14 +262,28 @@ function ResultsPage() {
   );
 }
 
+
 function Agenda() {
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [what, setWhat] = useState('Una valoración general');
   const [when, setWhen] = useState('Lo antes posible');
   const [part, setPart] = useState('Mañana');
-  const [warn, setWarn] = useState(false);
-  const link = wa(`Hola Dra. Verónica, soy ${name.trim()}. Me interesa: ${what}. Para: ${when.toLowerCase()}, en la ${part.toLowerCase()}.`);
+  const [consent, setConsent] = useState(false);
+  const [promo, setPromo] = useState(false);
+  const [tried, setTried] = useState(false);
+  const digits = phone.replace(/\D/g, '');
+  const phoneOk = digits.length >= 10 && digits.length <= 12;
+  const nameOk = name.trim().length >= 3;
+  const ready = nameOk && phoneOk && consent;
+  const msg =
+    `Hola EXORA, soy ${name.trim()} (cel. ${phone.trim()}). Me interesa: ${what}. Para: ${when.toLowerCase()}, en la ${part.toLowerCase()}.\n\n` +
+    `✔ Autorizo el tratamiento de mis datos personales (nombre, celular y la información de esta conversación) para agendar y gestionar mi cita, según la Política de Tratamiento de Datos de EXORA, versión ${POLICY_VERSION}.` +
+    (promo ? '\n✔ Acepto recibir información de tratamientos y promociones por WhatsApp.' : '');
+  const link = wa(msg);
+  const problems = [!nameOk && 'escribe tu nombre completo', !phoneOk && 'escribe un celular válido', !consent && 'acepta la política de tratamiento de datos'].filter(Boolean) as string[];
   const field = 'min-h-12 w-full min-w-0 rounded-xl border border-line bg-paper px-3.5 text-[1rem] text-ink focus:border-coral focus:outline-none';
+  const box = 'mt-0.5 size-5 shrink-0 accent-[#7f7a52]';
   return (
     <div className="grid items-start gap-10 md:grid-cols-2 md:gap-[5vw] [&>*]:min-w-0">
       <div>
@@ -297,8 +311,12 @@ function Agenda() {
       </div>
       <form className="glass grid min-w-0 gap-4 rounded-3xl p-6 md:p-8 [&_label]:min-w-0" onSubmit={(e) => e.preventDefault()} data-reveal style={{'--d': '300ms'} as CSSProperties}>
         <label className="grid gap-1.5 text-small font-medium">
-          Tu nombre
-          <input className={field} value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" placeholder="Ej. Laura Gómez" />
+          Tu nombre completo *
+          <input className={field} value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" placeholder="Ej. Laura Gómez" required aria-invalid={tried && !nameOk} />
+        </label>
+        <label className="grid gap-1.5 text-small font-medium">
+          Tu celular *
+          <input className={field} value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" inputMode="tel" placeholder="Ej. 310 000 0000" required aria-invalid={tried && !phoneOk} />
         </label>
         <label className="grid gap-1.5 text-small font-medium">
           ¿Qué te interesa?
@@ -330,30 +348,38 @@ function Agenda() {
             </select>
           </label>
         </div>
+        <label className={`flex gap-3 rounded-xl border p-3 text-[0.78rem] leading-snug text-ink/80 ${tried && !consent ? 'border-[#a87350]' : 'border-line'}`}>
+          <input type="checkbox" className={box} checked={consent} onChange={(e) => setConsent(e.target.checked)} required />
+          <span>
+            <b className="font-semibold text-ink">Obligatorio.</b> Autorizo de manera previa, expresa e informada a EXORA (Dra. Verónica Montoya y Dra. Susana Zárate) para recolectar, almacenar y usar mi nombre, celular y la información que comparta, con el fin de agendar, confirmar y gestionar mi cita y comunicarme con ellas, conforme a la Ley 1581 de 2012 y la{' '}
+            <a href="#privacidad" target="_blank" rel="noopener" className="underline hover:text-coral">
+              Política de Tratamiento de Datos
+            </a>
+            . Sé que puedo conocer, actualizar, rectificar o pedir la supresión de mis datos y revocar esta autorización.
+          </span>
+        </label>
+        <label className="flex gap-3 px-3 text-[0.78rem] leading-snug text-ink/70">
+          <input type="checkbox" className={box} checked={promo} onChange={(e) => setPromo(e.target.checked)} />
+          <span>Opcional. Acepto recibir por WhatsApp información de tratamientos, recordatorios y promociones de EXORA.</span>
+        </label>
         <a
-          href={link}
+          href={ready ? link : undefined}
+          target="_blank"
+          rel="noopener"
+          role="button"
+          aria-disabled={!ready}
           onClick={(e) => {
-            if (!name.trim()) {
+            if (!ready) {
               e.preventDefault();
-              setWarn(true);
+              setTried(true);
             }
           }}
-          className="mt-2 flex min-h-12 items-center justify-center rounded-full bg-ink text-small font-medium text-paper transition-colors hover:bg-coral"
+          className={`mt-1 flex min-h-12 items-center justify-center rounded-full text-small font-medium transition-colors ${ready ? 'cursor-pointer bg-ink text-paper hover:bg-coral' : 'cursor-not-allowed bg-ink/25 text-paper'}`}
         >
           Continuar en WhatsApp
         </a>
         <p className="text-[0.72rem] text-mute" aria-live="polite">
-          {warn && !name.trim()
-            ? 'Escribe tu nombre para continuar.'
-            : (
-                <>
-                  Al continuar aceptas el tratamiento de tus datos para agendar tu cita, según nuestra{' '}
-                  <a href="#privacidad" className="underline hover:text-coral">
-                    política de datos
-                  </a>
-                  .
-                </>
-              )}
+          {tried && problems.length ? `Para agendar, ${problems.join(', ')}.` : 'Los campos con * y la autorización de datos son necesarios para agendar.'}
         </p>
       </form>
     </div>
