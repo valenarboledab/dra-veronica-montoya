@@ -11,10 +11,9 @@ export const views = [
   {id: 'ecografias', label: 'Ecografías'},
   {id: 'combos', label: 'Combos y pagos'},
   {id: 'doctora', label: 'Las doctoras'},
-  {id: 'cita', label: 'Tu primera cita'},
   {id: 'preguntas', label: 'Preguntas'},
 ] as const;
-export type View = (typeof views)[number]['id'] | 'agenda' | 'resultados' | 'privacidad' | 'pagar' | 'panel' | 'cotizacion';
+export type View = (typeof views)[number]['id'] | 'agenda' | 'cita' | 'resultados' | 'privacidad' | 'pagar' | 'panel' | 'cotizacion';
 
 export const ADDRESS = 'Carrera 14 No. 1A-118, Piso 3, Consultorio 5, Armenia';
 

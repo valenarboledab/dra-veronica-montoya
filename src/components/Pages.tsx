@@ -234,29 +234,24 @@ function Doctor() {
   );
 }
 
+/** Los pasos de la primera cita, dentro de Agenda. */
 function Visit() {
   return (
-    <>
+    <section className="mt-14 md:mt-20">
       <Eyebrow>Tu primera cita</Eyebrow>
-      <BlurText lines={['Así es tu', '*primera* *cita*']} className="mt-3 font-display text-title font-medium" delay={100} />
-      <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <h2 className="mt-2 font-display text-[1.9rem] leading-tight font-medium md:text-[2.6rem]">
+        Así es tu <span className="accent">primera</span> cita
+      </h2>
+      <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {visit.map(([t, d], i) => (
-          <li key={t} className="glass relative rounded-3xl p-6" data-reveal style={{'--d': `${300 + i * 120}ms`} as CSSProperties}>
+          <li key={t} className="glass relative rounded-3xl p-6" data-reveal style={{'--d': `${100 + i * 120}ms`} as CSSProperties}>
             <span className="node mb-5 block size-[11px] rounded-full bg-coral shadow-[0_0_0_5px_rgb(127_122_82/0.16)]" />
             <h3 className="font-display text-[1.3rem] font-medium tracking-[-0.03em]">{t}</h3>
             <p className="mt-2 text-small text-mute">{d}</p>
           </li>
         ))}
       </ol>
-      <div className="mt-10 flex flex-wrap gap-3" data-reveal style={{'--d': '800ms'} as CSSProperties}>
-        <a href="#agenda" className="rounded-full bg-ink px-6 py-3 text-small font-medium text-paper transition-colors hover:bg-coral">
-          Agenda tu valoración
-        </a>
-        <a href="#preguntas" className="rounded-full px-6 py-3 text-small font-medium shadow-[inset_0_0_0_1px_var(--color-line)] hover:text-coral">
-          Preguntas frecuentes
-        </a>
-      </div>
-    </>
+    </section>
   );
 }
 
@@ -340,6 +335,7 @@ function Agenda() {
   const field = 'min-h-12 w-full min-w-0 rounded-xl border border-line bg-paper px-3.5 text-[1rem] text-ink focus:border-coral focus:outline-none';
   const box = 'mt-0.5 size-5 shrink-0 accent-[#7f7a52]';
   return (
+    <>
     <div className="grid items-start gap-10 md:grid-cols-2 md:gap-[5vw] [&>*]:min-w-0">
       <div>
         <Eyebrow>Agenda</Eyebrow>
@@ -444,13 +440,15 @@ function Agenda() {
         </p>
       </form>
     </div>
+    <Visit />
+    </>
   );
 }
 
 /** Las vistas de las pestañas que no son Inicio. */
 export function Page({view}: {view: Exclude<View, 'inicio'>}) {
   const root = useReveals<HTMLElement>();
-  const Body = {tratamientos: Treatments, ecografias: Eco, combos: Combos, doctora: Doctor, cita: Visit, preguntas: Faq, agenda: Agenda, resultados: ResultsPage, privacidad: Privacy, pagar: Pay, panel: Panel, cotizacion: QuoteView}[view];
+  const Body = {tratamientos: Treatments, ecografias: Eco, combos: Combos, doctora: Doctor, cita: Agenda, preguntas: Faq, agenda: Agenda, resultados: ResultsPage, privacidad: Privacy, pagar: Pay, panel: Panel, cotizacion: QuoteView}[view];
   return (
     <section
       ref={root}

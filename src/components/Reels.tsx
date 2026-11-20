@@ -84,7 +84,7 @@ export const REELS: Reel[] = [
     title: 'Empezamos por mirarte con calma',
     text: 'En la valoración revisamos tu piel, tus antecedentes y lo que quieres lograr. Solo después te proponemos un plan.',
     ask: 'Hola EXORA, quiero agendar una valoración.',
-    link: '#cita',
+    link: '#agenda',
     pos: '50% 25%',
   },
 ];
