@@ -221,7 +221,7 @@ export const POLICY_VERSION = '19-11-2026';
 
 /** Enlaces de pago. Pegar aquí el enlace de cada plataforma cuando la cuenta esté activa; mientras estén vacíos, el botón pide el enlace por WhatsApp. */
 export const PAY = {
-  tarjeta: '', // p. ej. enlace abierto de Bold o "Tu link" de Mercado Pago (el cliente escribe el valor)
+  tarjeta: '', // "Tu link" de Mercado Pago de la Dra. Verónica (link.mercadopago.com.co/...): el cliente escribe el valor
   cuotas: '', // p. ej. enlace de pago de Addi
   cuotasProveedor: 'Addi',
   // Mientras tanto: cuenta personal de la Dra. Verónica (transferencia, Nequi o llave Bre-B). Vacío = no se muestra.

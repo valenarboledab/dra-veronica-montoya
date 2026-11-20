@@ -7,7 +7,7 @@ import {WaLink} from './Consent';
 export function Pay() {
   const [ok, setOk] = useState(false);
   const options = [
-    {id: 'tarjeta', title: 'Tarjeta, PSE o Nequi', text: 'Crédito o débito (puedes diferir a cuotas con tu tarjeta), PSE desde tu banco o billeteras.', href: PAY.tarjeta, badge: 'Visa · Mastercard · PSE'},
+    {id: 'tarjeta', title: 'Tarjeta o PSE', text: 'Con Mercado Pago: tarjeta de crédito (puedes pagar a cuotas) o débito, PSE desde tu banco y más medios. Tú escribes el valor acordado.', href: PAY.tarjeta, badge: 'Mercado Pago'},
     {id: 'cuotas', title: 'A cuotas sin tarjeta', text: 'Paga en cuotas con una app de financiación: la aprobación es en minutos desde tu celular.', href: PAY.cuotas, badge: PAY.cuotasProveedor},
   ];
   return (
