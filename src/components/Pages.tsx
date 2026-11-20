@@ -37,6 +37,9 @@ function Facts({it}: {it: (typeof treatments)[number]['items'][number]}) {
   );
 }
 
+/** Las figuras 3D por tratamiento quedan ocultas hasta aprobar el nuevo estilo (ver /demo/botox.html). */
+const SHOW_3D = false;
+
 function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number]; i: number}) {
   const [open, setOpen] = useState(false);
   const [fig, setFig] = useState(false);
@@ -55,7 +58,7 @@ function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number
           <WaLink text={`Hola EXORA, quiero información sobre ${it.n.toLowerCase()}.`} className="text-small font-semibold text-coral hover:underline">
             Preguntar →
           </WaLink>
-          {it.f && (
+          {SHOW_3D && it.f && (
             <button type="button" onClick={() => setFig(true)} className="min-h-9 cursor-pointer text-small font-semibold text-ink/70 underline-offset-2 hover:underline">
               Ver en 3D
             </button>
