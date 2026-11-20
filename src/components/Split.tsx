@@ -27,13 +27,52 @@ export function Split({reduced}: {reduced: boolean}) {
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    if (reduced || STATIC) {
+    if (reduced) {
       steps.current.forEach((s) => s?.classList.add('is-lit'));
       pills.current.forEach((p) => p?.classList.add('is-in'));
       title2.current?.classList.add('is-in');
       end.current?.classList.add('is-in');
       if (line.current) line.current.style.transform = 'none';
       return;
+    }
+    if (STATIC) {
+      // sin anclar el scroll: cada paso se enciende al aparecer en pantalla (también en celular)
+      const all = steps.current.filter(Boolean) as HTMLDivElement[];
+      let lit = 0;
+      const grow = () => {
+        if (line.current) line.current.style.transform = `scaleY(${lit / Math.max(all.length, 1)})`;
+      };
+      grow();
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const s = e.target as HTMLDivElement;
+            s.classList.add('is-lit');
+            io.unobserve(s);
+            lit++;
+            grow();
+            if (s === all[all.length - 1]) {
+              title2.current?.classList.add('is-in');
+              end.current?.classList.add('is-in');
+            }
+          }),
+        {rootMargin: '0px 0px -18% 0px'},
+      );
+      all.forEach((s) => io.observe(s));
+      const io2 = new IntersectionObserver(
+        ([e]) => {
+          if (!e.isIntersecting) return;
+          pills.current.forEach((p, i) => setTimeout(() => p?.classList.add('is-in'), 300 + i * 450));
+          io2.disconnect();
+        },
+        {threshold: 0.35},
+      );
+      if (archWrap.current) io2.observe(archWrap.current);
+      return () => {
+        io.disconnect();
+        io2.disconnect();
+      };
     }
     return onFrame(() => {
       const {p, rect, vh} = pinProgress(el);
@@ -101,7 +140,7 @@ export function Split({reduced}: {reduced: boolean}) {
 
           <div ref={track} className="relative mt-6 pl-8 md:mt-9">
             <div className="absolute top-1.5 bottom-3 left-[5px] w-px bg-ink/10" />
-            <div ref={line} className="absolute top-1.5 bottom-3 left-[5px] w-px origin-top bg-linear-to-b from-peach to-coral [transform:scaleY(0)]" />
+            <div ref={line} className="absolute top-1.5 bottom-3 left-[5px] w-px origin-top bg-linear-to-b from-peach to-coral transition-transform duration-700 [transform:scaleY(0)]" />
             {split.steps.map((s, i) => (
               <div
                 key={s.n}

@@ -195,13 +195,14 @@ html.lenis body {
   /* en el celular todo aparece al llegar, sin las esperas pensadas para escritorio */
   [data-reveal],
   .gate {
+    transform: translate3d(0, 34px, 0);
     transition-delay: 0ms !important;
-    transition-duration: 0.6s;
+    transition-duration: 0.8s;
   }
   .hero-stage {
     --sw: max(100vw, 110.2svh);
     /* keep her face centred on narrow screens */
-    left: clamp(calc(100vw - var(--sw)), calc(50vw - 0.56 * var(--sw)), 0px);
+    left: clamp(calc(100vw - var(--sw)), calc(50vw - 0.5 * var(--sw)), 0px);
   }
 }
 

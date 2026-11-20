@@ -92,14 +92,14 @@ function Treatments() {
           </h1>
           <p className="mt-3 hidden max-w-[34rem] text-copy text-ink/70 md:block">{group.intro}</p>
           {/* pestañas con cuántos tratamientos hay en cada una */}
-          <div role="tablist" className="glass tabs-scroll mt-4 flex max-w-full gap-1 overflow-x-auto rounded-full p-1 md:mt-5 md:inline-flex">
+          <div role="tablist" className="mt-4 flex max-w-full flex-wrap gap-2 md:glass md:mt-5 md:inline-flex md:flex-nowrap md:gap-1 md:rounded-full md:p-1">
             {treatments.map((t) => (
               <button
                 key={t.id}
                 role="tab"
                 aria-selected={tab === t.id}
                 onClick={() => setTab(t.id)}
-                className={`flex min-h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full px-4 text-small font-medium transition-colors md:px-5 ${tab === t.id ? 'bg-ink text-paper' : 'text-ink/70 hover:text-ink'}`}
+                className={`flex min-h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full px-4 text-small font-medium transition-colors md:px-5 ${tab === t.id ? 'bg-ink text-paper' : 'glass text-ink/70 hover:text-ink md:bg-transparent md:backdrop-blur-none'}`}
               >
                 {t.short}
                 <span className={`grid size-5 place-items-center rounded-full text-[0.68rem] ${tab === t.id ? 'bg-paper/20' : 'bg-ink/8'}`}>{t.items.length}</span>

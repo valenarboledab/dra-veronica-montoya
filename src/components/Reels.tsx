@@ -112,6 +112,29 @@ function Viewer({r, onClose}: {r: Reel; onClose: () => void}) {
   );
 }
 
+/** Reels publicados en el Instagram de EXORA: se abren en Instagram. */
+const IG_REELS = [
+  {url: 'https://www.instagram.com/reel/DKKfwtPt7Qr/', img: 'exora-regenerativa.webp', title: 'Míralo en nuestro Instagram'},
+  {url: 'https://www.instagram.com/reel/DJWzISQJXtO/', img: 'exora-exosomas.webp', title: 'Otro reel de EXORA'},
+];
+
+function IgCard({r}: {r: (typeof IG_REELS)[number]}) {
+  return (
+    <a href={r.url} target="_blank" rel="noopener" className="group relative aspect-[9/16] w-[62vw] max-w-[15rem] shrink-0 snap-start overflow-hidden rounded-[1.6rem] bg-line md:w-[15rem]">
+      <img src={media(r.img)} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />
+      <span className="absolute inset-0 bg-gradient-to-t from-[#3b3823]/85 via-[#3b3823]/15 to-transparent" />
+      <span className="absolute top-3 left-3 rounded-full bg-paper/90 px-2.5 py-1 text-[0.68rem] font-medium tracking-wide text-ink uppercase">Instagram</span>
+      <span className="absolute inset-0 m-auto grid size-14 place-items-center rounded-full bg-paper/30 text-xl text-paper backdrop-blur-sm" aria-hidden>
+        ▶
+      </span>
+      <span className="absolute inset-x-3 bottom-3 text-paper">
+        <span className="block font-display text-[1.25rem] leading-tight">{r.title}</span>
+        <span className="mt-1 block text-[0.75rem] text-paper/80">Ver el reel en Instagram →</span>
+      </span>
+    </a>
+  );
+}
+
 /** Franja de videos tipo reels al final de Inicio. */
 export function Reels() {
   const [open, setOpen] = useState<Reel | null>(null);
@@ -129,6 +152,9 @@ export function Reels() {
         </a>
       </div>
       <div className="tabs-scroll mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-5 px-5 pb-2 md:scroll-px-[7vw] md:px-[7vw]">
+        {IG_REELS.map((r) => (
+          <IgCard key={r.url} r={r} />
+        ))}
         {REELS.map((r) => (
           <Card key={r.id} r={r} onOpen={() => setOpen(r)} />
         ))}

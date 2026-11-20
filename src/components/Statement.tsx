@@ -32,7 +32,33 @@ export function Statement({reduced}: {reduced: boolean}) {
     if (!el) return;
     const chipAt = statement.chips.map((c) => tokens.indexOf(c.at));
     // en celular y tablet la frase se muestra completa, sin anclar el scroll (evita espacios vacíos y tirones)
-    if (reduced || window.matchMedia('(max-width: 1023px)').matches) {
+    if (!reduced && window.matchMedia('(max-width: 1023px)').matches) {
+      const words = items.current.filter(Boolean) as HTMLSpanElement[];
+      words.forEach((w) => (w.style.color = tone(0)));
+      const timers: ReturnType<typeof setTimeout>[] = [];
+      const io = new IntersectionObserver(
+        ([e]) => {
+          if (!e.isIntersecting) return;
+          io.disconnect();
+          words.forEach((w, i) =>
+            timers.push(
+              setTimeout(() => {
+                w.style.transition = 'color .5s ease';
+                w.style.color = tone(1);
+                w.classList.add('is-in');
+              }, i * 70),
+            ),
+          );
+        },
+        {threshold: 0.35},
+      );
+      if (para.current) io.observe(para.current);
+      return () => {
+        io.disconnect();
+        timers.forEach(clearTimeout);
+      };
+    }
+    if (reduced) {
       items.current.forEach((w) => {
         if (!w) return;
         w.style.color = tone(1);
