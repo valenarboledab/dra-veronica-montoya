@@ -188,8 +188,8 @@ function DoctorFilm() {
 
 function Doctor() {
   return (
-    <div className="grid items-center gap-8 md:grid-cols-[0.85fr_1.15fr] md:gap-[5vw]">
-      <div className="relative mx-auto aspect-[3/4] w-[50%] max-w-[12rem] md:aspect-[2/3] md:w-full md:max-w-[22rem]" data-reveal>
+    <div className="grid items-start gap-8 md:grid-cols-[0.85fr_1.15fr] md:gap-[5vw]">
+      <div className="relative mx-auto aspect-[3/4] w-[50%] max-w-[12rem] md:aspect-[2/3] md:w-[min(100%,22rem,calc((100svh-13rem)*0.6667))] md:max-w-none md:self-start md:sticky md:top-36" data-reveal>
         <div className="arch absolute inset-0 translate-x-2.5 -translate-y-2.5 border border-coral/35 md:translate-x-4 md:-translate-y-4" />
         <div className="arch relative size-full bg-white">
           <DoctorFilm />
