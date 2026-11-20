@@ -14,6 +14,7 @@ import {newConsentId, saveConsent} from '../lib/consents';
 import {AnatomyDialog} from './Anatomy';
 import {REELS, Viewer, type Reel} from './Reels';
 import {BotoxDemo} from './BotoxDemo';
+import {Eco} from './Eco';
 import {useReducedMotion} from '../hooks/useReducedMotion';
 
 const Eyebrow = ({children}: {children: string}) => (
@@ -449,7 +450,7 @@ function Agenda() {
 /** Las vistas de las pestañas que no son Inicio. */
 export function Page({view}: {view: Exclude<View, 'inicio'>}) {
   const root = useReveals<HTMLElement>();
-  const Body = {tratamientos: Treatments, combos: Combos, doctora: Doctor, cita: Visit, preguntas: Faq, agenda: Agenda, resultados: ResultsPage, privacidad: Privacy, pagar: Pay, panel: Panel, cotizacion: QuoteView}[view];
+  const Body = {tratamientos: Treatments, ecografias: Eco, combos: Combos, doctora: Doctor, cita: Visit, preguntas: Faq, agenda: Agenda, resultados: ResultsPage, privacidad: Privacy, pagar: Pay, panel: Panel, cotizacion: QuoteView}[view];
   return (
     <section
       ref={root}

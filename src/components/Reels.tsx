@@ -109,6 +109,17 @@ const PROCS: [string, string, string, string][] = [
   ["eco-ecografia", "Ecografías", "Ver por dentro, sin dolor", "Un aparatico con gel sobre la piel: las ondas de sonido muestran tus órganos, sin radiación y sin dolor."],
 ];
 REELS.push(
+  {
+    id: 'eco-combo',
+    video: 'proc-eco-combo.mp4',
+    poster: 'proc-eco-combo.webp',
+    tag: 'Ecografía + regenerativa',
+    title: 'Primero vemos, después tratamos',
+    text: 'La ecografía muestra dónde está un relleno o biopolímero bajo la piel, y el tratamiento se hace guiado por esa imagen.',
+    ask: 'Hola EXORA, quiero información sobre la ecografía facial y de rellenos.',
+    voz: 'voz-eco-combo.mp3',
+    solo: true,
+  },
   ...PROCS.map(([fig, tag, title, text]): Reel => ({
     id: fig,
     video: `proc-${fig}.mp4`,
