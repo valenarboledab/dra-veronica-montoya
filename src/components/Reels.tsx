@@ -120,6 +120,9 @@ REELS.push(
     voz: 'voz-eco-combo.mp3',
     solo: true,
   },
+  {id: 'eco-rellenos', video: 'proc-eco-combo.mp4', poster: 'proc-eco-combo.webp', tag: 'Ecografía de rellenos', title: 'Encontrar lo que no se ve', text: 'La ecografía ubica rellenos y biopolímeros bajo la piel y muestra si hay una obstrucción.', ask: 'Hola EXORA, quiero una ecografía de rellenos o biopolímeros.', voz: 'voz-eco-rellenos.mp3', fig: 'eco-rellenos', solo: true},
+  {id: 'eco-mapeo', video: 'proc-eco-mapeo.mp4', poster: 'proc-eco-mapeo.webp', tag: 'Mapeo facial', title: 'Un mapa de tu rostro', text: 'Capas de la piel, músculos y vasos, vistos antes de un procedimiento para hacerlo con más seguridad.', ask: 'Hola EXORA, quiero información sobre el mapeo facial por ecografía.', voz: 'voz-eco-mapeo.mp3', fig: 'eco-mapeo', solo: true},
+  {id: 'eco-piel', video: 'proc-eco-piel.mp4', poster: 'proc-eco-piel.webp', tag: 'Ecografía de piel', title: 'La piel, por dentro', text: 'Muestra cómo es una lesión de la piel y qué tan profunda está, sin cortar y sin dolor.', ask: 'Hola EXORA, quiero una ecografía de piel.', voz: 'voz-eco-piel.mp3', fig: 'eco-piel', solo: true},
   ...PROCS.map(([fig, tag, title, text]): Reel => ({
     id: fig,
     video: `proc-${fig}.mp4`,

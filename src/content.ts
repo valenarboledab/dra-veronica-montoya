@@ -149,9 +149,9 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     short: 'Ecografías',
     intro: 'Ecografías de todo el cuerpo y ecografía especializada de piel y rostro, realizadas por la Dra. Susana Zárate. Un servicio poco común en el Eje Cafetero.',
     items: [
-      {n: 'Mapeo facial por ecografía', d: 'Ecografía de alta resolución del rostro: muestra capas de la piel, músculos y vasos antes de un procedimiento, para planearlo con más seguridad.', p: 'Antes de rellenos o bioestimuladores', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
-      {n: 'Ecografía de rellenos y biopolímeros', d: 'Ubica ácido hialurónico, biopolímeros u otros materiales aplicados antes, y ayuda a ver obstrucciones o complicaciones para decidir cómo tratarlas.', p: 'Bultos, dolor o dudas sobre un relleno', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
-      {n: 'Ecografía de piel', d: 'Estudio por ultrasonido de lesiones y cambios de la piel y el tejido bajo ella.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
+      {n: 'Mapeo facial por ecografía', d: 'Ecografía de alta resolución del rostro: muestra capas de la piel, músculos y vasos antes de un procedimiento, para planearlo con más seguridad.', p: 'Antes de rellenos o bioestimuladores', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-mapeo'},
+      {n: 'Ecografía de rellenos y biopolímeros', d: 'Ubica ácido hialurónico, biopolímeros u otros materiales aplicados antes, y ayuda a ver obstrucciones o complicaciones para decidir cómo tratarlas.', p: 'Bultos, dolor o dudas sobre un relleno', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-rellenos'},
+      {n: 'Ecografía de piel', d: 'Estudio por ultrasonido de lesiones y cambios de la piel y el tejido bajo ella.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-piel'},
       {n: 'Ecografías de todo el cuerpo', d: 'Abdomen, tiroides, tejidos blandos y demás estudios por ultrasonido, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
     ],
   },
