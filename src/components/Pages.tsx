@@ -117,11 +117,11 @@ function DoctorFilm() {
   const cls = 'absolute inset-0 size-full object-cover object-[50%_20%] mix-blend-multiply transition-opacity duration-200';
   return (
     <>
-      <img src={media('doctora.webp')} alt="" className={cls} aria-hidden />
       <video ref={idle} src={media('vero-idle.mp4')} poster={media('vero-end.webp')} className={`${cls} opacity-0`} muted loop playsInline preload="auto" aria-hidden />
       <video
         ref={intro}
         src={media('vero-intro.mp4')}
+        poster={media('vero-end.webp')}
         className={cls}
         muted
         playsInline
