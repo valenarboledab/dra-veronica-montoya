@@ -466,3 +466,14 @@ html.lenis body {
     animation: none;
   }
 }
+
+/* Insignia "Powered by Netlify": la inyecta Netlify como iframe. Se tiñe en tonos
+   de la marca y casi transparente; al pasar el mouse se ve un poco más. */
+#nl-badge-frame {
+  filter: invert(1) sepia(0.5) saturate(1.6) hue-rotate(-18deg) brightness(1.04) !important;
+  opacity: 0.45 !important;
+  transition: opacity 0.3s;
+}
+#nl-badge-frame:hover {
+  opacity: 0.9 !important;
+}

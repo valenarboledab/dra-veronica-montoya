@@ -1,5 +1,5 @@
 import {useEffect, useRef, type CSSProperties} from 'react';
-import {hero, media, scans, wa, WA_SHOW} from '../content';
+import {hero, media, scans} from '../content';
 import {useReveals} from '../hooks/useReveals';
 import {lerp, range, smoothstep} from '../lib/math';
 import {onFrame} from '../lib/scroll';
@@ -240,30 +240,6 @@ export function Hero({reduced}: {reduced: boolean}) {
         <p className="max-w-[18rem] text-copy text-ink/75" data-reveal style={{'--d': '1300ms'} as CSSProperties}>
           {hero.sub}
         </p>
-        <div className="mt-6 flex flex-wrap items-center gap-5" data-reveal style={{'--d': '1450ms'} as CSSProperties}>
-          <a
-            href="#agenda"
-            className="group flex items-center gap-3 rounded-full bg-ink py-1.5 pr-1.5 pl-5 text-small font-medium text-paper transition-colors hover:bg-coral"
-          >
-            {hero.cta}
-            <span className="grid size-8 place-items-center rounded-full bg-blush text-ink transition-transform group-hover:translate-x-0.5">
-              <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 8h10M9 4l4 4-4 4" />
-              </svg>
-            </span>
-          </a>
-          <span className="flex items-center gap-2.5">
-            <a href={wa('Hola Dra. Verónica, quiero agendar una valoración.')} className="flex items-center gap-2.5">
-              <span className="grid size-9 place-items-center rounded-full bg-[#25d366] text-white">
-                <svg viewBox="0 0 24 24" className="size-[1.05rem]" fill="currentColor" aria-hidden><path d="M12 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.1-1.3A9.9 9.9 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.8c.1.2 1.9 2.9 4.6 4 1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z" /></svg>
-              </span>
-              <span className="text-[0.72rem] leading-tight text-mute">
-                <b className="block font-display text-[0.95rem] font-semibold tracking-[-0.02em] text-ink">{WA_SHOW}</b>
-                Solo con cita previa
-              </span>
-            </a>
-          </span>
-        </div>
       </div>
 
       {/* live reading card — top right */}
