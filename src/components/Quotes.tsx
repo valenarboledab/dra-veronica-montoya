@@ -2,6 +2,7 @@ import {useEffect, useMemo, useState} from 'react';
 import {media, treatments} from '../content';
 import {cop, decodeQuote, loadQuotes, quoteUrl, resetQuotes, saveQuotes, total, type Quote} from '../lib/quotes';
 import {ConsentText} from './Consent';
+import {PayBadges} from './Trust';
 
 const fecha = (s: string) => new Date(s).toLocaleDateString('es-CO', {day: 'numeric', month: 'short'});
 const ESTADOS: Record<Quote['estado'], [string, string]> = {
@@ -232,7 +233,8 @@ export function QuoteView() {
               <button type="button" onClick={pagar} aria-disabled={!ok} className={`mt-4 flex min-h-12 w-full items-center justify-center rounded-full text-small font-medium ${ok ? 'cursor-pointer bg-[#009ee3] text-white' : 'cursor-not-allowed bg-ink/20 text-paper'}`}>
                 Pagar {cop(t)} con Mercado Pago (simulado)
               </button>
-              <p className="mt-2 text-center text-[0.7rem] text-mute">Tarjeta de crédito o débito, PSE · pago seguro</p>
+              <PayBadges className="mt-3 justify-center" />
+              <p className="mt-3 text-center text-[0.7rem] text-mute">Productos con registro sanitario INVIMA vigente.</p>
             </>
           )}
         </div>

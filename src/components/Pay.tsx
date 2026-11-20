@@ -2,6 +2,7 @@ import {useState, type CSSProperties} from 'react';
 import {PAY} from '../content';
 import {BlurText} from './BlurText';
 import {WaLink} from './Consent';
+import {PayBadges, Trust} from './Trust';
 
 /** Pagos en línea. Funciona con enlaces de pago (Bold, Mercado Pago, Wompi, Addi…): basta con pegarlos en PAY en content.ts. */
 export function Pay() {
@@ -66,6 +67,10 @@ export function Pay() {
           </WaLink>
         </div>
       )}
+      <div className="mt-6">
+        <Trust compact />
+        <PayBadges className="mt-3" />
+      </div>
       <p className="mt-5 text-[0.72rem] text-mute">Si necesitas factura o tienes dudas con tu pago, escríbenos por WhatsApp.</p>
     </div>
   );

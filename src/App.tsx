@@ -8,6 +8,7 @@ import {Page} from './components/Pages';
 import {Split} from './components/Split';
 import {Statement} from './components/Statement';
 import {Reels} from './components/Reels';
+import {TrustStrip} from './components/Trust';
 import {useReducedMotion} from './hooks/useReducedMotion';
 import {useReveals} from './hooks/useReveals';
 import {scrollToY, startScroll} from './lib/scroll';
@@ -58,6 +59,7 @@ export default function App() {
           <Hero reduced={reduced} />
           <Split reduced={reduced} />
           <Statement reduced={reduced} />
+          <TrustStrip />
           <Reels />
         </>
       ) : (
