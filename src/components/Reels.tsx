@@ -2,10 +2,10 @@ import {useEffect, useRef, useState} from 'react';
 import {media} from '../content';
 import {WaLink} from './Consent';
 
-type Reel = {id: string; video: string; poster: string; tag: string; title: string; text: string; ask: string; pos?: string; link?: string};
+export type Reel = {id: string; video: string; poster: string; tag: string; title: string; text: string; ask: string; pos?: string; link?: string; voz?: string; fig?: string};
 
 /** Videos cortos al estilo "reels". Para sumar uno nuevo, se agrega aquí. */
-const REELS: Reel[] = [
+export const REELS: Reel[] = [
   {
     id: 'botox-celulas',
     video: 'proc-botox-celulas.mp4',
@@ -15,6 +15,7 @@ const REELS: Reel[] = [
     text: 'Con una aguja muy finita, unas gotitas llegan al músculo que está debajo de la arruga. El músculo descansa y la piel queda lisita. Dura unos 15 minutos.',
     ask: 'Hola EXORA, vi el video del bótox y quiero una valoración.',
     pos: '50% 50%',
+    voz: 'voz-botox.mp3',
   },
   {
     id: 'vero',
@@ -36,6 +37,44 @@ const REELS: Reel[] = [
     text: 'La gotita llega al músculo, la aguja sale y la arruga de arriba se alisa. Sin cortes ni vendas: vuelves a tu día.',
     ask: 'Hola EXORA, quiero información sobre bótox.',
     pos: '55% 50%',
+    voz: 'voz-botox.mp3',
+    fig: 'facial-botox',
+  },
+  {
+    id: 'hialuronico',
+    video: 'proc-hialuronico.mp4',
+    poster: 'proc-hialuronico.webp',
+    tag: 'Ácido hialurónico',
+    title: 'Volumen que se ve natural',
+    text: 'Un poquito de gel justo donde la piel perdió volumen. El ácido hialurónico atrae agua y rellena con suavidad: te ves descansada, no diferente.',
+    ask: 'Hola EXORA, quiero información sobre ácido hialurónico.',
+    pos: '40% 50%',
+    voz: 'voz-hialuronico.mp3',
+    fig: 'facial-hialuronico',
+  },
+  {
+    id: 'skinbooster',
+    video: 'proc-skinbooster.mp4',
+    poster: 'proc-skinbooster.webp',
+    tag: 'Skinbooster',
+    title: 'Gotitas de hidratación',
+    text: 'Muchas microgotas de hidratación, una junto a otra, justo debajo de la piel. Tu piel se llena de agua por dentro y se ve luminosa y elástica.',
+    ask: 'Hola EXORA, quiero información sobre skinbooster.',
+    pos: '45% 50%',
+    voz: 'voz-skinbooster.mp3',
+    fig: 'facial-skinbooster',
+  },
+  {
+    id: 'dermapen',
+    video: 'proc-dermapen.mp4',
+    poster: 'proc-dermapen.webp',
+    tag: 'Dermapen',
+    title: 'Tu piel fabrica colágeno nuevo',
+    text: 'Miles de canalitos microscópicos que tu piel repara creando colágeno nuevo. Poco a poco queda más lisa, firme y pareja.',
+    ask: 'Hola EXORA, quiero información sobre dermapen.',
+    pos: '50% 50%',
+    voz: 'voz-dermapen.mp3',
+    fig: 'facial-dermapen',
   },
   {
     id: 'valoracion',
@@ -72,15 +111,24 @@ function Card({r, onOpen}: {r: Reel; onOpen: () => void}) {
   );
 }
 
-function Viewer({r, onClose}: {r: Reel; onClose: () => void}) {
+export function Viewer({r, onClose}: {r: Reel; onClose: () => void}) {
   const ref = useRef<HTMLDialogElement>(null);
+  const voice = useRef<HTMLAudioElement>(null);
+  const [sound, setSound] = useState(true);
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
   useEffect(() => {
     const d = ref.current;
     if (!d) return;
-    d.showModal();
-    d.addEventListener('close', onClose);
-    return () => d.removeEventListener('close', onClose);
-  }, [onClose]);
+    if (!d.open) d.showModal();
+    voice.current?.play().catch(() => setSound(false));
+    const close = () => closeRef.current();
+    d.addEventListener('close', close);
+    return () => {
+      voice.current?.pause();
+      d.removeEventListener('close', close);
+    };
+  }, []);
   return (
     <dialog
       ref={ref}
@@ -93,6 +141,29 @@ function Viewer({r, onClose}: {r: Reel; onClose: () => void}) {
           ✕
         </button>
         <span className="absolute top-3 left-3 rounded-full bg-paper/90 px-2.5 py-1 text-[0.68rem] font-medium tracking-wide text-ink uppercase">{r.tag}</span>
+        {r.voz && (
+          <>
+            <audio ref={voice} src={media(r.voz)} preload="auto" />
+            <button
+              type="button"
+              onClick={() => {
+                const a = voice.current;
+                if (!a) return;
+                if (sound) {
+                  a.pause();
+                  setSound(false);
+                } else {
+                  a.currentTime = 0;
+                  a.play();
+                  setSound(true);
+                }
+              }}
+              className="absolute bottom-3 left-3 flex min-h-10 cursor-pointer items-center gap-2 rounded-full bg-[#3b3823]/60 px-4 text-small text-paper backdrop-blur-sm"
+            >
+              {sound ? '🔊 Escuchando' : '🔈 Escuchar explicación'}
+            </button>
+          </>
+        )}
       </div>
       <div className="p-5">
         <p className="font-display text-[1.6rem] leading-tight">{r.title}</p>

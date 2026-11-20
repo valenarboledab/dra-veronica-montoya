@@ -11,6 +11,7 @@ import {QuoteView} from './Quotes';
 import {Panel} from './Panel';
 import {ConsentText, consentLine, WaLink} from './Consent';
 import {AnatomyDialog} from './Anatomy';
+import {REELS, Viewer, type Reel} from './Reels';
 import {useReducedMotion} from '../hooks/useReducedMotion';
 
 const Eyebrow = ({children}: {children: string}) => (
@@ -47,6 +48,7 @@ const SHOW_3D = false;
 function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number]; i: number}) {
   const [open, setOpen] = useState(false);
   const [fig, setFig] = useState(false);
+  const [vid, setVid] = useState<Reel | null>(null);
   return (
     <article
       className="card-in glass flex flex-col gap-2 rounded-2xl p-4 md:gap-3 md:rounded-3xl md:p-6"
@@ -62,6 +64,11 @@ function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number
           <WaLink text={`Hola EXORA, quiero información sobre ${it.n.toLowerCase()}.`} className="text-small font-semibold text-coral hover:underline">
             Preguntar →
           </WaLink>
+          {it.f && REELS.some((r) => r.fig === it.f) && (
+            <button type="button" onClick={() => setVid(REELS.find((r) => r.fig === it.f) ?? null)} className="min-h-9 cursor-pointer text-small font-semibold text-ink/75 underline-offset-2 hover:underline">
+              ▶ Ver video
+            </button>
+          )}
           {SHOW_3D && it.f && (
             <button type="button" onClick={() => setFig(true)} className="min-h-9 cursor-pointer text-small font-semibold text-ink/70 underline-offset-2 hover:underline">
               Ver en 3D
@@ -77,6 +84,7 @@ function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number
           {open ? 'Ocultar' : 'Ver detalles'}
         </button>
       </div>
+      {vid && <Viewer r={vid} onClose={() => setVid(null)} />}
       {fig && it.f && <AnatomyDialog id={it.f} n={i + 1} onClose={() => setFig(false)} />}
     </article>
   );
