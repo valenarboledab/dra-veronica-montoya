@@ -16,6 +16,9 @@ export function Footer() {
               {l.label}
             </a>
           ))}
+          <a href="#panel" className="text-paper/45 transition-colors hover:text-peach" aria-label="Acceso del equipo EXORA">
+            Acceso equipo
+          </a>
         </span>
       </div>
     </footer>

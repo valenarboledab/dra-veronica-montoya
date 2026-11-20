@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {useMemo, useState, useEffect} from 'react';
 import {media, treatments} from '../content';
 import {comboDesc, cop, loadQuotes, quoteUrl, resetQuotes, saveQuotes, subtotal, total, type Quote} from '../lib/quotes';
 import {Banner, ESTADOS, fecha} from './Quotes';
@@ -12,7 +12,10 @@ const SKEY = 'exora-panel-user';
 
 const waTo = (cel: string, msg: string) => {
   const tel = cel.replace(/\D/g, '');
-  window.open(`https://wa.me/${tel ? '57' + tel.slice(-10) : ''}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  const url = `https://wa.me/${tel ? '57' + tel.slice(-10) : ''}?text=${encodeURIComponent(msg)}`;
+  // En celular abre la app directamente; en computador, una pestaña nueva.
+  if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) window.location.href = url;
+  else if (!window.open(url, '_blank')) window.location.href = url;
 };
 const first = (n: string) => n.trim().split(' ')[0];
 const vencida = (q: Quote) => q.estado !== 'pagada' && new Date(q.vence).getTime() < Date.now();
@@ -46,6 +49,9 @@ function Login({onIn}: {onIn: (name: string) => void}) {
           Simulación · <b>vero@exora.co</b> o <b>susana@exora.co</b>
           <br />
           contraseña <b>exora2026</b>
+        </p>
+        <p className="text-center text-[0.72rem] leading-relaxed text-mute">
+          Tip: en el celular, abre esta página y toca <b>Compartir → Agregar a inicio</b>. Te queda como una app de EXORA.
         </p>
       </form>
     </div>
@@ -168,25 +174,48 @@ const quoteMsg = (q: Quote, who: string) =>
 /** Tras crear la cotización: enviar el enlace por WhatsApp o compartir el PDF. */
 function Sent({q, who, onClose}: {q: Quote; who: string; onClose: () => void}) {
   const [msg, setMsg] = useState('');
+  const [pdf, setPdf] = useState<File | null>(null);
+  const text = quoteMsg(q, who);
+  // El PDF se prepara antes del toque: el celular solo deja compartir si es inmediato.
+  useEffect(() => {
+    let ok = true;
+    import('../lib/quotePdf').then(({quotePdf}) => quotePdf(q, {demo: true})).then((b) => ok && setPdf(new File([b], `Cotizacion-EXORA-${q.id}.pdf`, {type: 'application/pdf'})));
+    return () => {
+      ok = false;
+    };
+  }, [q]);
+  const sharePdf = () => {
+    if (!pdf) return setMsg('Preparando el PDF… intenta de nuevo en un segundo.');
+    const nav = navigator as Navigator & {canShare?: (d: object) => boolean};
+    if (nav.canShare?.({files: [pdf]})) {
+      nav.share({files: [pdf], text}).then(() => setMsg('PDF compartido.'), () => {});
+      return;
+    }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(pdf);
+    a.download = pdf.name;
+    a.click();
+    setMsg('PDF descargado: adjúntalo en el chat de WhatsApp.');
+  };
+  const copy = () =>
+    navigator.clipboard?.writeText(text).then(
+      () => setMsg('Mensaje copiado: pégalo en el chat de la paciente.'),
+      () => setMsg('No se pudo copiar.'),
+    );
   return (
     <div className="mt-4 grid gap-3 rounded-3xl bg-coral p-5 text-paper">
       <b className="font-display text-[1.5rem]">Cotización {q.id} lista ✓</b>
       <span className="text-small text-paper/85">
         {q.paciente} · {cop(total(q))}
       </span>
-      <button type="button" onClick={() => waTo(q.celular, quoteMsg(q, who))} className="min-h-13 cursor-pointer rounded-full bg-[#25d366] py-3 text-[1rem] font-semibold text-white">
+      <button type="button" onClick={() => waTo(q.celular, text)} className="min-h-13 cursor-pointer rounded-full bg-[#25d366] py-3 text-[1rem] font-semibold text-white">
         Enviar enlace por WhatsApp
       </button>
-      <button
-        type="button"
-        onClick={async () => {
-          const {sharePdf} = await import('../lib/quotePdf');
-          const r = await sharePdf(q, quoteMsg(q, who));
-          setMsg(r === 'downloaded' ? 'PDF descargado: adjúntalo en el chat de WhatsApp.' : r === 'shared' ? 'PDF compartido.' : '');
-        }}
-        className="min-h-12 cursor-pointer rounded-full bg-paper py-3 text-small font-semibold text-coral"
-      >
-        Compartir PDF de la cotización
+      <button type="button" onClick={sharePdf} className="min-h-12 cursor-pointer rounded-full bg-paper py-3 text-small font-semibold text-coral">
+        {pdf ? 'Compartir PDF de la cotización' : 'Preparando PDF…'}
+      </button>
+      <button type="button" onClick={copy} className="min-h-12 cursor-pointer rounded-full border border-paper/60 py-3 text-small font-semibold text-paper">
+        Copiar mensaje con el enlace
       </button>
       {msg && <span className="text-[0.8rem]">{msg}</span>}
       <button type="button" onClick={onClose} className="cursor-pointer text-small text-paper/80 underline">
