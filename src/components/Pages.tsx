@@ -114,7 +114,7 @@ function DoctorFilm() {
       gestures.forEach((g) => window.removeEventListener(g, kick));
     };
   }, []);
-  const cls = 'absolute inset-0 size-full object-cover object-[50%_20%] transition-opacity duration-200';
+  const cls = 'absolute inset-0 size-full object-cover object-[50%_20%] mix-blend-multiply transition-opacity duration-200';
   return (
     <>
       <img src={media('doctora.webp')} alt="" className={cls} aria-hidden />
@@ -231,9 +231,9 @@ function Agenda() {
   const [part, setPart] = useState('Mañana');
   const [warn, setWarn] = useState(false);
   const link = wa(`Hola Dra. Verónica, soy ${name.trim()}. Me interesa: ${what}. Para: ${when.toLowerCase()}, en la ${part.toLowerCase()}.`);
-  const field = 'min-h-12 rounded-xl border border-line bg-paper px-3.5 text-[1rem] text-ink focus:border-coral focus:outline-none';
+  const field = 'min-h-12 w-full min-w-0 rounded-xl border border-line bg-paper px-3.5 text-[1rem] text-ink focus:border-coral focus:outline-none';
   return (
-    <div className="grid items-start gap-10 md:grid-cols-2 md:gap-[5vw]">
+    <div className="grid items-start gap-10 md:grid-cols-2 md:gap-[5vw] [&>*]:min-w-0">
       <div>
         <Eyebrow>Agenda</Eyebrow>
         <BlurText lines={['Agenda tu', '*valoración*']} className="mt-3 font-display text-title font-medium" delay={100} />
@@ -256,7 +256,7 @@ function Agenda() {
           ))}
         </ul>
       </div>
-      <form className="glass grid gap-4 rounded-3xl p-6 md:p-8" onSubmit={(e) => e.preventDefault()} data-reveal style={{'--d': '300ms'} as CSSProperties}>
+      <form className="glass grid min-w-0 gap-4 rounded-3xl p-6 md:p-8 [&_label]:min-w-0" onSubmit={(e) => e.preventDefault()} data-reveal style={{'--d': '300ms'} as CSSProperties}>
         <label className="grid gap-1.5 text-small font-medium">
           Tu nombre
           <input className={field} value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" placeholder="Ej. Laura Gómez" />

@@ -6,7 +6,7 @@ export function Nav({view}: {view: View}) {
   const home = view === 'inicio';
   return (
     <header
-      className={`inset-x-0 top-0 z-30 px-5 pt-5 md:px-7 ${home ? 'absolute bg-paper/80 pb-3 backdrop-blur-md lg:bg-transparent lg:pb-0 lg:backdrop-blur-none' : 'border-b border-line bg-paper/85 pb-4 backdrop-blur-md'}`}
+      className={`inset-x-0 top-0 z-30 px-5 pt-5 md:px-7 ${home ? 'relative bg-paper pb-3 lg:absolute lg:bg-transparent lg:pb-0' : 'border-b border-line bg-paper/85 pb-4 backdrop-blur-md'}`}
     >
       <div className="grid grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[1fr_auto_1fr]">
         <a href="#inicio" className={`flex items-center gap-2 lg:col-start-2 lg:row-start-1 ${home ? 'lg:glass lg:rounded-full lg:py-1.5 lg:pr-4 lg:pl-2' : ''}`}>

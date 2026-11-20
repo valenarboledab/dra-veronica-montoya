@@ -23,7 +23,7 @@ function bokehTexture() {
   bg.addColorStop(1, '#fbe5da');
   g.fillStyle = bg;
   g.fillRect(0, 0, c.width, c.height);
-  g.filter = 'blur(46px)';
+  // degradados radiales en vez de ctx.filter: Safari (iPhone) ignora el blur del canvas
   const blobs: [number, number, number, string][] = [
     [0.12, 0.22, 230, 'rgba(229,154,161,0.42)'],
     [0.86, 0.18, 190, 'rgba(246,205,185,0.9)'],
@@ -34,10 +34,11 @@ function bokehTexture() {
     [0.34, 0.3, 70, 'rgba(255,255,255,0.9)'],
   ];
   for (const [x, y, r, col] of blobs) {
-    g.fillStyle = col;
-    g.beginPath();
-    g.arc(x * c.width, y * c.height, r, 0, Math.PI * 2);
-    g.fill();
+    const rg = g.createRadialGradient(x * c.width, y * c.height, 0, x * c.width, y * c.height, r * 1.6);
+    rg.addColorStop(0, col);
+    rg.addColorStop(1, col.replace(/[\d.]+\)$/, '0)'));
+    g.fillStyle = rg;
+    g.fillRect(0, 0, c.width, c.height);
   }
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;

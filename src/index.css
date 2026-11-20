@@ -168,7 +168,6 @@ html.lenis body {
   .hero-frame {
     position: relative;
     height: 60svh;
-    margin-top: 6.25rem; /* debajo del menú, para que su cara no quede tapada */
   }
   /* en el celular todo aparece al llegar, sin las esperas pensadas para escritorio */
   [data-reveal],
@@ -294,6 +293,12 @@ html.lenis body {
 }
 .focus.is-on .ring-label {
   opacity: 1;
+}
+@media (max-width: 767px) {
+  .ring-label,
+  .leader {
+    display: none;
+  }
 }
 @keyframes spin {
   to {
