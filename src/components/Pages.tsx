@@ -2,6 +2,8 @@ import {useEffect, useRef, useState, type CSSProperties} from 'react';
 import {doctor, faq, media, treatments, visit, wa, WA_SHOW, type View} from '../content';
 import {useReveals} from '../hooks/useReveals';
 import {BlurText} from './BlurText';
+import {DropScene} from './DropScene';
+import {useReducedMotion} from '../hooks/useReducedMotion';
 
 const Eyebrow = ({children}: {children: string}) => (
   <p className="flex items-center gap-2 text-micro font-medium text-mute uppercase" data-reveal>
@@ -10,31 +12,39 @@ const Eyebrow = ({children}: {children: string}) => (
   </p>
 );
 
+const dropWord: Record<string, string> = {facial: 'Facial', intimo: 'Íntimo', regen: 'Regenerativa'};
+
 function Treatments() {
   const [tab, setTab] = useState(treatments[0].id);
+  const reduced = useReducedMotion();
   const group = treatments.find((t) => t.id === tab)!;
   return (
     <>
-      <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div className="grid items-center gap-8 md:grid-cols-[1fr_1.1fr] md:gap-[4vw]">
         <div>
           <Eyebrow>Tratamientos</Eyebrow>
           <BlurText lines={['Pensados', 'para *ti*']} className="mt-3 font-display text-title font-medium" delay={100} />
+          <p className="mt-5 max-w-[30rem] text-copy text-ink/70">{group.intro}</p>
+          <div role="tablist" className="glass tabs-scroll mt-7 inline-flex max-w-full gap-1 overflow-x-auto rounded-full p-1">
+            {treatments.map((t) => (
+              <button
+                key={t.id}
+                role="tab"
+                aria-selected={tab === t.id}
+                onClick={() => setTab(t.id)}
+                className={`min-h-11 shrink-0 cursor-pointer rounded-full px-5 text-small font-medium transition-colors ${tab === t.id ? 'bg-ink text-paper' : 'text-ink/70 hover:text-ink'}`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
         </div>
-        <div role="tablist" className="glass tabs-scroll flex gap-1 overflow-x-auto rounded-full p-1" data-reveal style={{'--d': '300ms'} as CSSProperties}>
-          {treatments.map((t) => (
-            <button
-              key={t.id}
-              role="tab"
-              aria-selected={tab === t.id}
-              onClick={() => setTab(t.id)}
-              className={`min-h-11 shrink-0 cursor-pointer rounded-full px-5 text-small font-medium transition-colors ${tab === t.id ? 'bg-ink text-paper' : 'text-ink/70 hover:text-ink'}`}
-            >
-              {t.label}
-            </button>
-          ))}
+        {/* la gota: la palabra detrás cambia con la pestaña */}
+        <div className="aspect-[4/3] w-full md:aspect-auto md:h-[28rem]" aria-hidden>
+          <DropScene word={dropWord[tab]} reduced={reduced} />
         </div>
       </div>
-      <p className="mt-6 max-w-[40rem] text-copy text-ink/70">{group.intro}</p>
+
       <div key={tab} className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {group.items.map((it, i) => (
           <article
@@ -89,8 +99,18 @@ function DoctorFilm() {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return show();
     const toIdle = () => w.play().then(show).catch(show);
     v.addEventListener('ended', toIdle);
-    v.play().catch(show);
-    return () => v.removeEventListener('ended', toIdle);
+    // si el celular bloquea el autoplay, arranca al primer toque o scroll
+    const kick = () => {
+      if (v.paused && !v.ended && v.style.opacity !== '0') v.play().catch(() => {});
+      else if (v.ended && w.paused) w.play().catch(() => {});
+    };
+    const gestures = ['touchstart', 'pointerdown', 'scroll'] as const;
+    gestures.forEach((g) => window.addEventListener(g, kick, {passive: true}));
+    v.play().catch(() => {});
+    return () => {
+      v.removeEventListener('ended', toIdle);
+      gestures.forEach((g) => window.removeEventListener(g, kick));
+    };
   }, []);
   const cls = 'absolute inset-0 size-full object-cover object-[50%_20%] transition-opacity duration-200';
   return (

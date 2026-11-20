@@ -68,7 +68,7 @@ export function Statement({reduced}: {reduced: boolean}) {
   }, [reduced, root]);
 
   return (
-    <section ref={root} className="relative h-[260vh] bg-paper">
+    <section ref={root} className="relative h-[190vh] bg-paper md:h-[260vh]">
       <div className="sticky top-0 flex h-svh items-center overflow-hidden px-5 md:px-[7vw]">
         <div className="relative z-10 max-w-[64rem]">
           <p className="mb-6 flex items-center gap-2 text-micro font-medium text-mute uppercase md:mb-8" data-reveal>

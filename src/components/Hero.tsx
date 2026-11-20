@@ -92,11 +92,32 @@ export function Hero({reduced}: {reduced: boolean}) {
     v.addEventListener('ended', toIdle);
     w.addEventListener('playing', onIdlePlaying, {once: true});
     // Autoplay refused: skip straight to her looking at you (idle poster is that frame).
+    let refused = false;
     v.play().catch(() => {
+      refused = true;
       phase = 'idle';
       showIdle();
       toIdle();
     });
+
+    // Celulares con ahorro de batería bloquean el autoplay: al primer toque o
+    // scroll del usuario se arranca el video desde el principio.
+    const kick = () => {
+      if (!refused && !v.paused) return;
+      if (refused) {
+        refused = false;
+        phase = 'intro';
+        v.style.opacity = '1';
+        w.style.opacity = '0';
+        v.currentTime = 0;
+        v.play().catch(() => {
+          phase = 'idle';
+          showIdle();
+        });
+      } else if (phase === 'idle' && w.paused) w.play().catch(() => {});
+    };
+    const gestures = ['touchstart', 'pointerdown', 'scroll', 'keydown'] as const;
+    gestures.forEach((g) => window.addEventListener(g, kick, {passive: true}));
 
     const io = new IntersectionObserver(([e]) => {
       visible = e.isIntersecting;
@@ -126,6 +147,7 @@ export function Hero({reduced}: {reduced: boolean}) {
       io.disconnect();
       v.removeEventListener('ended', toIdle);
       w.removeEventListener('playing', onIdlePlaying);
+      gestures.forEach((g) => window.removeEventListener(g, kick));
     };
   }, [reduced, root]);
 

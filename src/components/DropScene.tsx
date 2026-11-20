@@ -1,8 +1,6 @@
-import {useEffect, useRef, type CSSProperties} from 'react';
+import {useEffect, useRef} from 'react';
 import * as THREE from 'three';
 import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
-import {botox, wa} from '../content';
-import {useReveals} from '../hooks/useReveals';
 import {clamp} from '../lib/math';
 import {onFrame} from '../lib/scroll';
 
@@ -53,6 +51,9 @@ function wordTexture(word: string) {
   const g = c.getContext('2d')!;
   g.fillStyle = '#1e1816';
   g.font = FONT;
+  // encoge la letra si la palabra es larga, para que quepa siempre
+  const fit = Math.min(1, 2200 / g.measureText(word).width);
+  if (fit < 1) g.font = FONT.replace('380px', `${Math.floor(380 * fit)}px`);
   g.textAlign = 'center';
   g.textBaseline = 'middle';
   // tracking cerrado como el resto de títulos
@@ -203,9 +204,16 @@ function buildMotes() {
   return {points: new THREE.Points(geo, mat), seed};
 }
 
-export function Botox({reduced}: {reduced: boolean}) {
-  const root = useReveals<HTMLElement>();
+/** Gota 3D con una palabra detrás que cambia (se usa en Tratamientos). */
+export function DropScene({word, reduced}: {word: string; reduced: boolean}) {
+  const root = useRef<HTMLDivElement>(null);
   const mount = useRef<HTMLDivElement>(null);
+  const wordRef = useRef(word);
+  const repaint = useRef<() => void>(() => {});
+  useEffect(() => {
+    wordRef.current = word;
+    repaint.current();
+  }, [word]);
 
   useEffect(() => {
     const el = mount.current;
@@ -228,7 +236,7 @@ export function Botox({reduced}: {reduced: boolean}) {
       near.disconnect();
       teardown?.();
     };
-  }, [reduced, root]);
+  }, [reduced]);
 
   function init(el: HTMLDivElement, section: HTMLElement) {
     let disposed = false;
@@ -246,7 +254,7 @@ export function Botox({reduced}: {reduced: boolean}) {
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
     const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
-    camera.position.set(0, 0.05, 7.2);
+    camera.position.set(0, 0.05, 5.6);
 
     const key = new THREE.DirectionalLight(0xfff4ec, 1.6);
     key.position.set(3, 4, 5);
@@ -259,10 +267,14 @@ export function Botox({reduced}: {reduced: boolean}) {
     scene.add(word);
     const paintWord = () => {
       wordMat.map?.dispose();
-      wordMat.map = wordTexture(botox.word);
+      wordMat.map = wordTexture(wordRef.current);
       wordMat.needsUpdate = true;
     };
     paintWord();
+    repaint.current = () => {
+      paintWord();
+      if (reduced) requestAnimationFrame(() => draw(0));
+    };
     document.fonts?.ready.then(() => !disposed && paintWord());
 
     const drop = buildDrop();
@@ -285,8 +297,8 @@ export function Botox({reduced}: {reduced: boolean}) {
       const visW = visH * camera.aspect;
       const ww = Math.min(visW * 0.96, visH * 3.2);
       word.scale.set(ww, ww * (640 / 2400), 1);
-      word.position.y = camera.aspect < 0.9 ? 1.45 : 0.02;
-      const s = camera.aspect < 0.9 ? 0.62 : 0.86;
+      word.position.y = 0.62;
+      const s = camera.aspect < 0.9 ? 0.6 : 0.74;
       vial.scale.setScalar(s);
     };
     const ro = new ResizeObserver(resize);
@@ -302,7 +314,7 @@ export function Botox({reduced}: {reduced: boolean}) {
       const rect = section.getBoundingClientRect();
       const p = clamp((window.innerHeight - rect.top) / (window.innerHeight + rect.height));
       // sostiene su lugar como un colibrí: oscilación corta y un giro lento con el scroll
-      vial.position.y = reduced ? 0 : Math.sin(t * 1.7) * 0.05 + Math.sin(t * 0.6) * 0.03;
+      vial.position.y = -0.32 + (reduced ? 0 : Math.sin(t * 1.7) * 0.05 + Math.sin(t * 0.6) * 0.03);
       vial.rotation.y = reduced ? 0.4 : Math.sin(t * 0.45) * 0.3 + (p - 0.5) * 1.6;
       vial.rotation.z = reduced ? 0 : Math.sin(t * 0.8) * 0.05;
       vial.rotation.x = reduced ? 0.2 : 0.25 + Math.sin(t * 0.35) * 0.08;
@@ -341,59 +353,8 @@ export function Botox({reduced}: {reduced: boolean}) {
   }
 
   return (
-    <section ref={root} className="relative h-svh min-h-[620px] overflow-hidden bg-blush" aria-labelledby="botox-title">
-      <h2 id="botox-title" className="sr-only">
-        {botox.word}: {botox.line}
-      </h2>
+    <div ref={root} className="relative size-full overflow-hidden rounded-[2rem]">
       <div ref={mount} className="absolute inset-0 [&>canvas]:block [&>canvas]:size-full" />
-
-      <div className="pointer-events-none relative z-10 flex h-full flex-col justify-between px-5 pt-10 pb-8 md:px-[6vw] md:pt-14 md:pb-12">
-        <div className="flex items-start justify-between gap-6">
-          <p
-            className="glass inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-micro font-medium text-ink/80 uppercase"
-            data-reveal
-          >
-            <span className="size-1.5 rounded-full bg-coral" />
-            {botox.eyebrow}
-          </p>
-          <p className="hidden max-w-[17rem] text-right text-copy text-ink/75 md:block" data-reveal style={{'--d': '200ms'} as CSSProperties}>
-            {botox.line}
-          </p>
-        </div>
-
-        <div className="flex flex-col items-start gap-3 md:flex-row md:items-end md:justify-between">
-          <div className="flex items-end gap-3">
-            {botox.cards.map((c, i) => (
-              <div
-                key={c.label}
-                className="glass w-[9.5rem] rounded-2xl p-4 md:w-[11.5rem]"
-                style={{'--d': `${300 + i * 150}ms`, marginBottom: i === 0 ? '2.4rem' : 0} as CSSProperties}
-                data-reveal
-              >
-                <p className="text-micro font-medium text-mute uppercase">{c.label}</p>
-                <p className="mt-2 font-display text-figure font-medium whitespace-nowrap">{c.value}</p>
-                <p className="mt-1 text-[0.72rem] text-mute">{c.note}</p>
-              </div>
-            ))}
-          </div>
-          <p className="max-w-[20rem] text-small text-ink/75 md:hidden" data-reveal>
-            {botox.line}
-          </p>
-          <a
-            href={wa('Hola Dra. Verónica, quiero información sobre bótox.')}
-            className="group pointer-events-auto flex items-center gap-3 rounded-full bg-ink py-1.5 pr-1.5 pl-5 text-small font-medium text-paper transition-colors hover:bg-coral"
-            data-reveal
-            style={{'--d': '600ms'} as CSSProperties}
-          >
-            {botox.cta}
-            <span className="grid size-8 place-items-center rounded-full bg-blush text-ink transition-transform group-hover:translate-x-0.5">
-              <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 8h10M9 4l4 4-4 4" />
-              </svg>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
+    </div>
   );
 }

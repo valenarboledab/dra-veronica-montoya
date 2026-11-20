@@ -167,7 +167,14 @@ html.lenis body {
 @media (max-width: 767px) {
   .hero-frame {
     position: relative;
-    height: 62svh;
+    height: 60svh;
+    margin-top: 6.25rem; /* debajo del menú, para que su cara no quede tapada */
+  }
+  /* en el celular todo aparece al llegar, sin las esperas pensadas para escritorio */
+  [data-reveal],
+  .gate {
+    transition-delay: 0ms !important;
+    transition-duration: 0.6s;
   }
   .hero-stage {
     --sw: max(100vw, 110.2svh);
