@@ -14,16 +14,19 @@ export const views = [
 ] as const;
 export type View = (typeof views)[number]['id'] | 'agenda' | 'resultados' | 'privacidad';
 
+export const ADDRESS = 'Calle 25N #13-41, Consultorio 9, Mall Privilegio, Armenia';
+
 export const brand = {
-  name: 'Dra. Verónica Montoya',
+  name: 'EXORA',
+  by: 'Dra. Verónica Montoya',
   short: 'Verónica Montoya',
-  tag: 'Medicina estética',
+  tag: 'Medicina estética, regenerativa y ecografías',
   contact: 'WhatsApp',
   app: 'Agendar',
 };
 
 export const hero = {
-  eyebrow: 'Medicina estética · Armenia, Quindío',
+  eyebrow: 'Estética · Regenerativa · Ecografías · Armenia',
   lead: 'Tu piel,',
   accent: 'por fin',
   tail: 'entendida.',
@@ -129,6 +132,15 @@ export const treatments: {id: string; label: string; short: string; intro: strin
       {n: 'Ácido hialurónico en rodillas', d: 'Lubrica la articulación de la rodilla para disminuir el dolor y mejorar el movimiento.', p: 'Desgaste de rodilla (artrosis)', s: '30 min', e: 'Según valoración'},
     ],
   },
+  {
+    id: 'eco',
+    label: 'Ecografías',
+    short: 'Ecografías',
+    intro: 'Estudios por ultrasonido en el consultorio, con cita previa. Escríbenos por WhatsApp para saber qué ecografía necesitas.',
+    items: [
+      {n: 'Ecografías', d: 'Estudio por ultrasonido realizado en el consultorio, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa'},
+    ],
+  },
 ];
 
 export const doctor = {
@@ -136,8 +148,8 @@ export const doctor = {
   body: 'Médica general con enfoque en medicina estética, en Armenia. Su consulta se basa en una idea sencilla: que te veas descansada y luminosa, nunca transformada. Escucha primero, explica cada opción con claridad y diseña un plan a tu medida.',
   facts: [
     ['Formación', 'Médica general con enfoque en medicina estética'],
-    ['Enfoque', 'Estética facial, íntima y medicina regenerativa'],
-    ['Consultorio', 'Mall Privilegio, Armenia, Quindío'],
+    ['Enfoque', 'Estética facial e íntima, medicina regenerativa y ecografías'],
+    ['Consultorio', ADDRESS],
     ['Horario', '8:00 a. m. – 4:00 p. m. · solo con cita previa'],
   ],
 };

@@ -12,6 +12,7 @@ export function Nav({view}: {view: View}) {
         <a href="#inicio" className="glass flex items-center gap-2 justify-self-start rounded-full py-1.5 pr-4 pl-1.5 xl:col-start-2 xl:row-start-1 xl:justify-self-center">
           <Mark className="size-8" />
           <span className="font-display text-[1.05rem] font-semibold tracking-[-0.035em] whitespace-nowrap sm:text-[1.2rem] md:text-[1.35rem]">{brand.name}</span>
+          <span className="hidden border-l border-ink/15 pl-2 text-[0.72rem] leading-tight text-ink/60 sm:block">{brand.by}</span>
         </a>
 
         <div className="col-start-2 flex items-center gap-5 justify-self-end xl:col-start-3">

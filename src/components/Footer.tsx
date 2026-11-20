@@ -8,6 +8,7 @@ export function Footer() {
         <span className="flex items-center gap-2 text-ink">
           <Mark className="size-5" />
           <span className="font-display text-base font-semibold tracking-[-0.03em]">{brand.name}</span>
+          <span className="text-mute">· {brand.by}</span>
           <span className="text-mute">© {new Date().getFullYear()}</span>
         </span>
         <p className="max-w-[28rem]">{footer.note}</p>

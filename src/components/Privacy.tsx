@@ -11,7 +11,7 @@ const sections: [string, string[]][] = [
   [
     '1. Responsable del tratamiento',
     [
-      'Verónica Montoya, médica general con enfoque en medicina estética (en adelante, "la Responsable"). Consultorio en el Mall Privilegio, Armenia, Quindío, Colombia. Contacto: WhatsApp ' +
+      'Verónica Montoya, médica general con enfoque en medicina estética (en adelante, "la Responsable"). Consultorio: Calle 25N #13-41, Consultorio 9, Mall Privilegio, Armenia, Quindío, Colombia. Contacto: WhatsApp ' +
         WA_SHOW +
         '.',
     ],

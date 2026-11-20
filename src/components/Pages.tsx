@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState, type CSSProperties} from 'react';
-import {doctor, faq, media, treatments, visit, wa, WA_SHOW, type View} from '../content';
+import {doctor, faq, media, treatments, visit, wa, WA_SHOW, type View, ADDRESS} from '../content';
 import {useReveals} from '../hooks/useReveals';
 import {BlurText} from './BlurText';
 import {DropScene} from './DropScene';
@@ -272,7 +272,7 @@ function Agenda() {
         </p>
         <ul className="mt-8 grid gap-5" data-reveal style={{'--d': '550ms'} as CSSProperties}>
           {[
-            ['Consultorio', 'Mall Privilegio, Armenia, Quindío'],
+            ['Consultorio', ADDRESS],
             ['Horario', '8:00 a. m. – 4:00 p. m. · solo con cita previa'],
             ['WhatsApp', WA_SHOW],
           ].map(([k, v]) => (
