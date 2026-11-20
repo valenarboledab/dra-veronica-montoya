@@ -114,7 +114,7 @@ function DoctorFilm() {
       gestures.forEach((g) => window.removeEventListener(g, kick));
     };
   }, []);
-  const cls = 'absolute inset-0 size-full object-cover object-[50%_20%] mix-blend-multiply transition-opacity duration-200';
+  const cls = 'absolute inset-0 size-full object-cover object-[50%_20%] transition-opacity duration-200';
   return (
     <>
       <video ref={idle} src={media('vero-idle.mp4')} poster={media('vero-end.webp')} className={`${cls} opacity-0`} muted loop playsInline preload="auto" aria-hidden />
@@ -137,7 +137,7 @@ function Doctor() {
     <div className="grid items-center gap-10 md:grid-cols-[0.85fr_1.15fr] md:gap-[5vw]">
       <div className="relative mx-auto aspect-[2/3] w-full max-w-[22rem]" data-reveal>
         <div className="arch absolute inset-0 translate-x-4 -translate-y-4 border border-coral/35" />
-        <div className="arch relative size-full bg-blush">
+        <div className="arch relative size-full bg-white">
           <DoctorFilm />
         </div>
       </div>
