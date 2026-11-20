@@ -3,6 +3,8 @@ import {doctor, faq, media, treatments, visit, wa, WA_SHOW, type View} from '../
 import {useReveals} from '../hooks/useReveals';
 import {BlurText} from './BlurText';
 import {DropScene} from './DropScene';
+import {Results} from './BeforeAfter';
+import {Privacy} from './Privacy';
 import {useReducedMotion} from '../hooks/useReducedMotion';
 
 const Eyebrow = ({children}: {children: string}) => (
@@ -209,6 +211,19 @@ function Faq() {
   );
 }
 
+function ResultsPage() {
+  return (
+    <>
+      <Eyebrow>Resultados</Eyebrow>
+      <BlurText lines={['Antes y', '*después*']} className="mt-3 font-display text-title font-medium" delay={100} />
+      <p className="mt-5 mb-10 max-w-[32rem] text-copy text-ink/70">
+        Pasa el mouse o desliza el dedo sobre cada foto para ver el cambio.
+      </p>
+      <Results />
+    </>
+  );
+}
+
 function Agenda() {
   const [name, setName] = useState('');
   const [what, setWhat] = useState('Una valoración general');
@@ -291,7 +306,15 @@ function Agenda() {
         <p className="text-[0.72rem] text-mute" aria-live="polite">
           {warn && !name.trim()
             ? 'Escribe tu nombre para continuar.'
-            : 'Al continuar aceptas el tratamiento de tus datos para agendar tu cita (Ley 1581 de 2012).'}
+            : (
+                <>
+                  Al continuar aceptas el tratamiento de tus datos para agendar tu cita, según nuestra{' '}
+                  <a href="#privacidad" className="underline hover:text-coral">
+                    política de datos
+                  </a>
+                  .
+                </>
+              )}
         </p>
       </form>
     </div>
@@ -301,7 +324,7 @@ function Agenda() {
 /** Las vistas de las pestañas que no son Inicio. */
 export function Page({view}: {view: Exclude<View, 'inicio'>}) {
   const root = useReveals<HTMLElement>();
-  const Body = {tratamientos: Treatments, doctora: Doctor, cita: Visit, preguntas: Faq, agenda: Agenda}[view];
+  const Body = {tratamientos: Treatments, doctora: Doctor, cita: Visit, preguntas: Faq, agenda: Agenda, resultados: ResultsPage, privacidad: Privacy}[view];
   return (
     <section
       ref={root}

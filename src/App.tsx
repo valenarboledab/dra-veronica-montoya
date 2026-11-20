@@ -10,7 +10,7 @@ import {useReducedMotion} from './hooks/useReducedMotion';
 import {useReveals} from './hooks/useReveals';
 import {scrollToY, startScroll} from './lib/scroll';
 
-const ids: string[] = [...views.map((v) => v.id), 'agenda'];
+const ids: string[] = [...views.map((v) => v.id), 'agenda', 'resultados', 'privacidad'];
 const fromHash = (): View => {
   const h = location.hash.slice(1);
   return (ids.includes(h) ? h : 'inicio') as View;

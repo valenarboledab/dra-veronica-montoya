@@ -13,8 +13,8 @@ export function Footer() {
         <p className="max-w-[28rem]">{footer.note}</p>
         <span className="flex gap-5">
           {footer.links.map((l) => (
-            <a key={l} href="#" className="transition-colors hover:text-coral">
-              {l}
+            <a key={l.label} href={l.href} className="transition-colors hover:text-coral">
+              {l.label}
             </a>
           ))}
         </span>

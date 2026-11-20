@@ -12,7 +12,7 @@ export const views = [
   {id: 'cita', label: 'Tu primera cita'},
   {id: 'preguntas', label: 'Preguntas'},
 ] as const;
-export type View = (typeof views)[number]['id'] | 'agenda';
+export type View = (typeof views)[number]['id'] | 'agenda' | 'resultados' | 'privacidad';
 
 export const brand = {
   name: 'Dra. Verónica Montoya',
@@ -158,7 +158,10 @@ export const faq = [
 
 export const footer = {
   note: 'La información de este sitio es educativa y no reemplaza una consulta médica. Todo procedimiento requiere valoración previa y consentimiento informado; los resultados varían en cada paciente.',
-  links: ['Tratamiento de datos', 'Instagram'],
+  links: [
+    {label: 'Tratamiento de datos', href: '#privacidad'},
+    {label: 'Instagram', href: '#'},
+  ],
 };
 
 /** Hero de bótox al estilo Colibrí: un vial flotando con la palabra gigante detrás. */
@@ -172,3 +175,11 @@ export const botox = {
   ],
   cta: 'Preguntar por bótox',
 };
+
+/**
+ * Antes y después. SOLO fotos reales de pacientes con consentimiento firmado.
+ * Para agregar un caso: pon las dos fotos en public/media (misma encuadre y luz)
+ * y añade aquí {title, before, after, note}. Mientras esté vacío, la página
+ * #resultados muestra marcos vacíos y no aparece en el menú.
+ */
+export const beforeAfter: {title: string; before: string; after: string; note: string}[] = [];
