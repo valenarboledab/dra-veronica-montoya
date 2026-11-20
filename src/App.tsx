@@ -35,7 +35,7 @@ export default function App() {
       window.removeEventListener('resize', check);
     };
   }, []);
-  const bubble = view !== 'inicio' || pastHero;
+  const bubble = (view !== 'inicio' || pastHero) && view !== 'panel';
 
   useEffect(() => startScroll(reduced), [reduced]);
 

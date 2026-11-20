@@ -1,4 +1,4 @@
-import {useMemo, useState, useEffect} from 'react';
+import {useMemo, useState, useEffect, useRef} from 'react';
 import {media, treatments} from '../content';
 import {comboDesc, cop, loadQuotes, quoteUrl, resetQuotes, saveQuotes, subtotal, total, type Quote} from '../lib/quotes';
 import {Banner, ESTADOS, fecha} from './Quotes';
@@ -164,6 +164,17 @@ function Quick({who, onDone}: {who: string; onDone: (q: Quote) => void}) {
       >
         Crear cotización
       </button>
+      {!ready && (
+        <p className="-mt-2 text-center text-[0.8rem] text-mute">
+          {name.trim().length < 2
+            ? 'Falta el nombre de la paciente.'
+            : cel.replace(/\D/g, '').length < 10
+              ? 'Falta el celular (10 dígitos).'
+              : picked.length === 0
+                ? 'Toca al menos un tratamiento.'
+                : 'Escribe el valor de cada tratamiento.'}
+        </p>
+      )}
     </div>
   );
 }
@@ -176,6 +187,9 @@ function Sent({q, who, onClose}: {q: Quote; who: string; onClose: () => void}) {
   const [msg, setMsg] = useState('');
   const [pdf, setPdf] = useState<File | null>(null);
   const text = quoteMsg(q, who);
+  const box = useRef<HTMLDivElement>(null);
+  // En el celular el formulario se cierra y la tarjeta quedaba fuera de la vista.
+  useEffect(() => box.current?.scrollIntoView({behavior: 'smooth', block: 'center'}), []);
   // El PDF se prepara antes del toque: el celular solo deja compartir si es inmediato.
   useEffect(() => {
     let ok = true;
@@ -203,7 +217,7 @@ function Sent({q, who, onClose}: {q: Quote; who: string; onClose: () => void}) {
       () => setMsg('No se pudo copiar.'),
     );
   return (
-    <div className="mt-4 grid gap-3 rounded-3xl bg-coral p-5 text-paper">
+    <div ref={box} className="mt-4 grid scroll-mt-28 gap-3 rounded-3xl bg-coral p-5 text-paper">
       <b className="font-display text-[1.5rem]">Cotización {q.id} lista ✓</b>
       <span className="text-small text-paper/85">
         {q.paciente} · {cop(total(q))}
