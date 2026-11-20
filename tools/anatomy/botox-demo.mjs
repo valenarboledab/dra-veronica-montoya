@@ -79,42 +79,50 @@ function skin(wrinkle) {
   return out.join("");
 }
 
-// jeringa en el plano del corte (por delante de la cara), de modo que se ve la aguja llegar al músculo
-function syringe() {
-  const x = -22, y = Y1 + 7, tip = 12;
-  const F = G.frameOf([x, y, tip], [0, 0, 1], [1, 0, 0], [0, 1, 0]);
+// puntos que la doctora marca sobre la piel, a lado y lado de la arruga
+const DOTS = [[-40, -14], [-24, 6], [24, -6], [40, 14], [-8, -22], [8, 22]];
+const ZTOP = Z.piel[1];
+const marks = (lit) => DOTS.map(([x, y]) => S(k.cylinder(x, y, 1.9, ZTOP, 0.5, P, 18), { tone: "hi", lit }) ).join("");
+
+// jeringa vertical con la punta en (x, y, ZTOP); se dibuja en el primer punto y se traslada
+function syringe(x, y) {
+  const F = G.frameOf([x, y, ZTOP], [0, 0, 1], [1, 0, 0], [0, 1, 0]);
   const out = [];
-  out.push(S(G.disc(0, 44, 0.6, F, P), { tone: "hi", lit: true }));
-  out.push(S(G.disc(44, 48, 1.8, F, P), { tone: "mid" }));
-  out.push(S(G.solidOf([[48, 0], [48, 5.4], [86, 5.4], [86, 0]], F, P), { tone: "hi", inner: Ln([54, 60, 66, 72, 78].map((s) => G.arcOf(F, s, 5.4, P)).join(""), { tone: "lo" }) }));
-  out.push(S(G.prismOf(F, [[-10, -3], [10, -3], [10, 3], [-10, 3]], 86, 88, P), { tone: "mid" }));
-  out.push(S(G.disc(88, 102, 1.8, F, P), { tone: "mid" }));
-  out.push(S(G.disc(102, 104.5, 5, F, P), { tone: "mid" }));
+  out.push(S(G.disc(0, 14, 0.55, F, P), { tone: "hi", lit: true }));
+  out.push(S(G.disc(14, 18, 1.8, F, P), { tone: "mid" }));
+  out.push(S(G.solidOf([[18, 0], [18, 5.4], [56, 5.4], [56, 0]], F, P), { tone: "hi", inner: Ln([24, 30, 36, 42, 48].map((s) => G.arcOf(F, s, 5.4, P)).join(""), { tone: "lo" }) }));
+  out.push(S(G.prismOf(F, [[-10, -3], [10, -3], [10, 3], [-10, 3]], 56, 58, P), { tone: "mid" }));
+  out.push(S(G.disc(58, 72, 1.8, F, P), { tone: "mid" }));
+  out.push(S(G.disc(72, 74.5, 5, F, P), { tone: "mid" }));
   return out.join("");
 }
 
-const drop = () => '<g class="gota">' + S(G.sphereOf([-22, Y1 + 1, 12], 4.2, P), { tone: "hi", lit: true }) + '</g>';
+// gotitas: una en cada punto, debajo de la piel (en el músculo se marcan en la superficie con un halo)
+const drops = () => DOTS.map(([x, y], i) => `<g class="gota" data-drop="${i}">${S(G.sphereOf([x, y, ZTOP + 2.2], 2.6, P), { tone: "hi", lit: true })}</g>`).join("");
 
-// sombra de "rayitas" de alivio sobre la piel lisa
 const sparkle = () => {
-  const c = at([20, 0, Z.piel[1] + 8]);
+  const c = at([20, 0, ZTOP + 8]);
   const lines = [0, 1, 2, 3].map((i) => { const a = (i * Math.PI) / 4; return `M${(c[0] + Math.cos(a) * 3).toFixed(1)} ${(c[1] + Math.sin(a) * 3).toFixed(1)}L${(c[0] + Math.cos(a) * 7).toFixed(1)} ${(c[1] + Math.sin(a) * 7).toFixed(1)}M${(c[0] - Math.cos(a) * 3).toFixed(1)} ${(c[1] - Math.sin(a) * 3).toFixed(1)}L${(c[0] - Math.cos(a) * 7).toFixed(1)} ${(c[1] - Math.sin(a) * 7).toFixed(1)}`; });
   return `<path class="iso-line" data-tone="lit" data-free="" d="${lines.join("")}" style="stroke-width:1.2"/>`;
 };
 
 const state = (tight, wrinkle, extra = "") => [plate(), muscle(tight), fat(), skin(wrinkle), extra].join("");
+const HOPS = DOTS.map(([x, y]) => k.translateAlong(P, [x - DOTS[0][0], y - DOTS[0][1], 0]));
+const LIFT = k.translateAlong(P, [0, 0, 22]);
 
 const STEPS = [
-  { svg: state(true, true), n: "1", title: "El músculo se aprieta", text: "Cuando frunces el ceño o te ríes mucho, un músculo chiquito debajo de la piel se aprieta como un acordeón. Con los años, la piel de arriba se dobla y aparece una arruga." },
-  { svg: state(true, true, `<g data-part="syringe">${syringe()}</g><g data-part="drop">${drop()}</g>`), n: "2", title: "Una gotita lo calma", text: "La doctora pone una gotita de bótox, con una aguja muy finita, justo en ese músculo. La gotita le dice al músculo: «tranquilo, descansa un poquito»." },
-  { svg: state(false, false, sparkle()), n: "3", title: "La piel queda lisita", text: "El músculo deja de apretar tanto, entonces la piel ya no se dobla y la arruga se suaviza. ¡Y puedes seguir sonriendo! El efecto dura unos meses." },
+  { svg: state(true, true, `<g data-part="marks">${marks(true)}</g>`), n: "1", title: "Limpiamos y marcamos", time: "5 min",
+    text: "Primero la doctora habla contigo, limpia bien tu piel y dibuja unos puntitos donde va a aplicar. Si quieres, te pone frío o una crema para que lo sientas menos." },
+  { svg: state(true, true, `${marks(false)}${drops()}<g data-part="syringe">${syringe(DOTS[0][0], DOTS[0][1])}</g>`), n: "2", title: "Gotitas en cada puntito", time: "10–15 min",
+    text: "Con una aguja muy finita pone una gotita en cada puntito, uno por uno. Se siente como un pellizquito rápido. No hay cortes ni vendas." },
+  { svg: state(false, false, sparkle()), n: "3", title: "¡Listo! Vuelves a tu día", time: "3 a 14 días",
+    text: "Puedes irte enseguida. Ese día no te acuestes en las 4 horas siguientes, no te frotes la zona y evita el ejercicio fuerte. En 3 a 7 días empiezas a ver la piel más lisita, y a los 15 días vuelves a un control." },
 ];
-
 const figure = (inner) => k.figureSvg({ width: W, height: H, label: "La piel como un pastel de tres capas: piel arriba, grasita en el medio y músculo abajo.", body: [inner] });
 
 const css = readFileSync(join(HERE, "kit/iso.css"), "utf8") + readFileSync(join(HERE, "exora.css"), "utf8");
 const html = `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Así funciona el bótox · EXORA</title>
+<title>Tu cita de bótox, paso a paso · EXORA</title>
 <style>
 @font-face{font-family:GrandSlang;src:url(../fonts/GrandSlang-Roman.woff2) format("woff2")}
 @font-face{font-family:Bitter;src:url(../fonts/Bitter-Regular.woff2) format("woff2")}
@@ -141,31 +149,39 @@ h1{font-family:GrandSlang,Georgia,serif;font-weight:400;font-size:clamp(2rem,6vw
 .text{margin-top:16px;min-height:7.5em}
 .text h2{font-family:GrandSlang,Georgia,serif;font-weight:400;font-size:1.9rem;margin:0}
 .text p{font-size:1.15rem;line-height:1.55;margin:.4em 0 0}
+.time{display:inline-block;background:#e6e1cf;border-radius:999px;padding:3px 10px;font-size:.85rem;margin-bottom:6px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:14px}
+.facts div{background:#f5f2ea;border-radius:16px;padding:12px 14px}.facts b{display:block;font-size:.85rem;color:#7f7a52;font-weight:400}.facts span{font-size:1.05rem}
+[data-drop]{opacity:0;transition:opacity .4s ease}
 .note{font-size:.78rem;color:#8e8a6c;margin-top:22px}
 </style></head>
 <body class="iso" data-theme="light"><div class="wrap">
 <div class="kicker">EXORA · explicado fácil</div>
-<h1>¿Cómo funciona el bótox?</h1>
-<p style="font-size:1.1rem;margin:.3em 0 0">Imagina que tu piel es un pastel de tres capas.</p>
+<h1>Tu cita de bótox, paso a paso</h1>
+<p style="font-size:1.1rem;margin:.3em 0 0">Esto es lo que te vamos a hacer, contado fácil. Tu piel es como un pastel de tres capas.</p>
 <div class="card">
   <div class="stage">${STEPS.map((s, i) => `<div data-step="${i}" class="${i === 0 ? "on" : ""}">${figure(s.svg)}</div>`).join("")}</div>
   <div class="legend"><span><i style="background:#faf6f0"></i>Piel</span><span><i style="background:#f1e6c2"></i>Grasita</span><span><i style="background:#d9b49a"></i>Músculo</span><span><i style="background:#a87350;border-radius:50%"></i>La gotita</span></div>
 </div>
-<div class="steps">${STEPS.map((s, i) => `<button data-go="${i}" class="${i === 0 ? "on" : ""}">${s.n}. ${s.title.split(" ").slice(0, 2).join(" ")}</button>`).join("")}</div>
-<div class="text" aria-live="polite"><h2 id="t">${STEPS[0].title}</h2><p id="p">${STEPS[0].text}</p></div>
+<div class="steps">${STEPS.map((s, i) => `<button data-go="${i}" class="${i === 0 ? "on" : ""}">Paso ${s.n}</button>`).join("")}</div>
+<div class="text" aria-live="polite"><div class="time" id="m">⏱ ${STEPS[0].time}</div><h2 id="t">${STEPS[0].title}</h2><p id="p">${STEPS[0].text}</p></div>\n<div class="facts"><div><b>¿Cuánto dura la cita?</b><span>Unos 20 a 30 minutos</span></div><div><b>¿Duele?</b><span>Poquito: como un pellizquito</span></div><div><b>¿Cuánto dura el efecto?</b><span>Unos 3 a 4 meses</span></div></div>
 <p class="note">Dibujo educativo y simplificado: las capas no están a escala. La doctora te explica tu caso en la valoración.</p>
 </div>
 <script>
-const STEPS=${JSON.stringify(STEPS.map(({ title, text }) => ({ title, text })))};
-const LIFT=${JSON.stringify(k.translateAlong(P, [0, 0, 34]))}.match(/translate\\(([-\\d.]+)[ ,]+([-\\d.]+)\\)/);
+const STEPS=${JSON.stringify(STEPS.map(({ title, text, time }) => ({ title, text, time })))};
+const HOPS=${JSON.stringify(HOPS)}, LIFT=${JSON.stringify(LIFT)};
+const xy=(t)=>{const m=/translate\\(([-\\d.]+)[ ,]+([-\\d.]+)\\)/.exec(t);return m?[+m[1],+m[2]]:[0,0]};
 const panes=[...document.querySelectorAll('[data-step]')],btns=[...document.querySelectorAll('[data-go]')];
 const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let cur=0,timer=0;
-function show(i){cur=i;panes.forEach((p,j)=>p.classList.toggle('on',j===i));btns.forEach((b,j)=>b.classList.toggle('on',j===i));
-document.getElementById('t').textContent=STEPS[i].title;document.getElementById('p').textContent=STEPS[i].text;
-const syr=panes[1].querySelector('[data-part=syringe]'),drop=panes[1].querySelector('[data-part=drop]');
-if(i===1){syr.style.transform='translate('+LIFT[1]+'px,'+LIFT[2]+'px)';drop.style.opacity=0;requestAnimationFrame(()=>requestAnimationFrame(()=>{syr.style.transform='translate(0,0)';drop.style.opacity=1}))}}
-function auto(){clearTimeout(timer);if(still)return;timer=setTimeout(()=>{show((cur+1)%3);auto()},6500)}
+let cur=0,timer=0,hop=[];
+function place(syr,i,up){const [x,y]=xy(HOPS[i]),[lx,ly]=xy(LIFT);syr.style.transform='translate('+(x+(up?lx:0))+'px,'+(y+(up?ly:0))+'px)'}
+function show(i){cur=i;hop.forEach(clearTimeout);hop=[];panes.forEach((p,j)=>p.classList.toggle('on',j===i));btns.forEach((b,j)=>b.classList.toggle('on',j===i));
+document.getElementById('t').textContent=STEPS[i].title;document.getElementById('p').textContent=STEPS[i].text;document.getElementById('m').textContent='⏱ '+STEPS[i].time;
+const syr=panes[1].querySelector('[data-part=syringe]'),ds=[...panes[1].querySelectorAll('[data-drop]')];
+syr.style.transition='none';place(syr,0,true);ds.forEach(d=>d.style.opacity=still&&i===1?1:0);
+if(i===1&&!still){requestAnimationFrame(()=>{syr.style.transition='transform .55s cubic-bezier(.32,.72,0,1)';
+ds.forEach((d,j)=>{const t=j*900;hop.push(setTimeout(()=>place(syr,j,true),t),setTimeout(()=>place(syr,j,false),t+420),setTimeout(()=>{d.style.opacity=1},t+620),setTimeout(()=>place(syr,j,true),t+760))})})}}
+function auto(){clearTimeout(timer);if(still)return;timer=setTimeout(()=>{show((cur+1)%3);auto()},cur===1?7600:6500)}
 btns.forEach((b,i)=>b.addEventListener('click',()=>{show(i);auto()}));
 show(0);auto();
 </script></body></html>`;
