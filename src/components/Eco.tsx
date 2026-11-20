@@ -42,10 +42,11 @@ export function Eco() {
       <div className="grid items-center gap-8 md:grid-cols-[1.05fr_1fr] md:gap-[5vw] [&>*]:min-w-0">
         <div>
           <p className="text-micro font-medium tracking-[0.14em] text-coral uppercase">Ecografías · Dra. Susana Zárate</p>
-          <BlurText lines={['Mira lo que pasa', '*dentro* de ti']} className="mt-3 font-display text-title font-medium" delay={100} />
+          <BlurText lines={['La precisión de la imagen,', 'el *cuidado* de cada paciente']} className="mt-3 font-display text-title font-medium" delay={100} />
           <p className="mt-5 max-w-[32rem] text-copy text-ink/75">
-            Ecografías de todo el cuerpo y una especialidad que casi no se encuentra en el Eje Cafetero: <b className="font-semibold text-ink">la ecografía de piel y rostro</b>. Respuestas claras, en un consultorio tranquilo de Armenia.
+            Estudios ecográficos de todo el cuerpo y un área especializada en <b className="font-semibold text-ink">ecografía dermatológica y facial</b>, para evaluar en detalle la piel y los tejidos del rostro.
           </p>
+          <p className="mt-3 max-w-[32rem] text-copy text-ink/75">Diagnóstico, confianza y atención en un entorno tranquilo en Armenia, Quindío.</p>
           <ul className="mt-5 flex flex-wrap gap-2">
             {SELLOS.map((s) => (
               <li key={s} className="glass rounded-full px-3.5 py-1.5 text-[0.82rem]">
