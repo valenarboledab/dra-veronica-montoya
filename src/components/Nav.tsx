@@ -1,5 +1,5 @@
 import type {CSSProperties} from 'react';
-import {brand, views, wa, type View} from '../content';
+import {brand, views, type View} from '../content';
 import {Mark} from './icons';
 
 /** Pestañas: cada una abre su propia vista (#inicio, #tratamientos…), no un scroll infinito. */
@@ -16,12 +16,6 @@ export function Nav({view}: {view: View}) {
         </a>
 
         <div className="col-start-2 flex items-center gap-5 justify-self-end lg:col-start-3" data-reveal style={{'--d': '450ms'} as CSSProperties}>
-          <a
-            href={wa('Hola Dra. Verónica, quiero agendar una valoración.')}
-            className="hidden text-small font-medium text-ink/80 transition-colors hover:text-coral sm:block"
-          >
-            {brand.contact}
-          </a>
           <a href="#agenda" className="rounded-full bg-ink px-4 py-2 text-small font-medium text-paper transition-colors hover:bg-coral">
             {brand.app}
           </a>
