@@ -5,6 +5,7 @@ import {BlurText} from './BlurText';
 import {DropScene} from './DropScene';
 import {Results} from './BeforeAfter';
 import {Privacy} from './Privacy';
+import {Pay} from './Pay';
 import {ConsentText, consentLine, WaLink} from './Consent';
 import {AnatomyDialog} from './Anatomy';
 import {useReducedMotion} from '../hooks/useReducedMotion';
@@ -410,7 +411,7 @@ function Agenda() {
 /** Las vistas de las pestañas que no son Inicio. */
 export function Page({view}: {view: Exclude<View, 'inicio'>}) {
   const root = useReveals<HTMLElement>();
-  const Body = {tratamientos: Treatments, doctora: Doctor, cita: Visit, preguntas: Faq, agenda: Agenda, resultados: ResultsPage, privacidad: Privacy}[view];
+  const Body = {tratamientos: Treatments, doctora: Doctor, cita: Visit, preguntas: Faq, agenda: Agenda, resultados: ResultsPage, privacidad: Privacy, pagar: Pay}[view];
   return (
     <section
       ref={root}

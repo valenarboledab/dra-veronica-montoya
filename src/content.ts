@@ -12,7 +12,7 @@ export const views = [
   {id: 'cita', label: 'Tu primera cita'},
   {id: 'preguntas', label: 'Preguntas'},
 ] as const;
-export type View = (typeof views)[number]['id'] | 'agenda' | 'resultados' | 'privacidad';
+export type View = (typeof views)[number]['id'] | 'agenda' | 'resultados' | 'privacidad' | 'pagar';
 
 export const ADDRESS = 'Calle 25N #13-41, Consultorio 9, Mall Privilegio, Armenia';
 
@@ -191,6 +191,7 @@ export const faq = [
 export const footer = {
   note: 'La información de este sitio es educativa y no reemplaza una consulta médica. Todo procedimiento requiere valoración previa y consentimiento informado; los resultados varían en cada paciente.',
   links: [
+    {label: 'Pagar', href: '#pagar'},
     {label: 'Tratamiento de datos', href: '#privacidad'},
     {label: 'Instagram @exora.regeneracion', href: 'https://www.instagram.com/exora.regeneracion/'},
   ],
@@ -217,3 +218,10 @@ export const botox = {
 export const beforeAfter: {title: string; before: string; after: string; note: string}[] = [];
 
 export const POLICY_VERSION = '19-11-2026';
+
+/** Enlaces de pago. Pegar aquí el enlace de cada plataforma cuando la cuenta esté activa; mientras estén vacíos, el botón pide el enlace por WhatsApp. */
+export const PAY = {
+  tarjeta: '', // p. ej. enlace abierto de Bold o "Tu link" de Mercado Pago (el cliente escribe el valor)
+  cuotas: '', // p. ej. enlace de pago de Addi
+  cuotasProveedor: 'Addi · Sistecrédito',
+};
