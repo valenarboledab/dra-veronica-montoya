@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import {media} from '../content';
 import {WaLink} from './Consent';
 
-export type Reel = {id: string; video: string; poster: string; tag: string; title: string; text: string; ask: string; pos?: string; link?: string; voz?: string; fig?: string};
+export type Reel = {id: string; video: string; poster: string; tag: string; title: string; text: string; ask: string; pos?: string; link?: string; voz?: string; fig?: string; solo?: boolean};
 
 /** Videos cortos al estilo "reels". Para sumar uno nuevo, se agrega aquí. */
 export const REELS: Reel[] = [
@@ -88,6 +88,40 @@ export const REELS: Reel[] = [
     pos: '50% 25%',
   },
 ];
+
+/** Videos de cada procedimiento: se ven con "Ver video" en Tratamientos (no en la tira del inicio). */
+const PROCS: [string, string, string, string][] = [
+  ["facial-bioestimuladores", "Bioestimuladores de colágeno", "Tu piel fabrica su propio colágeno", "Unas perlitas que despiertan tu propio colágeno. Con las semanas la piel se pone más firme, poco a poco y natural."],
+  ["facial-exosomas", "Exosomas", "Mensajeros que renuevan tu piel", "Mensajeros diminutos que les avisan a las células de tu piel que se renueven: mejor textura y mejor recuperación."],
+  ["facial-peeling", "Peeling", "Una piel más pareja y fresca", "Una capa suave suelta las células viejas y manchadas, y debajo aparece una piel más pareja."],
+  ["intimo-bioestimuladores", "Bioestimuladores íntimos", "Firmeza desde tu propio colágeno", "Unas perlitas que estimulan tu colágeno. Con las semanas el tejido gana firmeza."],
+  ["intimo-hialuronico", "Ácido hialurónico en labios mayores", "Volumen suave y natural", "Un poquito de ácido hialurónico devuelve volumen e hidratación con un resultado armónico."],
+  ["intimo-peeling", "Peeling genital", "Un tono más parejo", "Suelta poco a poco las células más oscuras de la superficie, con sesiones suaves y seguras."],
+  ["intimo-skinbooster", "Skinbooster íntimo", "Hidratación por dentro", "Muchas gotitas de hidratación justo debajo de la superficie: más confort y elasticidad."],
+  ["intimo-hilos", "Hilos íntimos", "Colágeno alrededor de cada hilo", "Hilos muy delgaditos bajo la piel. Alrededor de cada uno tu cuerpo fabrica colágeno nuevo."],
+  ["regen-biopuntura", "Biopuntura", "Justo en el punto del dolor", "Una gotita de medicamento biológico en el punto exacto donde el músculo está tenso e inflamado."],
+  ["regen-bioinfusion", "Bioinfusión", "Vitaminas directo a tus células", "Vitaminas, minerales y antioxidantes entran por una venita y viajan por la sangre hasta tus células."],
+  ["regen-exosomas", "Exosomas", "Mensajes de reparación", "Los exosomas llevan mensajes de reparación a los tejidos lastimados y el cuerpo se recupera mejor."],
+  ["regen-celulas", "Células madre", "Apoyo a la reparación del cuerpo", "Ayudan al cuerpo en su propia reparación. Solo se indican después de una valoración completa."],
+  ["regen-intraarticular", "Aplicaciones intraarticulares", "Alivio dentro de la articulación", "El medicamento llega justo dentro de la articulación para calmar la inflamación y moverte con menos dolor."],
+  ["regen-hialuronico-rodilla", "Ácido hialurónico en rodillas", "Un lubricante para tu rodilla", "Cubre el cartílago como un lubricante suave: la rodilla se desliza mejor y duele menos."],
+  ["capilar-tricologia", "Tricología", "Nutrientes hasta la raíz", "Revisamos tu cuero cabelludo y llevamos nutrientes a la raíz para que el cabello débil se fortalezca."],
+  ["eco-ecografia", "Ecografías", "Ver por dentro, sin dolor", "Un aparatico con gel sobre la piel: las ondas de sonido muestran tus órganos, sin radiación y sin dolor."],
+];
+REELS.push(
+  ...PROCS.map(([fig, tag, title, text]): Reel => ({
+    id: fig,
+    video: `proc-${fig}.mp4`,
+    poster: `proc-${fig}.webp`,
+    tag,
+    title,
+    text,
+    ask: `Hola EXORA, quiero información sobre ${tag.toLowerCase()}.`,
+    voz: `voz-${fig}.mp3`,
+    fig,
+    solo: true,
+  })),
+);
 
 function Card({r, onOpen}: {r: Reel; onOpen: () => void}) {
   const v = useRef<HTMLVideoElement>(null);
@@ -226,7 +260,7 @@ export function Reels() {
         {IG_REELS.map((r) => (
           <IgCard key={r.url} r={r} />
         ))}
-        {REELS.map((r) => (
+        {REELS.filter((r) => !r.solo).map((r) => (
           <Card key={r.id} r={r} onOpen={() => setOpen(r)} />
         ))}
         <a
