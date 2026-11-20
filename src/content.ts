@@ -32,7 +32,7 @@ export const hero = {
   lead: 'Tu piel,',
   accent: 'por fin',
   tail: 'entendida.',
-  sub: 'EXORA reúne a la Dra. Verónica Montoya, en medicina regenerativa, y a la Dra. Susana Zárate, en ecografías. Te valoramos con calma para que te veas descansada, nunca transformada.',
+  sub: 'EXORA reúne a la Dra. Verónica Montoya, en medicina regenerativa, y a la Dra. Susana Zárate, en ecografías y mapeo facial. Te valoramos con calma para que te veas descansada, nunca transformada.',
   cta: 'Agenda tu valoración',
   card: {
     title: 'Valoración facial',
@@ -147,17 +147,20 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     id: 'eco',
     label: 'Ecografías',
     short: 'Ecografías',
-    intro: 'Ecografías y ultrasonidos realizados por la Dra. Susana Zárate en el consultorio, con cita previa. Escríbenos por WhatsApp para saber qué estudio necesitas.',
+    intro: 'Ecografías de todo el cuerpo y ecografía especializada de piel y rostro, realizadas por la Dra. Susana Zárate. Un servicio poco común en el Eje Cafetero.',
     items: [
-      {n: 'Ecografías y ultrasonidos', d: 'Estudios por ultrasonido realizados por la Dra. Susana Zárate, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
+      {n: 'Mapeo facial por ecografía', d: 'Ecografía de alta resolución del rostro: muestra capas de la piel, músculos y vasos antes de un procedimiento, para planearlo con más seguridad.', p: 'Antes de rellenos o bioestimuladores', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
+      {n: 'Ecografía de rellenos y biopolímeros', d: 'Ubica ácido hialurónico, biopolímeros u otros materiales aplicados antes, y ayuda a ver obstrucciones o complicaciones para decidir cómo tratarlas.', p: 'Bultos, dolor o dudas sobre un relleno', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
+      {n: 'Ecografía de piel', d: 'Estudio por ultrasonido de lesiones y cambios de la piel y el tejido bajo ella.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
+      {n: 'Ecografías de todo el cuerpo', d: 'Abdomen, tiroides, tejidos blandos y demás estudios por ultrasonido, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
     ],
   },
 ];
 
 export const susana = {
   name: 'Dra. Susana Zárate',
-  role: 'Ecografías y ultrasonidos',
-  body: 'Socia de EXORA. Realiza las ecografías y los ultrasonidos del consultorio, con cita previa.',
+  role: 'Ecografías · mapeo facial y piel',
+  body: 'Socia de EXORA. Realiza ecografías de todo el cuerpo y se enfoca en la ecografía de piel y rostro: mapeo facial antes de un procedimiento y estudio de rellenos, ácido hialurónico y biopolímeros para detectar obstrucciones o complicaciones. Un servicio poco común en el Eje Cafetero.',
 };
 
 export const doctor = {
@@ -236,7 +239,9 @@ export const faq: {t: string; qs: [string, string][]}[] = [
   {
     t: 'Ecografías',
     qs: [
-      ['¿Quién hace las ecografías?', 'La Dra. Susana Zárate.'],
+      ['¿Quién hace las ecografías?', 'La Dra. Susana Zárate, que además se enfoca en ecografía de piel y rostro.'],
+      ['¿Qué es el mapeo facial por ecografía?', 'Es una ecografía del rostro que muestra las capas de la piel, los músculos y los vasos. Sirve para planear un procedimiento con más seguridad.'],
+      ['¿Pueden ver si tengo biopolímeros o un relleno mal puesto?', 'Sí. La ecografía ayuda a ubicar ácido hialurónico, biopolímeros u otros materiales y a ver obstrucciones o complicaciones. Con eso se decide el mejor manejo.'],
       ['¿Duelen o tienen radiación?', 'No. El ultrasonido no usa radiación y no duele. Algunos estudios piden preparación previa; te la indicamos al agendar.'],
     ],
   },
