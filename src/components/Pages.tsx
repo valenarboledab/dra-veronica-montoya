@@ -150,6 +150,7 @@ function DoctorFilm() {
       <video
         ref={intro}
         src={media('vero-intro.mp4')}
+        autoPlay
         poster={media('vero-end.webp')}
         className={cls}
         muted
@@ -163,9 +164,9 @@ function DoctorFilm() {
 
 function Doctor() {
   return (
-    <div className="grid items-center gap-10 md:grid-cols-[0.85fr_1.15fr] md:gap-[5vw]">
-      <div className="relative mx-auto aspect-[2/3] w-full max-w-[22rem]" data-reveal>
-        <div className="arch absolute inset-0 translate-x-4 -translate-y-4 border border-coral/35" />
+    <div className="grid items-center gap-8 md:grid-cols-[0.85fr_1.15fr] md:gap-[5vw]">
+      <div className="relative mx-auto aspect-[3/4] w-[62%] max-w-[15rem] md:aspect-[2/3] md:w-full md:max-w-[22rem]" data-reveal>
+        <div className="arch absolute inset-0 translate-x-2.5 -translate-y-2.5 border border-coral/35 md:translate-x-4 md:-translate-y-4" />
         <div className="arch relative size-full bg-white">
           <DoctorFilm />
         </div>

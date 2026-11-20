@@ -174,6 +174,7 @@ export function Hero({reduced}: {reduced: boolean}) {
             ref={intro}
             className="absolute inset-0 size-full"
             src={media('hero-intro.mp4')}
+            autoPlay
             poster={media('hero-poster.webp')}
             muted
             playsInline
