@@ -22,12 +22,12 @@ function Treatments() {
   const group = treatments.find((t) => t.id === tab)!;
   return (
     <>
-      <div className="grid items-center gap-8 md:grid-cols-[1fr_1.1fr] md:gap-[4vw]">
+      <div className="grid items-center gap-5 md:grid-cols-[1fr_auto] md:gap-[4vw]">
         <div>
           <Eyebrow>Tratamientos</Eyebrow>
           <BlurText lines={['Pensados', 'para *ti*']} className="mt-3 font-display text-title font-medium" delay={100} />
-          <p className="mt-5 max-w-[30rem] text-copy text-ink/70">{group.intro}</p>
-          <div role="tablist" className="glass tabs-scroll mt-7 inline-flex max-w-full gap-1 overflow-x-auto rounded-full p-1">
+          <p className="mt-3 max-w-[34rem] text-copy text-ink/70">{group.intro}</p>
+          <div role="tablist" className="glass tabs-scroll mt-5 inline-flex max-w-full gap-1 overflow-x-auto rounded-full p-1">
             {treatments.map((t) => (
               <button
                 key={t.id}
@@ -42,12 +42,12 @@ function Treatments() {
           </div>
         </div>
         {/* la gota: la palabra detrás cambia con la pestaña */}
-        <div className="aspect-[4/3] w-full md:aspect-auto md:h-[28rem]" aria-hidden>
+        <div className="h-40 w-full md:h-56 md:w-[22rem] lg:w-[26rem]" aria-hidden>
           <DropScene word={dropWord[tab]} reduced={reduced} />
         </div>
       </div>
 
-      <div key={tab} className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div key={tab} className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {group.items.map((it, i) => (
           <article
             key={it.n}
@@ -328,7 +328,7 @@ export function Page({view}: {view: Exclude<View, 'inicio'>}) {
   return (
     <section
       ref={root}
-      className="min-h-[calc(100svh-8rem)] bg-linear-to-br from-blush via-[#fdf1eb] to-paper px-5 py-12 md:px-[6vw] md:py-20"
+      className="min-h-[calc(100svh-8rem)] bg-linear-to-br from-blush via-[#fdf1eb] to-paper px-5 py-8 md:px-[6vw] md:py-12"
     >
       <div className="mx-auto max-w-[78rem]">
         <Body />
