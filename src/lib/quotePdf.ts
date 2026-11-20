@@ -79,12 +79,12 @@ export async function quotePdf(q: Quote, opts: {demo?: boolean} = {}): Promise<B
   doc.setFontSize(10);
   if (q.desc) {
     doc.setTextColor(...MUTE);
-    doc.text('Subtotal', W - 70, y);
+    doc.text('Subtotal', W - 95, y);
     doc.text(cop(subtotal(q)), W - 22, y, {align: 'right'});
     y += 7;
     doc.setTextColor(168, 115, 80);
-    doc.text(`Descuento combo (${q.desc}%)`, W - 70, y);
-    doc.text('−' + cop(subtotal(q) - total(q)), W - 22, y, {align: 'right'});
+    doc.text(`Descuento combo (${q.desc}%)`, W - 95, y);
+    doc.text('- ' + cop(subtotal(q) - total(q)), W - 22, y, {align: 'right'});
     y += 9;
   }
   doc.setFillColor(...CREAM);
