@@ -7,7 +7,7 @@ import {POLICY_VERSION, WA_SHOW} from '../content';
  * falta su número de documento y un correo de contacto.
  */
 const updated = '19 de noviembre de 2026';
-const ADDR = 'Calle 25N #13-41, Consultorio 9, Mall Privilegio, Armenia, Quindío, Colombia';
+const ADDR = 'Carrera 14 No. 1A-118, Piso 3, Consultorio 5, Armenia, Quindío, Colombia';
 
 const sections: [string, string[]][] = [
   [

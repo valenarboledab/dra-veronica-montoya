@@ -15,7 +15,7 @@ export const views = [
 ] as const;
 export type View = (typeof views)[number]['id'] | 'agenda' | 'resultados' | 'privacidad' | 'pagar' | 'panel' | 'cotizacion';
 
-export const ADDRESS = 'Calle 25N #13-41, Consultorio 9, Mall Privilegio, Armenia';
+export const ADDRESS = 'Carrera 14 No. 1A-118, Piso 3, Consultorio 5, Armenia';
 
 export const brand = {
   name: 'EXORA',
