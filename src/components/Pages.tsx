@@ -106,7 +106,7 @@ function DoctorFilm() {
       if (v.paused && !v.ended && v.style.opacity !== '0') v.play().catch(() => {});
       else if (v.ended && w.paused) w.play().catch(() => {});
     };
-    const gestures = ['touchstart', 'pointerdown', 'scroll'] as const;
+    const gestures = ['touchend', 'click', 'touchstart', 'scroll'] as const;
     gestures.forEach((g) => window.addEventListener(g, kick, {passive: true}));
     v.play().catch(() => {});
     return () => {

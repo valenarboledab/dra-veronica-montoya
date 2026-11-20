@@ -397,6 +397,29 @@ html.lenis body {
   }
 }
 
+/* Celulares y tablets táctiles (Safari en iPhone se traba con filter: blur en muchas capas):
+   las entradas usan solo opacidad y movimiento, sin desenfoque. */
+@media (hover: none), (max-width: 767px) {
+  .blur-text .ch {
+    filter: none;
+    will-change: auto;
+  }
+  .blur-text.is-in .ch {
+    animation-name: fade-in;
+    animation-duration: 0.7s;
+  }
+  [data-reveal],
+  .gate {
+    filter: none;
+  }
+}
+@keyframes fade-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card-in {
     animation: none;

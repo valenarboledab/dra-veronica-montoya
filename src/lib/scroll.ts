@@ -12,7 +12,9 @@ const subscribers = new Set<Tick>();
 let lenis: Lenis | null = null;
 
 export function startScroll(reducedMotion: boolean): () => void {
-  if (!reducedMotion) {
+  // En pantallas táctiles se usa el scroll nativo (Lenis no aporta y en iOS puede estorbar).
+  const touch = window.matchMedia('(hover: none)').matches;
+  if (!reducedMotion && !touch) {
     lenis = new Lenis({lerp: 0.09, smoothWheel: true, wheelMultiplier: 0.9});
   }
 

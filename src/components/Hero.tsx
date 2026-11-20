@@ -116,7 +116,7 @@ export function Hero({reduced}: {reduced: boolean}) {
         });
       } else if (phase === 'idle' && w.paused) w.play().catch(() => {});
     };
-    const gestures = ['touchstart', 'pointerdown', 'scroll', 'keydown'] as const;
+    const gestures = ['touchend', 'click', 'touchstart', 'scroll', 'keydown'] as const;
     gestures.forEach((g) => window.addEventListener(g, kick, {passive: true}));
 
     const io = new IntersectionObserver(([e]) => {

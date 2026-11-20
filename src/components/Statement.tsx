@@ -41,13 +41,14 @@ export function Statement({reduced}: {reduced: boolean}) {
       return;
     }
     const lit = new Array(tokens.length).fill(-1);
+    const touch = window.matchMedia('(hover: none)').matches;
     return onFrame(() => {
       const {p, rect, vh} = pinProgress(el);
       if (rect.bottom < 0 || rect.top > vh) return;
       const arrive = smoothstep(range(vh - rect.top, vh * 0.15, vh));
       if (para.current) {
         para.current.style.opacity = `${arrive}`;
-        para.current.style.filter = arrive < 1 ? `blur(${(1 - arrive) * 10}px)` : 'none';
+        para.current.style.filter = !touch && arrive < 1 ? `blur(${(1 - arrive) * 10}px)` : 'none';
       }
       const front = range(p, 0.06, 0.8) * (tokens.length + 3);
       items.current.forEach((w, i) => {
