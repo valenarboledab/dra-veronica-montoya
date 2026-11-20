@@ -88,7 +88,7 @@ export const statement = {
   ] as const,
 };
 
-type Item = {n: string; d: string; p: string; s: string; e: string};
+type Item = {n: string; d: string; p: string; s: string; e: string; f?: string};
 
 export const treatments: {id: string; label: string; short: string; intro: string; items: Item[]}[] = [
   {
@@ -97,13 +97,13 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     short: 'Facial',
     intro: 'Rejuvenecimiento y calidad de piel con resultados naturales: que te veas descansada, no diferente.',
     items: [
-      {n: 'Bótox', d: 'Suaviza las arrugas de frente, entrecejo y patas de gallo sin congelar tu expresión. También se usa para el bruxismo y la sudoración excesiva (hiperhidrosis).', p: 'Arrugas, bruxismo e hiperhidrosis', s: '20–30 min', e: 'Visible en 3 a 7 días'},
-      {n: 'Bioestimuladores de colágeno', d: 'Hidroxiapatita de calcio y ácido poliláctico que estimulan tu propio colágeno. Se aplican en rostro, zona genital y manos.', p: 'Flacidez y calidad de la piel', s: '40 min', e: 'Progresivo en semanas'},
-      {n: 'Ácido hialurónico', d: 'Devuelve volumen e hidratación en labios, ojeras, pómulos o surcos, respetando tus proporciones.', p: 'Pérdida de volumen', s: '30–45 min', e: 'Inmediato'},
-      {n: 'Skinbooster', d: 'Microinyecciones de hidratación profunda que dan luminosidad, elasticidad y una textura más uniforme.', p: 'Piel apagada o deshidratada', s: '30 min', e: 'Plan por sesiones'},
-      {n: 'Exosomas', d: 'Tratamiento regenerativo que ayuda a mejorar la calidad, la textura y la recuperación de la piel.', p: 'Rejuvenecimiento y recuperación', s: '30–45 min', e: 'Plan por sesiones'},
-      {n: 'Peeling', d: 'Renueva la superficie de la piel para tratar manchas, melasma, marcas de acné y poros.', p: 'Manchas y textura', s: '30 min', e: 'Plan por sesiones'},
-      {n: 'Dermapen', d: 'Microagujas que estimulan la renovación de la piel y mejoran cicatrices, poros y líneas finas.', p: 'Cicatrices de acné y poros', s: '45 min', e: 'Plan por sesiones'},
+      {n: 'Bótox', d: 'Suaviza las arrugas de frente, entrecejo y patas de gallo sin congelar tu expresión. También se usa para el bruxismo y la sudoración excesiva (hiperhidrosis).', p: 'Arrugas, bruxismo e hiperhidrosis', s: '20–30 min', e: 'Visible en 3 a 7 días', f: 'facial-botox'},
+      {n: 'Bioestimuladores de colágeno', d: 'Hidroxiapatita de calcio y ácido poliláctico que estimulan tu propio colágeno. Se aplican en rostro, zona genital y manos.', p: 'Flacidez y calidad de la piel', s: '40 min', e: 'Progresivo en semanas', f: 'facial-bioestimuladores'},
+      {n: 'Ácido hialurónico', d: 'Devuelve volumen e hidratación en labios, ojeras, pómulos o surcos, respetando tus proporciones.', p: 'Pérdida de volumen', s: '30–45 min', e: 'Inmediato', f: 'facial-hialuronico'},
+      {n: 'Skinbooster', d: 'Microinyecciones de hidratación profunda que dan luminosidad, elasticidad y una textura más uniforme.', p: 'Piel apagada o deshidratada', s: '30 min', e: 'Plan por sesiones', f: 'facial-skinbooster'},
+      {n: 'Exosomas', d: 'Tratamiento regenerativo que ayuda a mejorar la calidad, la textura y la recuperación de la piel.', p: 'Rejuvenecimiento y recuperación', s: '30–45 min', e: 'Plan por sesiones', f: 'facial-exosomas'},
+      {n: 'Peeling', d: 'Renueva la superficie de la piel para tratar manchas, melasma, marcas de acné y poros.', p: 'Manchas y textura', s: '30 min', e: 'Plan por sesiones', f: 'facial-peeling'},
+      {n: 'Dermapen', d: 'Microagujas que estimulan la renovación de la piel y mejoran cicatrices, poros y líneas finas.', p: 'Cicatrices de acné y poros', s: '45 min', e: 'Plan por sesiones', f: 'facial-dermapen'},
     ],
   },
   {
@@ -112,11 +112,11 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     short: 'Íntimo',
     intro: 'Un espacio privado y respetuoso para hablar de comodidad y confianza íntima. La consulta es confidencial.',
     items: [
-      {n: 'Bioestimuladores íntimos', d: 'Estimulan colágeno en la zona genital para mejorar la firmeza y la calidad del tejido.', p: 'Flacidez y cambios por edad o partos', s: '30–40 min', e: 'Progresivo en semanas'},
-      {n: 'Ácido hialurónico en labios mayores', d: 'Devuelve volumen e hidratación a los labios mayores, con un resultado natural y armónico.', p: 'Pérdida de volumen', s: '30–40 min', e: 'Inmediato'},
-      {n: 'Peeling genital', d: 'Unifica el tono de la piel de la zona íntima con protocolos seguros y graduales.', p: 'Cambios de pigmentación', s: '30 min', e: 'Plan por sesiones'},
-      {n: 'Skinbooster íntimo', d: 'Hidratación profunda del tejido íntimo para mayor confort y elasticidad.', p: 'Resequedad', s: '30 min', e: 'Plan por sesiones'},
-      {n: 'Hilos íntimos', d: 'Hilos que estimulan colágeno y aportan firmeza al tejido de la zona íntima.', p: 'Laxitud del tejido', s: '40 min', e: 'Según valoración'},
+      {n: 'Bioestimuladores íntimos', d: 'Estimulan colágeno en la zona genital para mejorar la firmeza y la calidad del tejido.', p: 'Flacidez y cambios por edad o partos', s: '30–40 min', e: 'Progresivo en semanas', f: 'intimo-bioestimuladores'},
+      {n: 'Ácido hialurónico en labios mayores', d: 'Devuelve volumen e hidratación a los labios mayores, con un resultado natural y armónico.', p: 'Pérdida de volumen', s: '30–40 min', e: 'Inmediato', f: 'intimo-hialuronico'},
+      {n: 'Peeling genital', d: 'Unifica el tono de la piel de la zona íntima con protocolos seguros y graduales.', p: 'Cambios de pigmentación', s: '30 min', e: 'Plan por sesiones', f: 'intimo-peeling'},
+      {n: 'Skinbooster íntimo', d: 'Hidratación profunda del tejido íntimo para mayor confort y elasticidad.', p: 'Resequedad', s: '30 min', e: 'Plan por sesiones', f: 'intimo-skinbooster'},
+      {n: 'Hilos íntimos', d: 'Hilos que estimulan colágeno y aportan firmeza al tejido de la zona íntima.', p: 'Laxitud del tejido', s: '40 min', e: 'Según valoración', f: 'intimo-hilos'},
     ],
   },
   {
@@ -125,12 +125,12 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     short: 'Regenerativa',
     intro: 'Tratamientos para el dolor, la recuperación y el bienestar de tu cuerpo, siempre con valoración médica previa.',
     items: [
-      {n: 'Biopuntura', d: 'Aplicación de medicamentos biológicos en puntos específicos para apoyar el manejo del dolor y la inflamación.', p: 'Dolor muscular y articular', s: '30 min', e: 'Plan por sesiones'},
-      {n: 'Bioinfusión', d: 'Infusión intravenosa de vitaminas, minerales y antioxidantes según tus necesidades.', p: 'Cansancio y bienestar general', s: '45–60 min', e: 'Plan por sesiones'},
-      {n: 'Exosomas', d: 'Terapia regenerativa que apoya los procesos de reparación del cuerpo, indicada tras valoración médica.', p: 'Recuperación de tejidos', s: 'Según protocolo', e: 'Según valoración'},
-      {n: 'Células madre', d: 'Terapia regenerativa avanzada, indicada solo después de una valoración médica completa.', p: 'Casos seleccionados', s: 'Según protocolo', e: 'Según valoración'},
-      {n: 'Aplicaciones intraarticulares', d: 'Aplicación de medicamentos dentro de la articulación para aliviar el dolor y mejorar la movilidad.', p: 'Dolor articular', s: '30 min', e: 'Según valoración'},
-      {n: 'Ácido hialurónico en rodillas', d: 'Lubrica la articulación de la rodilla para disminuir el dolor y mejorar el movimiento.', p: 'Desgaste de rodilla (artrosis)', s: '30 min', e: 'Según valoración'},
+      {n: 'Biopuntura', d: 'Aplicación de medicamentos biológicos en puntos específicos para apoyar el manejo del dolor y la inflamación.', p: 'Dolor muscular y articular', s: '30 min', e: 'Plan por sesiones', f: 'regen-biopuntura'},
+      {n: 'Bioinfusión', d: 'Infusión intravenosa de vitaminas, minerales y antioxidantes según tus necesidades.', p: 'Cansancio y bienestar general', s: '45–60 min', e: 'Plan por sesiones', f: 'regen-bioinfusion'},
+      {n: 'Exosomas', d: 'Terapia regenerativa que apoya los procesos de reparación del cuerpo, indicada tras valoración médica.', p: 'Recuperación de tejidos', s: 'Según protocolo', e: 'Según valoración', f: 'regen-exosomas'},
+      {n: 'Células madre', d: 'Terapia regenerativa avanzada, indicada solo después de una valoración médica completa.', p: 'Casos seleccionados', s: 'Según protocolo', e: 'Según valoración', f: 'regen-celulas'},
+      {n: 'Aplicaciones intraarticulares', d: 'Aplicación de medicamentos dentro de la articulación para aliviar el dolor y mejorar la movilidad.', p: 'Dolor articular', s: '30 min', e: 'Según valoración', f: 'regen-intraarticular'},
+      {n: 'Ácido hialurónico en rodillas', d: 'Lubrica la articulación de la rodilla para disminuir el dolor y mejorar el movimiento.', p: 'Desgaste de rodilla (artrosis)', s: '30 min', e: 'Según valoración', f: 'regen-hialuronico-rodilla'},
     ],
   },
   {
@@ -139,7 +139,7 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     short: 'Capilar',
     intro: 'Cuidado médico del cabello y el cuero cabelludo. Empezamos con una valoración tricológica para entender la causa antes de tratar.',
     items: [
-      {n: 'Tricología', d: 'Valoración y tratamiento médico del cabello y el cuero cabelludo: caída, debilitamiento y falta de densidad.', p: 'Caída y cabello débil', s: 'Según valoración', e: 'Plan por sesiones'},
+      {n: 'Tricología', d: 'Valoración y tratamiento médico del cabello y el cuero cabelludo: caída, debilitamiento y falta de densidad.', p: 'Caída y cabello débil', s: 'Según valoración', e: 'Plan por sesiones', f: 'capilar-tricologia'},
     ],
   },
   {
@@ -148,7 +148,7 @@ export const treatments: {id: string; label: string; short: string; intro: strin
     short: 'Ecografías',
     intro: 'Ecografías y ultrasonidos realizados por la Dra. Susana Zárate en el consultorio, con cita previa. Escríbenos por WhatsApp para saber qué estudio necesitas.',
     items: [
-      {n: 'Ecografías y ultrasonidos', d: 'Estudios por ultrasonido realizados por la Dra. Susana Zárate, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa'},
+      {n: 'Ecografías y ultrasonidos', d: 'Estudios por ultrasonido realizados por la Dra. Susana Zárate, sin radiación y sin dolor.', p: 'Según orden o valoración médica', s: 'Según el estudio', e: 'Con cita previa', f: 'eco-ecografia'},
     ],
   },
 ];

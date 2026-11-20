@@ -1,0 +1,21 @@
+/* Tema EXORA para las figuras del kit: tinta oliva sobre papel crema */
+.iso[data-theme="light"]{
+  --anatomy-page:#f0eee9;--anatomy-card:#f5f2ea;--anatomy-text:#5f5b44;--anatomy-strong:#3b3823;--anatomy-muted:#8e8a6c;
+  --anatomy-paper:#f7f5ef;--anatomy-face:#fbfaf6;--anatomy-top:#fbfaf6;
+  --anatomy-shade-0:#d9d4bf;--anatomy-shade-1:#e3dfcd;--anatomy-shade-2:#ebe8da;--anatomy-shade-3:#f2efe5;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#efe7d2;
+  --anatomy-hi:#3b3823;--anatomy-mid:#8a855f;--anatomy-lo:#b5b092;--anatomy-faint:#d3cfb8;--anatomy-lit:#a87350;
+  --anatomy-halo:#7f7a52;--anatomy-halo-opacity:.28;--anatomy-dot:#3b3823;
+}
+/* Capas del tejido: tintes de la paleta (el color aquí es el tema: cada tejido) */
+.ly-musculo .iso-top{fill:#d9b49a}.ly-musculo .iso-fill{fill:#d0a98c}
+.ly-musculo .iso-shade[data-shade="0"]{fill:#b98a6b}.ly-musculo .iso-shade[data-shade="1"]{fill:#c49678}.ly-musculo .iso-shade[data-shade="2"]{fill:#cca184}.ly-musculo .iso-shade[data-shade="3"]{fill:#d4ab8f}
+.ly-musculo .iso-line[data-tone="faint"]{stroke:#b3826a}
+.ly-grasa .iso-top{fill:#f1e6c2}.ly-grasa .iso-fill{fill:#ecdfb6}
+.ly-grasa .iso-shade[data-shade="0"]{fill:#d8c68f}.ly-grasa .iso-shade[data-shade="1"]{fill:#e0cf9c}.ly-grasa .iso-shade[data-shade="2"]{fill:#e6d7a8}.ly-grasa .iso-shade[data-shade="3"]{fill:#ecdeb4}
+.ly-grasa .iso-line[data-tone="faint"]{stroke:#cdb77a}
+.ly-dermis .iso-top{fill:#efe4dc}.ly-dermis .iso-fill{fill:#eadcd2}
+.ly-dermis .iso-shade[data-shade="0"]{fill:#d6c0b2}.ly-dermis .iso-shade[data-shade="1"]{fill:#dec9bc}.ly-dermis .iso-shade[data-shade="2"]{fill:#e4d1c5}.ly-dermis .iso-shade[data-shade="3"]{fill:#ead9ce}
+.ly-dermis .iso-line[data-tone="faint"]{stroke:#cfb3a3}
+.ly-epidermis .iso-top{fill:#faf6f0}
+.ly-epidermis .iso-shade[data-shade="0"]{fill:#e6dccd}.ly-epidermis .iso-shade[data-shade="1"]{fill:#ece3d6}.ly-epidermis .iso-shade[data-shade="2"]{fill:#f1e9de}.ly-epidermis .iso-shade[data-shade="3"]{fill:#f5efe6}

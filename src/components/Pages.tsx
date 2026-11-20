@@ -1,10 +1,12 @@
 import {useEffect, useRef, useState, type CSSProperties} from 'react';
-import {doctor, susana, faq, media, treatments, visit, wa, WA_SHOW, type View, ADDRESS, POLICY_VERSION} from '../content';
+import {doctor, susana, faq, media, treatments, visit, wa, WA_SHOW, type View, ADDRESS} from '../content';
 import {useReveals} from '../hooks/useReveals';
 import {BlurText} from './BlurText';
 import {DropScene} from './DropScene';
 import {Results} from './BeforeAfter';
 import {Privacy} from './Privacy';
+import {ConsentText, consentLine, WaLink} from './Consent';
+import {AnatomyDialog} from './Anatomy';
 import {useReducedMotion} from '../hooks/useReducedMotion';
 
 const Eyebrow = ({children}: {children: string}) => (
@@ -37,6 +39,7 @@ function Facts({it}: {it: (typeof treatments)[number]['items'][number]}) {
 
 function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number]; i: number}) {
   const [open, setOpen] = useState(false);
+  const [fig, setFig] = useState(false);
   return (
     <article
       className="card-in glass flex flex-col gap-2 rounded-2xl p-4 md:gap-3 md:rounded-3xl md:p-6"
@@ -48,12 +51,16 @@ function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number
         <Facts it={it} />
       </div>
       <div className="flex items-center justify-between gap-3 md:mt-auto md:pt-2">
-        <a
-          href={wa(`Hola EXORA, quiero información sobre ${it.n.toLowerCase()}.`)}
-          className="text-small font-semibold text-coral hover:underline"
-        >
-          Preguntar →
-        </a>
+        <span className="flex items-center gap-4">
+          <WaLink text={`Hola EXORA, quiero información sobre ${it.n.toLowerCase()}.`} className="text-small font-semibold text-coral hover:underline">
+            Preguntar →
+          </WaLink>
+          {it.f && (
+            <button type="button" onClick={() => setFig(true)} className="min-h-9 cursor-pointer text-small font-semibold text-ink/70 underline-offset-2 hover:underline">
+              Ver en 3D
+            </button>
+          )}
+        </span>
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
@@ -63,6 +70,7 @@ function TreatmentCard({it, i}: {it: (typeof treatments)[number]['items'][number
           {open ? 'Ocultar' : 'Ver detalles'}
         </button>
       </div>
+      {fig && it.f && <AnatomyDialog id={it.f} n={i + 1} onClose={() => setFig(false)} />}
     </article>
   );
 }
@@ -263,12 +271,19 @@ function ResultsPage() {
 }
 
 
+/** Citas cada 30 minutos de 8:00 a. m. a 3:30 p. m. (el consultorio atiende de 8 a 4). */
+const SLOTS = Array.from({length: 16}, (_, i) => {
+  const m = 8 * 60 + i * 30, h = Math.floor(m / 60), mm = m % 60;
+  const h12 = h > 12 ? h - 12 : h;
+  return `${h12}:${mm ? '30' : '00'} ${h < 12 ? 'a. m.' : 'p. m.'}`;
+});
+
 function Agenda() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [what, setWhat] = useState('Una valoración general');
   const [when, setWhen] = useState('Lo antes posible');
-  const [part, setPart] = useState('Mañana');
+  const [part, setPart] = useState(SLOTS[0]);
   const [consent, setConsent] = useState(false);
   const [promo, setPromo] = useState(false);
   const [tried, setTried] = useState(false);
@@ -277,9 +292,8 @@ function Agenda() {
   const nameOk = name.trim().length >= 3;
   const ready = nameOk && phoneOk && consent;
   const msg =
-    `Hola EXORA, soy ${name.trim()} (cel. ${phone.trim()}). Me interesa: ${what}. Para: ${when.toLowerCase()}, en la ${part.toLowerCase()}.\n\n` +
-    `✔ Autorizo el tratamiento de mis datos personales (nombre, celular y la información de esta conversación) para agendar y gestionar mi cita, según la Política de Tratamiento de Datos de EXORA, versión ${POLICY_VERSION}.` +
-    (promo ? '\n✔ Acepto recibir información de tratamientos y promociones por WhatsApp.' : '');
+    `Hola EXORA, soy ${name.trim()} (cel. ${phone.trim()}). Me interesa: ${what}. Para: ${when.toLowerCase()}, hacia las ${part}.\n\n` +
+    consentLine(promo);
   const link = wa(msg);
   const problems = [!nameOk && 'escribe tu nombre completo', !phoneOk && 'escribe un celular válido', !consent && 'acepta la política de tratamiento de datos'].filter(Boolean) as string[];
   const field = 'min-h-12 w-full min-w-0 rounded-xl border border-line bg-paper px-3.5 text-[1rem] text-ink focus:border-coral focus:outline-none';
@@ -341,21 +355,25 @@ function Agenda() {
             </select>
           </label>
           <label className="grid gap-1.5 text-small font-medium">
-            Horario
+            Hora preferida
             <select className={field} value={part} onChange={(e) => setPart(e.target.value)}>
-              <option>Mañana</option>
-              <option>Tarde</option>
+              <optgroup label="Mañana">
+                {SLOTS.filter((h) => h.endsWith('a. m.')).map((h) => (
+                  <option key={h}>{h}</option>
+                ))}
+              </optgroup>
+              <optgroup label="Tarde">
+                {SLOTS.filter((h) => h.endsWith('p. m.')).map((h) => (
+                  <option key={h}>{h}</option>
+                ))}
+              </optgroup>
             </select>
           </label>
         </div>
         <label className={`flex gap-3 rounded-xl border p-3 text-[0.78rem] leading-snug text-ink/80 ${tried && !consent ? 'border-[#a87350]' : 'border-line'}`}>
           <input type="checkbox" className={box} checked={consent} onChange={(e) => setConsent(e.target.checked)} required />
           <span>
-            <b className="font-semibold text-ink">Obligatorio.</b> Autorizo de manera previa, expresa e informada a EXORA (Dra. Verónica Montoya y Dra. Susana Zárate) para recolectar, almacenar y usar mi nombre, celular y la información que comparta, con el fin de agendar, confirmar y gestionar mi cita y comunicarme con ellas, conforme a la Ley 1581 de 2012 y la{' '}
-            <a href="#privacidad" target="_blank" rel="noopener" className="underline hover:text-coral">
-              Política de Tratamiento de Datos
-            </a>
-            . Sé que puedo conocer, actualizar, rectificar o pedir la supresión de mis datos y revocar esta autorización.
+            <ConsentText />
           </span>
         </label>
         <label className="flex gap-3 px-3 text-[0.78rem] leading-snug text-ink/70">

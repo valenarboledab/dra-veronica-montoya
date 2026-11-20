@@ -1,5 +1,6 @@
+import {WaLink} from './Consent';
 import {useRef, useState, type CSSProperties} from 'react';
-import {beforeAfter, media, wa} from '../content';
+import {beforeAfter, media} from '../content';
 import {Mark} from './icons';
 
 type Case = (typeof beforeAfter)[number];
@@ -89,9 +90,9 @@ export function Results() {
         Fotos de pacientes reales de la Dra. Verónica Montoya, publicadas con su consentimiento informado y firmado. Sin
         retoques. Los resultados varían en cada persona y no se pueden garantizar.
       </p>
-      <a href={wa('Hola Dra. Verónica, vi los resultados y quiero una valoración.')} className="mt-6 inline-flex rounded-full bg-ink px-6 py-3 text-small font-medium text-paper hover:bg-coral">
+      <WaLink text="Hola EXORA, vi los resultados y quiero una valoración." className="mt-6 inline-flex rounded-full bg-ink px-6 py-3 text-small font-medium text-paper hover:bg-coral">
         Quiero mi valoración
-      </a>
+      </WaLink>
     </>
   );
 }
